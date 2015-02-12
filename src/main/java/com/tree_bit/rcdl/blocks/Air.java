@@ -8,8 +8,8 @@ package com.tree_bit.rcdl.blocks;
  */
 public class Air extends Blocks {
 
-  public Air() {
-    super(0, 0);
-  }
+    public Air() {
+        super(0, 0);
+    }
 
 }

@@ -7,11 +7,11 @@ package com.tree_bit.rcdl.blocks;
  */
 public interface IDataValueEnum {
 
-  /**
-   * Returns the data value of this setting.
-   *
-   * @return <b>int</b> data value
-   */
-  public int getDataValue();
+    /**
+     * Returns the data value of this setting.
+     *
+     * @return <b>int</b> data value
+     */
+    public int getDataValue();
 
 }

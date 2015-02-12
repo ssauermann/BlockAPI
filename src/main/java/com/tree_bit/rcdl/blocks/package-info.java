@@ -1,5 +1,6 @@
 /**
- * Classes giving access to Minecraft Blocks and their special data value behavior.
+ * Classes giving access to Minecraft Blocks and their special data value
+ * behavior.
  *
  * @author Alexander
  * @author Sascha Sauermann
