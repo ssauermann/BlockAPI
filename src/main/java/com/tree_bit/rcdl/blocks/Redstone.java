@@ -1,4 +1,4 @@
-package com.tree_bit.com.rcdl.blocks;
+package com.tree_bit.rcdl.blocks;
 
 /**
  * An Object of this class contains all Information about Redstone
@@ -8,15 +8,15 @@ package com.tree_bit.com.rcdl.blocks;
  */
 public class Redstone extends Blocks {
 
-	public Redstone(int power) {
-		super(55, power);
-	}
+  public Redstone(int power) {
+    super(55, power);
+  }
 
-	/**
-	 * Standard Constructor which sets the power to 0
-	 */
-	public Redstone() {
-		super(55, 0);
-	}
+  /**
+   * Standard Constructor which sets the power to 0
+   */
+  public Redstone() {
+    super(55, 0);
+  }
 
 }

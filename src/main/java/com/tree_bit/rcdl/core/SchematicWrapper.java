@@ -1,4 +1,4 @@
-package com.tree_bit.com.rcdl.core;
+package com.tree_bit.rcdl.core;
 
 import java.io.File;
 import java.io.FileInputStream;

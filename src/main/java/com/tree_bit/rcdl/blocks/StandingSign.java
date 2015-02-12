@@ -1,4 +1,4 @@
-package com.tree_bit.com.rcdl.blocks;
+package com.tree_bit.rcdl.blocks;
 
 /**
  * A sign which is placed on top of another block (if you want a sign which is on the side of a

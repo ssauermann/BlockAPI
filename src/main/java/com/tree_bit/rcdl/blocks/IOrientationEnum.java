@@ -1,4 +1,4 @@
-package com.tree_bit.com.rcdl.blocks;
+package com.tree_bit.rcdl.blocks;
 
 /**
  * Method a block orientation enum has to implement.

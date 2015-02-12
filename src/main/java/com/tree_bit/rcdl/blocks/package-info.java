@@ -5,7 +5,7 @@
  * @author Sascha Sauermann
  */
 @NonNullByDefault
-package com.tree_bit.com.rcdl.blocks;
+package com.tree_bit.rcdl.blocks;
 
 import org.eclipse.jdt.annotation.NonNullByDefault;
 
