@@ -106,11 +106,11 @@ public class RedstoneTorch extends Blocks {
          * @return <b>Orientation</b> orientation
          */
         @Override
-        public Orientation mirror(boolean xAxis) {
+        public Orientation mirror(boolean rotateX) {
             if (this.value == FacingUp.value) {
                 return FacingUp;
             }
-            if (xAxis) {
+            if (rotateX) {
                 if (this.next(0) == FacingSouth) {
                     return FacingNorth;
                 } else if (this.next(0) == FacingNorth) {
@@ -146,8 +146,8 @@ public class RedstoneTorch extends Blocks {
     }
 
     @Override
-    public void mirror(boolean xAxis) {
-        this.setOrientation(this.facing.mirror(xAxis));
+    public void mirror(boolean rotateX) {
+        this.setOrientation(this.facing.mirror(rotateX));
     }
 
     /**

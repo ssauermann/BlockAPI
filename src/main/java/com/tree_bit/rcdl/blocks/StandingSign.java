@@ -38,8 +38,8 @@ public class StandingSign extends Blocks {
     }
 
     @Override
-    public void mirror(boolean xAxis) {
-        this.setOrientation(this.orientation.mirror(xAxis));
+    public void mirror(boolean rotateX) {
+        this.setOrientation(this.orientation.mirror(rotateX));
     }
 
     /**

@@ -108,8 +108,8 @@ public class Repeater extends Blocks {
          * @return <b>Orientation</b> orientation
          */
         @Override
-        public Orientation mirror(boolean xAxis) {
-            if (xAxis) {
+        public Orientation mirror(boolean rotateX) {
+            if (rotateX) {
                 if (this.next(0) == FacingSouth) {
                     return FacingNorth;
                 } else if (this.next(0) == FacingNorth) {

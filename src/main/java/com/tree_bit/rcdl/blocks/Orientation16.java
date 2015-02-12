@@ -56,9 +56,9 @@ public enum Orientation16 implements IOrientationEnum, IDataValueEnum {
      * @return <b>Orientation</b> mirrored orientation (out of 16 possible)
      */
     @Override
-    public Orientation16 mirror(boolean xAxis) {
+    public Orientation16 mirror(boolean rotateX) {
         Orientation16 returnV;
-        if (xAxis) {
+        if (rotateX) {
             if (this.ordinal() <= 8) {
                 // 0-8 => 8-number
                 returnV = values()[8 - this.ordinal()];

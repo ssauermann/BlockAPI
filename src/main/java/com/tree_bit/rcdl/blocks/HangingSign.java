@@ -42,8 +42,8 @@ public class HangingSign extends Blocks {
         }
 
         @Override
-        public Orientation mirror(boolean xAxis) {
-            if (xAxis) {
+        public Orientation mirror(boolean rotateX) {
+            if (rotateX) {
                 if (this.next(0) == South) {
                     return North;
                 } else if (this.next(0) == North) {

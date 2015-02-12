@@ -68,10 +68,10 @@ public abstract class Blocks {
      * Child classes should overwrite this method if they have an orientation.
      * </p>
      *
-     * @param xAxis <b>boolean</b> Mirrors the block at the x (true) or the
+     * @param rotateX <b>boolean</b> Mirrors the block at the x (true) or the
      *        y-axis (true).
      */
-    public void mirror(boolean xAxis) {
+    public void mirror(boolean rotateX) {
         // Normal blocks are the same after mirroring.
     }
 

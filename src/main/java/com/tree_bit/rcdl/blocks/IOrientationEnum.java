@@ -23,11 +23,11 @@ interface IOrientationEnum {
     /**
      * Mirrors the block at the given axis.
      *
-     * @param xAxis <b>boolean</b> mirror at x (true) or z (false) axis.
+     * @param rotateX <b>boolean</b> mirror at x (true) or z (false) axis.
      * @return <b>IOrientation</b> returns the new orientation after the
      *         mirroring
      */
-    public IOrientationEnum mirror(boolean xAxis);
+    public IOrientationEnum mirror(boolean rotateX);
 
     /**
      * Returns the next orientation. This should follow an reasonable order.
