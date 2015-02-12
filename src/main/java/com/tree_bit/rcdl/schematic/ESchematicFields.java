@@ -1,4 +1,4 @@
-package com.tree_bit.rcdl.core;
+package com.tree_bit.rcdl.schematic;
 
 import org.jnbt.NBTConstants;
 
