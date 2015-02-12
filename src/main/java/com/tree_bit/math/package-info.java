@@ -6,5 +6,5 @@
 @NonNullByDefault
 package com.tree_bit.math;
 
-import com.google.common.annotations.*;
+import org.eclipse.jdt.annotation.NonNullByDefault;
 
