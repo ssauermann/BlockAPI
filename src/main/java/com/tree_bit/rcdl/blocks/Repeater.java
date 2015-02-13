@@ -1,6 +1,6 @@
 package com.tree_bit.rcdl.blocks;
 
-import com.tree_bit.math.MathExtended;
+import com.google.common.math.IntMath;
 
 /**
  * Holds all the information for a Repeater.
@@ -130,7 +130,7 @@ public class Repeater extends Blocks {
          */
         @Override
         public Orientation next(int i) {
-            final Orientation temp = values()[MathExtended.mod((this.ordinal() + i), 4)];
+            final Orientation temp = values()[IntMath.mod((this.ordinal() + i), 4)];
             if (temp != null) {
                 return temp;
             }

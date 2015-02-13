@@ -21,7 +21,7 @@ public class RedstoneLamp extends Blocks {
             this.mcID = id;
         }
 
-        private int getMcID() {
+        int getMcID() {
             return this.mcID;
         }
     }

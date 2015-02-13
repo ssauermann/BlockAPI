@@ -1,5 +1,7 @@
 package com.tree_bit.rcdl.schematic;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import org.jnbt.ByteArrayTag;
 import org.jnbt.CompoundTag;
 import org.jnbt.NBTInputStream;
@@ -36,13 +38,17 @@ public class SchematicWrapper {
      * @throws FileNotFoundException
      * @throws IOException
      */
+    // Can't be null (checked by Guava)
+    @SuppressWarnings("null")
     public SchematicWrapper(String path) throws FileNotFoundException, IOException {
-        if ((path == null) || path.equals("")) {
+        if (path.equals("")) {
             throw new IllegalArgumentException("Path is empty");
         }
-        final NBTInputStream inputStream = new NBTInputStream(new FileInputStream(path));
-        this.root = (CompoundTag) inputStream.readTag();
-        inputStream.close();
+
+        try (final NBTInputStream inputStream = new NBTInputStream(new FileInputStream(path))) {
+            this.root = checkNotNull((CompoundTag) inputStream.readTag());
+        }
+
     }
 
     /**
@@ -87,8 +93,10 @@ public class SchematicWrapper {
      *
      * @return <b>byte[]</b> blocks
      */
+    // Can't be null (checked by Guava)
+    @SuppressWarnings("null")
     public byte[] readBlocks() {
-        return ((ByteArrayTag) this.read(ESchematicFields.BLOCKS)).getValue();
+        return checkNotNull(((ByteArrayTag) this.read(ESchematicFields.BLOCKS)).getValue());
     }
 
     /**
@@ -100,8 +108,10 @@ public class SchematicWrapper {
      *
      * @return <b>byte[]</b> blocks
      */
+    // Can't be null (checked by Guava)
+    @SuppressWarnings("null")
     public byte[] readData() {
-        return ((ByteArrayTag) this.read(ESchematicFields.DATA)).getValue();
+        return checkNotNull(((ByteArrayTag) this.read(ESchematicFields.DATA)).getValue());
     }
 
     /**
@@ -121,8 +131,10 @@ public class SchematicWrapper {
      * @param parentTag <b>CompoundTag</b> parent compound tag
      * @return <b>Tag</b> child tag
      */
+    // Can't be null (checked by Guava)
+    @SuppressWarnings("null")
     private static Tag getTag(String key, CompoundTag parentTag) {
-        return parentTag.getValue().get(key);
+        return checkNotNull(parentTag.getValue().get(key));
     }
 
     /**
@@ -134,16 +146,18 @@ public class SchematicWrapper {
      * @return <b>Map&lt;String, Tag&gt;</b> map with the old values and the new
      *         one
      */
+    // Can't be null (checked by Guava)
+    @SuppressWarnings("null")
     private static Map<String, Tag> addTag(Tag t, CompoundTag parentTag) {
         final Map<String, Tag> map = new HashMap<>();
 
         // Copy old Map
         for (final Tag old : parentTag.getValue().values()) {
-            map.put(old.getName(), old);
+            map.put(checkNotNull(old.getName()), old);
         }
 
         // Add t to map (replace possibly existing old value)
-        map.put(t.getName(), t);
+        map.put(checkNotNull(t.getName()), t);
 
         return map;
     }
@@ -221,7 +235,7 @@ public class SchematicWrapper {
      * @throws IOException
      */
     public void saveChangesToFile(String path) throws FileNotFoundException, IOException {
-        if ((path == null) || path.equals("")) {
+        if (path.equals("")) {
             throw new IllegalArgumentException("Path is empty");
         }
 
@@ -235,13 +249,15 @@ public class SchematicWrapper {
             f.createNewFile();
         }
 
-        final NBTOutputStream out = new NBTOutputStream(new FileOutputStream(f));
-        out.writeTag(this.root);
-        out.close();
+        try (final NBTOutputStream out = new NBTOutputStream(new FileOutputStream(f))) {
+            out.writeTag(this.root);
+        }
     }
 
     @Override
+    // Can't be null (checked by Guava)
+    @SuppressWarnings("null")
     public String toString() {
-        return this.root.toString();
+        return checkNotNull(this.root.toString());
     }
 }

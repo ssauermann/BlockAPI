@@ -21,7 +21,7 @@ public class HangingSign extends Blocks {
     public HangingSign(Orientation orientation, String[] text) {
         super(68, orientation.getDataValue());
         if (text.length > 4) {
-            throw new IllegalArgumentException(Messages.getString("StandingSign.IllegalTextArray")); //$NON-NLS-1$
+            throw new IllegalArgumentException("Too much text for a sign. String array is too big (max 4): " + text.length);
         }
         this.text = text;
         this.orientation = orientation;

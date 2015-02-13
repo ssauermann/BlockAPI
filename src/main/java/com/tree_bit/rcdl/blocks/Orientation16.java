@@ -1,6 +1,6 @@
 package com.tree_bit.rcdl.blocks;
 
-import com.tree_bit.math.MathExtended;
+import com.google.common.math.IntMath;
 
 /**
  * Enum containing all 16 different orientations minecraft has to offer for
@@ -37,7 +37,7 @@ public enum Orientation16 implements IOrientationEnum, IDataValueEnum {
      */
     @Override
     public Orientation16 next(int i) {
-        final Orientation16 temp = values()[MathExtended.mod((this.ordinal() + i), 16)];
+        final Orientation16 temp = values()[IntMath.mod((this.ordinal() + i), 16)];
         if (temp != null) {
             return temp;
         }

@@ -1,6 +1,6 @@
 package com.tree_bit.rcdl.blocks;
 
-import com.tree_bit.math.MathExtended;
+import com.google.common.math.IntMath;
 
 /**
  * This Class holds all information about a Redstone Torch.
@@ -131,7 +131,7 @@ public class RedstoneTorch extends Blocks {
          */
         @Override
         public Orientation next(int i) {
-            final Orientation temp = values()[MathExtended.mod((this.ordinal() + i), 16)];
+            final Orientation temp = values()[IntMath.mod((this.ordinal() + i), 16)];
             if (temp != null) {
                 return temp;
             }

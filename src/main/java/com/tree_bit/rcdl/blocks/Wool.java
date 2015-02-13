@@ -22,7 +22,7 @@ public class Wool extends Blocks {
             this.value = value;
         }
 
-        private int getColorvalue() {
+        int getColorvalue() {
             return this.value;
         }
     }

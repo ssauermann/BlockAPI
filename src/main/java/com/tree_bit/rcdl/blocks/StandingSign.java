@@ -26,7 +26,7 @@ public class StandingSign extends Blocks {
     public StandingSign(Orientation16 orientation, String[] text) {
         super(63, orientation.getDataValue());
         if (text.length > 4) {
-            throw new IllegalArgumentException(Messages.getString("StandingSign.IllegalTextArray") + text.length); //$NON-NLS-1$
+            throw new IllegalArgumentException("Too much text for a sign. String array is too big (max 4): " + text.length); //$NON-NLS-1$
         }
         this.text = text;
         this.orientation = orientation;

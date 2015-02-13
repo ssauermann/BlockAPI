@@ -1,5 +1,8 @@
 package com.tree_bit.rcdl.blocks;
 
+import org.eclipse.jdt.annotation.NonNull;
+
+
 /**
  * Minecraft Block
  *
@@ -16,7 +19,7 @@ public abstract class Blocks {
 
     /** sign text */
     // TODO: Not an attribute of all blocks
-    protected String[] text = new String[4];
+    protected String[] text = new String @NonNull [4];
 
     /**
      * Sets the Object Up with the Information about its ID and value
@@ -26,11 +29,11 @@ public abstract class Blocks {
      */
     public Blocks(int mcID, int datavalue) {
         if ((datavalue > 15) || (datavalue < 0)) {
-            throw new IllegalArgumentException(Messages.getString("Blocks.Datavalues0To15Exception")); //$NON-NLS-1$
+            throw new IllegalArgumentException("Datavalues higher than 15 and lower than 0 are permitted");
         }
         this.minecraftID = mcID;
         this.datavalue = datavalue;
-        this.text = new String[] {};
+        this.text = new String @NonNull [] {"Bla"};
     }
 
     /**
@@ -87,7 +90,7 @@ public abstract class Blocks {
      */
     public final void rotate(int degree) {
         if ((degree % 90) != 0) {
-            throw new IllegalArgumentException(Messages.getString("Blocks.Rotation90DegreeException")); //$NON-NLS-1$
+            throw new IllegalArgumentException("Rotation is only allowed for multiples of 90 degree");
         }
 
         int count = degree / 90;
