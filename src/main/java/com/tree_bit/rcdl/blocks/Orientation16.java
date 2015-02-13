@@ -2,63 +2,90 @@ package com.tree_bit.rcdl.blocks;
 
 import com.google.common.math.IntMath;
 
+import java.util.Arrays;
+import java.util.Set;
+
 /**
- * Enum containing all 16 different orientations minecraft has to offer for
- * blocks.
+ * Enum of the cardinal directions, mapping those to their block data value.
  *
  * <p>
- * This is used by:
+ * Allowed axes for rotation are:
  * <ul>
- * <li>{@link StandingSign}</li>
+ * <li>y</li>
  * </ul>
  * </p>
  *
- * @author Sascha Sauermann
- * @author Alexander
+ * <p>
+ * Allowed plains for mirroring are:
+ * <ul>
+ * <li>x-y</li>
+ * <li>z-y</li>
+ * </ul>
+ * </p>
  */
 public enum Orientation16 implements IOrientationEnum, IDataValueEnum {
-    South(0), SouthSouthWest(1), SouthWest(2), WestSouthWest(3), West(4), WestNorthWest(5), NorthWest(6), NorthNorthWest(7), North(8), NorthNorthEast(
-            9), NorthEast(10), EastNorthEast(11), East(12), EastSouthEast(13), SouthEast(14), SouthSouthEast(15);
+    /** South */
+    S(0),
+    /** South-south-west */
+    SSW(1),
+    /** South-west */
+    SW(2),
+    /** West-south-west */
+    WSW(3),
+    /** West */
+    W(4),
+    /** West-north-west */
+    WNW(5),
+    /** North-west */
+    NW(6),
+    /** North-north-west */
+    NNW(7),
+    /** North */
+    N(8),
+    /** North-north-east */
+    NNE(9),
+    /** North-east */
+    NE(10),
+    /** East-north-east */
+    ENE(11),
+    /** East */
+    E(12),
+    /** East-south-east */
+    ESE(13),
+    /** South-east */
+    SE(14),
+    /** South-south-east */
+    SSE(15);
 
-    /** Data value */
     private int value;
 
-    /**
-     * Creates a new orientation.
-     *
-     * @param value <b>int</b> data value
-     */
     private Orientation16(int value) {
         this.value = value;
     }
 
-    /**
-     * @return <b>Orientation</b> next orientation (out of 16 possible)
-     */
     @Override
     public Orientation16 next(int i) {
         final Orientation16 temp = values()[IntMath.mod((this.ordinal() + i), 16)];
         if (temp != null) {
             return temp;
         }
-        throw new IllegalStateException();
+        throw new NullPointerException();
     }
 
-    /**
-     * @return <b>Orientation</b> new orientation (out of 16 possible)
-     */
     @Override
-    public Orientation16 rotate(int n) {
-        return this.next(n);
+    public Orientation16 rotate(Axis a, int n) {
+        if (a == Axis.Y) {
+            return this.next(n);
+        }
+        throw new UnsupportedOperationException("Can't rotate at this axis: " + a);
     }
 
-    /**
-     * @return <b>Orientation</b> mirrored orientation (out of 16 possible)
-     */
     @Override
-    public Orientation16 mirror(boolean rotateX) {
+    public Orientation16 mirror(Set<Axis> plain) {
+
         Orientation16 returnV;
-        if (rotateX) {
+
+        if (plain.contains(Axis.Y) && plain.contains(Axis.X)) {
             if (this.ordinal() <= 8) {
                 // 0-8 => 8-number
                 returnV = values()[8 - this.ordinal()];
@@ -66,14 +93,17 @@ public enum Orientation16 implements IOrientationEnum, IDataValueEnum {
                 // 9-15 => 24-number
                 returnV = values()[24 - this.ordinal()];
             }
-        } else {
+        } else if (plain.contains(Axis.Y) && plain.contains(Axis.Z)) {
             // 16-number mod 16
             returnV = values()[(16 - this.ordinal()) % 16];
+        } else {
+            throw new UnsupportedOperationException("Can't mirror at this plain: " + Arrays.toString(plain.toArray(new Axis[] {})));
         }
+
         if (returnV != null) {
             return returnV;
         }
-        throw new IllegalStateException();
+        throw new NullPointerException();
     }
 
     @Override

@@ -1,40 +1,59 @@
 package com.tree_bit.rcdl.blocks;
 
+import java.util.Set;
+
 /**
- * Method a block orientation enum has to implement.
+ * Methods a orientation enum has to implement.
  *
  * This includes rotating, mirroring and getting the next orientation (cyclic).
- *
- * @author Sascha Sauermann
  */
 interface IOrientationEnum {
 
     /**
      * Rotates the block n times (clockwise). The new orientation is independant
      * of the degree and only dependant of the number of possible fix rotations.
-     * Use negative numbers for counterclockwise rotations.
+     * Use negative numbers for counterclockwise rotations. (Clockwise -> Axis
+     * viewed from +infinity to -infinity/zero)
      *
-     * @param n <b>int</b> number of rotations
-     * @return <b>IOrientation</b> returns the new orientation after the
-     *         rotations
+     * <p>
+     * Axes may be excluded for some types of orientation and throw an
+     * {@link UnsupportedOperationException}.
+     * </p>
+     *
+     * @param axis Axis of rotation
+     * @param n Number of rotations
+     * @return The new orientation after the rotations
      */
-    public IOrientationEnum rotate(int n);
+    IOrientationEnum rotate(Axis axis, int n);
 
     /**
-     * Mirrors the block at the given axis.
+     * Mirrors the orientation at the given plain.
+     * <p>
+     * Plains may be excluded for some types of orientation and throw an
+     * {@link UnsupportedOperationException}.
+     * </p>
      *
-     * @param rotateX <b>boolean</b> mirror at x (true) or z (false) axis.
-     * @return <b>IOrientation</b> returns the new orientation after the
-     *         mirroring
+     * @param plain Mirror at the given plain
+     * @return The new orientation after the mirroring
      */
-    public IOrientationEnum mirror(boolean rotateX);
+    IOrientationEnum mirror(Set<Axis> plain);
 
     /**
-     * Returns the next orientation. This should follow an reasonable order.
+     * Returns the next orientation n steps after the current one. This
+     * operation is cyclic.
      *
-     * @param i <b>int</b> index
+     * <p>
+     * <b>Example:</b> <br>
+     * next(3) == next(1).next(1).next(1)
+     * </p>
      *
-     * @return <b>IOrientation</b> returns the next orientation.
+     * <p>
+     * An implementation of this method should follow a reasonable order.
+     * </p>
+     *
+     * @param n Number of steps to the desired orientation (may be negative)
+     *
+     * @return The next orientation
      */
-    public IOrientationEnum next(int i);
+    IOrientationEnum next(int n);
 }
