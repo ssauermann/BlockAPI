@@ -20,9 +20,9 @@ import java.util.Map;
 /**
  * Wrapper for Minecraft NBT files. Used for MCEdit schematics.
  *
- * @see http://minecraft.gamepedia.com/Schematic
- *
- * @author Sascha Sauermann
+ * @see<a
+ *        href="http://minecraft.gamepedia.com/Schematic">http://minecraft.gamepedia
+ *        .com/Schematic</a>
  */
 public class SchematicWrapper {
 

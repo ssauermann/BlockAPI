@@ -3,7 +3,7 @@ package com.tree_bit.rcdl.blocks;
 import java.util.Set;
 
 /**
- * Methods a orientation enum has to implement.
+ * Methods an orientation enum has to implement.
  *
  * This includes rotating, mirroring and getting the next orientation (cyclic).
  */
