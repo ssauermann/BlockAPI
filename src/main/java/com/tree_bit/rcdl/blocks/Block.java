@@ -5,11 +5,8 @@ import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * Minecraft Block
- *
- * @author Alexander
- * @author Sascha Sauermann
  */
-public abstract class Blocks {
+public abstract class Block {
 
     /** The Minecraft Id describes the Block which is used */
     protected int minecraftID;
@@ -27,7 +24,7 @@ public abstract class Blocks {
      * @param mcID (Minecraft ID)
      * @param datavalue (Value of the Block)
      */
-    public Blocks(int mcID, int datavalue) {
+    private Block(final int mcID, final int datavalue) {
         if ((datavalue > 15) || (datavalue < 0)) {
             throw new IllegalArgumentException("Datavalues higher than 15 and lower than 0 are permitted");
         }
@@ -74,7 +71,7 @@ public abstract class Blocks {
      * @param rotateX <b>boolean</b> Mirrors the block at the x (true) or the
      *        y-axis (true).
      */
-    public void mirror(boolean rotateX) {
+    public void mirror(final boolean rotateX) {
         // Normal blocks are the same after mirroring.
     }
 
@@ -88,7 +85,7 @@ public abstract class Blocks {
      *
      * @param degree <b>int</b> degree (only multiples of 90 are allowed)
      */
-    public final void rotate(int degree) {
+    public final void rotate(final int degree) {
         if ((degree % 90) != 0) {
             throw new IllegalArgumentException("Rotation is only allowed for multiples of 90 degree");
         }
@@ -109,7 +106,7 @@ public abstract class Blocks {
      *
      * @param count <b>int</b> rotation amount
      */
-    protected void rotateCount(int count) {
+    protected void rotateCount(final int count) {
         // No rotation for normal blocks
     }
 }
