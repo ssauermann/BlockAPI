@@ -59,12 +59,12 @@ public enum Orientation16 implements IOrientationEnum, IDataValueEnum {
 
     private int value;
 
-    private Orientation16(int value) {
+    private Orientation16(final int value) {
         this.value = value;
     }
 
     @Override
-    public Orientation16 next(int i) {
+    public Orientation16 next(final int i) {
         final Orientation16 temp = values()[IntMath.mod((this.ordinal() + i), 16)];
         if (temp != null) {
             return temp;
@@ -73,7 +73,7 @@ public enum Orientation16 implements IOrientationEnum, IDataValueEnum {
     }
 
     @Override
-    public Orientation16 rotate(Axis a, int n) {
+    public Orientation16 rotate(final Axis a, final int n) {
         if (a == Axis.Y) {
             return this.next(n);
         }
@@ -81,7 +81,7 @@ public enum Orientation16 implements IOrientationEnum, IDataValueEnum {
     }
 
     @Override
-    public Orientation16 mirror(Set<Axis> plain) {
+    public Orientation16 mirror(final Set<Axis> plain) {
 
         Orientation16 returnV;
 

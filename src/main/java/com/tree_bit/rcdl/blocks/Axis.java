@@ -34,7 +34,7 @@ public enum Axis {
      */
     // Checked by Guava
     @SuppressWarnings("null")
-    public static EnumSet<Axis> plain(Axis a, Axis b) {
+    public static EnumSet<Axis> plain(final Axis a, final Axis b) {
         if (a == b) {
             throw new IllegalArgumentException("The two axes mustn't be identical: " + a);
         }
