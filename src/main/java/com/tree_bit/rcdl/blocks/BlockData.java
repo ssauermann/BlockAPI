@@ -70,8 +70,21 @@ public abstract class BlockData {
     /**
      * Returns the data of this block.
      *
-     * @return Data
+     * @return Data array of this block.
      */
-    abstract IDataValueEnum getData();
+    public abstract IDataValueEnum[] getData();
+
+    /**
+     * Returns the combined data value for this block data.
+     *
+     * @return Combined data value
+     */
+    int getDataValue() {
+        int sum = 0;
+        for (final IDataValueEnum data : this.getData()) {
+            sum += data.getDataValue();
+        }
+        return sum;
+    }
 
 }

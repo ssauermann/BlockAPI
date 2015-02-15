@@ -134,8 +134,9 @@ public final class Redstone extends BlockData {
     }
 
     @Override
-    PowerLevel getData() {
-        return this.level;
+    @SuppressWarnings("null")
+    public PowerLevel[] getData() {
+        return new PowerLevel[] {this.level};
     }
 
 }

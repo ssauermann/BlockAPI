@@ -78,7 +78,8 @@ public final class GenericBlockData extends BlockData {
     }
 
     @Override
-    IDataValueEnum getData() {
-        return this.data;
+    @SuppressWarnings("null")
+    public Data[] getData() {
+        return new Data[] {this.data};
     }
 }

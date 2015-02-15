@@ -141,7 +141,8 @@ public class Torch extends BlockData {
     }
 
     @Override
-    TorchOrientation getData() {
-        return this.data;
+    @SuppressWarnings("null")
+    public TorchOrientation[] getData() {
+        return new TorchOrientation[] {this.data};
     }
 }
