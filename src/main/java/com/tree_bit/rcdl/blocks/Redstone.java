@@ -83,7 +83,7 @@ public final class Redstone extends BlockData {
     static {
         for (final PowerLevel power : PowerLevel.values()) {
             if (power == null) {
-                throw new AssertionError();
+                throw new NullPointerException();
             }
             instances.put(power, new Redstone(power));
         }
@@ -117,19 +117,20 @@ public final class Redstone extends BlockData {
     }
 
     @Override
-    public void mirror(final Set<Axis> plain) {
+    public Redstone mirror(final Set<Axis> plain) {
         if (!plain.contains(Axis.Y)) {
             throw new UnsupportedOperationException("Can't mirror at this plain: " + Arrays.toString(plain.toArray(new Axis[] {})));
         }
-        // No changes
+        return this;
     }
 
     @Override
-    public void rotate(final Axis a, final int degree) {
+    public Redstone rotate(final Axis a, final int degree) {
         if (a != Axis.Y) {
             throw new UnsupportedOperationException("Can't rotate at this axis: " + a);
         }
         BlockData.toCount(degree, 90); // Validates 'degree' as multiple of 90
+        return this;
     }
 
     @Override

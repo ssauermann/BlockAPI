@@ -66,24 +66,15 @@ public final class GenericBlockData extends BlockData {
         return INSTANCE;
     }
 
-    /**
-     * Mirrors the block at the given plain.
-     * <p>
-     * Plains may be excluded for some blocks and throw an
-     * {@link UnsupportedOperationException}.
-     * </p>
-     *
-     * @param plain Mirror at the given plain
-     */
     @Override
-    public void mirror(final Set<Axis> plain) {
-        return;
+    public GenericBlockData mirror(final Set<Axis> plain) {
+        return this;
     }
 
     @Override
-    public void rotate(final Axis axis, final int degree) {
+    public GenericBlockData rotate(final Axis axis, final int degree) {
         toCount(degree, 90);
-        // No rotation for a default block
+        return this; // No rotation for a default block
     }
 
     @Override

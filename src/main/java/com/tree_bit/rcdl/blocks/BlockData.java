@@ -24,8 +24,9 @@ public abstract class BlockData {
      *
      * @param axis Axis of rotation
      * @param degree Degree
+     * @return Data with new orientation
      */
-    public abstract void rotate(final Axis axis, final int degree);
+    public abstract BlockData rotate(final Axis axis, final int degree);
 
     /**
      * Mirrors the block at the given plain.
@@ -35,8 +36,9 @@ public abstract class BlockData {
      * </p>
      *
      * @param plain Mirror at the given plain
+     * @return Data with new orientation
      */
-    public abstract void mirror(final Set<Axis> plain);
+    public abstract BlockData mirror(final Set<Axis> plain);
 
     /**
      * Calculates the number of single turn steps from the given degrees and the
