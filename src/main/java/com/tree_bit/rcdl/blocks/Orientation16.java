@@ -9,7 +9,7 @@ import java.util.Set;
  * Enum of the cardinal directions, mapping those to their block data value.
  *
  * <p>
- * Allowed axes for rotation are:
+ * Allowed axes for rotation (multiple of 30 degree) are:
  * <ul>
  * <li>y</li>
  * </ul>
