@@ -125,9 +125,9 @@ public final class Redstone extends BlockData {
     }
 
     @Override
-    public Redstone rotate(final Axis a, final int degree) {
-        if (a != Axis.Y) {
-            throw new UnsupportedOperationException("Can't rotate at this axis: " + a);
+    public Redstone rotate(final Axis axis, final int degree) {
+        if (axis != Axis.Y) {
+            throw new UnsupportedOperationException("Can't rotate at this axis: " + axis);
         }
         BlockData.toCount(degree, 90); // Validates 'degree' as multiple of 90
         return this;
@@ -135,8 +135,9 @@ public final class Redstone extends BlockData {
 
     @Override
     @SuppressWarnings("null")
-    public PowerLevel[] getData() {
-        return new PowerLevel[] {this.level};
+    public Map<Class<? extends IDataValueEnum>, IDataValueEnum> getData() {
+        final Map<Class<? extends IDataValueEnum>, IDataValueEnum> map = new HashMap<>();
+        map.put(PowerLevel.class, this.level);
+        return map;
     }
-
 }

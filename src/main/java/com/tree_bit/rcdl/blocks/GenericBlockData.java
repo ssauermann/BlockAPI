@@ -1,5 +1,7 @@
 package com.tree_bit.rcdl.blocks;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -79,7 +81,9 @@ public final class GenericBlockData extends BlockData {
 
     @Override
     @SuppressWarnings("null")
-    public Data[] getData() {
-        return new Data[] {this.data};
+    public Map<Class<? extends IDataValueEnum>, IDataValueEnum> getData() {
+        final Map<Class<? extends IDataValueEnum>, IDataValueEnum> map = new HashMap<>();
+        map.put(Data.class, this.data);
+        return map;
     }
 }

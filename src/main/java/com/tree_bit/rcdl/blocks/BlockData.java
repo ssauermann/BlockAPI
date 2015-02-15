@@ -1,5 +1,6 @@
 package com.tree_bit.rcdl.blocks;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -68,11 +69,13 @@ public abstract class BlockData {
     }
 
     /**
-     * Returns the data of this block.
+     * Returns the data of this block. This method returns a map, mapping the
+     * class of a subtype of IDataValueEnum to a specific value of the same (!)
+     * type/class.
      *
-     * @return Data array of this block.
+     * @return Map containing all Data of the block
      */
-    public abstract IDataValueEnum[] getData();
+    public abstract Map<Class<? extends IDataValueEnum>, IDataValueEnum> getData();
 
     /**
      * Returns the combined data value for this block data.
@@ -81,7 +84,7 @@ public abstract class BlockData {
      */
     int getDataValue() {
         int sum = 0;
-        for (final IDataValueEnum data : this.getData()) {
+        for (final IDataValueEnum data : this.getData().values()) {
             sum += data.getDataValue();
         }
         return sum;

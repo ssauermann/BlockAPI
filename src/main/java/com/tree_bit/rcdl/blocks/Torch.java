@@ -142,7 +142,9 @@ public class Torch extends BlockData {
 
     @Override
     @SuppressWarnings("null")
-    public TorchOrientation[] getData() {
-        return new TorchOrientation[] {this.data};
+    public Map<Class<? extends IDataValueEnum>, IDataValueEnum> getData() {
+        final Map<Class<? extends IDataValueEnum>, IDataValueEnum> map = new HashMap<>();
+        map.put(TorchOrientation.class, this.data);
+        return map;
     }
 }
