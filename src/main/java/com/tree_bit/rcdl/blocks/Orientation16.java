@@ -57,7 +57,7 @@ public enum Orientation16 implements IOrientationEnum, IDataValueEnum {
     /** South-south-east */
     SSE(15);
 
-    private int value;
+    private final int value;
 
     private Orientation16(final int value) {
         this.value = value;
@@ -73,11 +73,11 @@ public enum Orientation16 implements IOrientationEnum, IDataValueEnum {
     }
 
     @Override
-    public Orientation16 rotate(final Axis a, final int n) {
-        if (a == Axis.Y) {
+    public Orientation16 rotate(final Axis axis, final int n) {
+        if (axis == Axis.Y) {
             return this.next(n);
         }
-        throw new UnsupportedOperationException("Can't rotate at this axis: " + a);
+        throw new UnsupportedOperationException("Can't rotate at this axis: " + axis);
     }
 
     @Override
