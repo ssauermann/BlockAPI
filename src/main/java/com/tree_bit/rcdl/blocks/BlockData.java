@@ -7,7 +7,7 @@ import java.util.Set;
  * Representing a data value object of a block. Child classes should implement
  * the singleton pattern.
  */
-public abstract class BlockData {
+abstract class BlockData {
 
 
     /**
