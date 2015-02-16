@@ -3,7 +3,7 @@ package com.tree_bit.rcdl.blocks;
 /**
  * Exception thrown when a block placement after an edit would be invalid.
  */
-public class PlacementInvalidException extends Exception {
+public class PlacementInvalidException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 

@@ -124,7 +124,7 @@ public final class Block implements Comparable<Block> {
      * @throws PlacementInvalidException Block placement after the mirroring
      *         would be invalid
      */
-    public Block mirror(final Set<Axis> plain) throws PlacementInvalidException {
+    public Block mirror(final Set<Axis> plain) {
         try {
             return getInstance(this.block, this.data.mirror(plain));
         } catch (final UnsupportedOperationException e) {
@@ -144,7 +144,7 @@ public final class Block implements Comparable<Block> {
      * @throws PlacementInvalidException Block placement after the rotation
      *         would be invalid
      */
-    public final Block rotate(final Axis axis, final int degree) throws PlacementInvalidException {
+    public final Block rotate(final Axis axis, final int degree) {
         try {
             return getInstance(this.block, this.data.rotate(axis, degree));
         } catch (final UnsupportedOperationException e) {
@@ -155,7 +155,7 @@ public final class Block implements Comparable<Block> {
     @Override
     public int compareTo(final Block o) {
         final Block b = checkNotNull(o);
-        return b.block.getId() - this.block.getId();
+        return this.block.getId() - b.block.getId();
     }
 
     @Override

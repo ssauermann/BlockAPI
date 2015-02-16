@@ -88,8 +88,10 @@ public class Torch extends BlockData {
                 } else if (this.next(0) == West) {
                     return East;
                 }
+            } else {
+                throw new UnsupportedOperationException("Can't mirror at this plain: " + Arrays.toString(plain.toArray(new Axis[] {})));
             }
-            throw new UnsupportedOperationException("Can't mirror at this plain: " + Arrays.toString(plain.toArray(new Axis[] {})));
+            return this;
         }
 
         @Override
@@ -128,6 +130,15 @@ public class Torch extends BlockData {
      */
     public static Torch getInstance(final TorchOrientation orientation) {
         return instances.get(orientation);
+    }
+
+    /**
+     * Returns an instance of the Torch data with a default orientation (UP).
+     *
+     * @return Instance of Torch data
+     */
+    public static Torch getInstance() {
+        return getInstance(TorchOrientation.Up);
     }
 
     /**
