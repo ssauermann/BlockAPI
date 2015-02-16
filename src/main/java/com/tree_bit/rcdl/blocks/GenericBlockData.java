@@ -82,6 +82,7 @@ public final class GenericBlockData extends BlockData {
 
     @Override
     public GenericBlockData mirror(final Set<Axis> plain) {
+        Axis.checkPlain(plain);
         return this;
     }
 

@@ -64,6 +64,7 @@ public enum OrientationNESW implements IDataValueEnum, IOrientationEnum {
 
     @Override
     public OrientationNESW mirror(final Set<Axis> plain) {
+        Axis.checkPlain(plain);
         if (plain.contains(Axis.Y) && plain.contains(Axis.X)) {
             if (this.next(0) == South) {
                 return North;

@@ -1,8 +1,6 @@
-package com.tree_bit.rcdl.tests.blocks;
+package com.tree_bit.rcdl.blocks;
 
 import static org.junit.Assert.assertTrue;
-
-import com.tree_bit.rcdl.blocks.Axis;
 
 import org.junit.Test;
 
@@ -24,6 +22,12 @@ public class TestAxis {
     @Test(expected = IllegalArgumentException.class)
     public void testPlainXX() {
         Axis.plain(Axis.X, Axis.X);
+    }
+
+    @SuppressWarnings({"static-method", "null"})
+    @Test(expected = IllegalArgumentException.class)
+    public void testcheckPlainsXX() {
+        Axis.checkPlain(EnumSet.of(Axis.X, Axis.X));
     }
 
 }

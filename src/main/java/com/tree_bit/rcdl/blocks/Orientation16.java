@@ -83,6 +83,8 @@ public enum Orientation16 implements IOrientationEnum, IDataValueEnum {
     @Override
     public Orientation16 mirror(final Set<Axis> plain) {
 
+        Axis.checkPlain(plain);
+
         Orientation16 returnV;
 
         if (plain.contains(Axis.Y) && plain.contains(Axis.X)) {

@@ -119,7 +119,7 @@ public final class Redstone extends BlockData {
 
     /**
      * Returns all data instances of 'Redstone Wire'.
-     * 
+     *
      * @return Set of all instances
      */
     static Set<Redstone> getInstances() {
@@ -128,6 +128,7 @@ public final class Redstone extends BlockData {
 
     @Override
     public Redstone mirror(final Set<Axis> plain) {
+        Axis.checkPlain(plain);
         if (!plain.contains(Axis.Y)) {
             throw new UnsupportedOperationException("Can't mirror at this plain: " + Arrays.toString(plain.toArray(new Axis[] {})));
         }

@@ -147,6 +147,7 @@ public class Torch extends BlockData {
 
     @Override
     public Torch mirror(final Set<Axis> plain) {
+        Axis.checkPlain(plain);
         return Torch.getInstance(this.data.mirror(plain));
     }
 

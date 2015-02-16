@@ -1,4 +1,4 @@
-package com.tree_bit.rcdl.tests.blocks;
+package com.tree_bit.rcdl.blocks;
 
 import static org.junit.Assert.assertEquals;
 
