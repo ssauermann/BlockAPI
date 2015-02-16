@@ -1,11 +1,23 @@
 package com.tree_bit.rcdl.blocks;
 
+import com.google.common.base.Joiner;
+import com.google.common.base.Objects;
+
 import java.util.Map;
 import java.util.Set;
 
 /**
- * Representing a data value object of a block. Child classes should implement
- * the singleton pattern.
+ * Representing a data value object of a block.
+ *
+ * <p>
+ * Child classes have to implement the singleton pattern and have a static
+ * method 'public static getInstance()' without parameters which returns a
+ * default Data object. Additional getInstance(params) methods may be added.
+ * </p>
+ * <p>
+ * Additionally a method 'static getInstances()' without parameters has to
+ * provide all instances of this data object as a Set.
+ * </p>
  */
 abstract class BlockData {
 
@@ -58,13 +70,13 @@ abstract class BlockData {
             throw new IllegalArgumentException("Rotation is only allowed for multiples of " + step + " degree");
         }
 
-        int count = degree / step;
+        final int count = degree / step;
 
-        if (degree < 0) {
-            count--;
-        } else {
-            count++;
-        }
+        // if (degree < 0) {
+        // count--;
+        // } else {
+        // count++;
+        // }
         return count;
     }
 
@@ -90,4 +102,10 @@ abstract class BlockData {
         return sum;
     }
 
+    @Override
+    @SuppressWarnings("null")
+    public String toString() {
+        return Objects.toStringHelper(this).add("Combined", this.getDataValue())
+                .add("Data", Joiner.on(',').skipNulls().join(this.getData().values().toArray())).toString();
+    }
 }

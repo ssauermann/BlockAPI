@@ -4,6 +4,7 @@ import com.google.common.math.IntMath;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -93,7 +94,7 @@ public class Torch extends BlockData {
 
         @Override
         public TorchOrientation next(final int i) {
-            final TorchOrientation temp = values()[IntMath.mod((this.ordinal() + i), 16)];
+            final TorchOrientation temp = values()[IntMath.mod((this.ordinal() + i), 5)];
             if (temp != null) {
                 return temp;
             }
@@ -127,6 +128,15 @@ public class Torch extends BlockData {
      */
     public static Torch getInstance(final TorchOrientation orientation) {
         return instances.get(orientation);
+    }
+
+    /**
+     * Returns all data instances of 'Torch'.
+     *
+     * @return Set of all instances
+     */
+    static Set<Torch> getInstances() {
+        return new HashSet<>(instances.values());
     }
 
     @Override

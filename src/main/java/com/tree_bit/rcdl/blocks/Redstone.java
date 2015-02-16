@@ -2,6 +2,7 @@ package com.tree_bit.rcdl.blocks;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -114,6 +115,15 @@ public final class Redstone extends BlockData {
      */
     public static Redstone getInstance(final PowerLevel level) {
         return instances.get(level);
+    }
+
+    /**
+     * Returns all data instances of 'Redstone Wire'.
+     * 
+     * @return Set of all instances
+     */
+    static Set<Redstone> getInstances() {
+        return new HashSet<>(instances.values());
     }
 
     @Override

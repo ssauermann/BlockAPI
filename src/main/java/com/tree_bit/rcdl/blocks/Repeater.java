@@ -5,6 +5,7 @@ import com.google.common.collect.Table;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -93,6 +94,25 @@ public class Repeater extends BlockData {
      */
     public static Repeater getInstance(final OrientationNESW orientation, final Delay delay) {
         return instances.get(orientation, delay);
+    }
+
+    /**
+     * Returns an instance of the 'Repeater' data with a default orientation
+     * (North) and default delay (0 Ticks).
+     *
+     * @return Instance of a repeater
+     */
+    public static Repeater getInstance() {
+        return getInstance(OrientationNESW.North, Delay.D1);
+    }
+
+    /**
+     * Returns all data instances of 'Repeater'.
+     *
+     * @return Set of all instances
+     */
+    static Set<Repeater> getInstances() {
+        return new HashSet<>(instances.values());
     }
 
     @Override

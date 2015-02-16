@@ -1,6 +1,7 @@
 package com.tree_bit.rcdl.blocks;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -66,6 +67,17 @@ public final class GenericBlockData extends BlockData {
      */
     public static GenericBlockData getInstance() {
         return INSTANCE;
+    }
+
+    /**
+     * Returns all data instances of 'Generic Block Data'.
+     *
+     * @return Set of all instances
+     */
+    static Set<GenericBlockData> getInstances() {
+        final HashSet<GenericBlockData> set = new HashSet<>();
+        set.add(INSTANCE);
+        return set;
     }
 
     @Override

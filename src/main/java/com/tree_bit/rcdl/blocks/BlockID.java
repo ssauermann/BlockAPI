@@ -1,5 +1,7 @@
 package com.tree_bit.rcdl.blocks;
 
+import com.google.common.base.Objects;
+
 /**
  * Mapping of block names to id.
  */
@@ -431,6 +433,11 @@ public enum BlockID {
      */
     Class<? extends BlockData> getDataClass() {
         return this.dataClass;
+    }
+
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this).addValue(super.toString()).add("id", this.id).toString();
     }
 
 }
