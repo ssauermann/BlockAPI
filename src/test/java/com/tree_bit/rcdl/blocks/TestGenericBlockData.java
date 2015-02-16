@@ -31,9 +31,9 @@ public class TestGenericBlockData {
 
     @Test
     public void testMirrorSetOfAxis() {
-        this.instance.mirror(EnumSet.of(Axis.X, Axis.Y));
-        this.instance.mirror(EnumSet.of(Axis.Z, Axis.Y));
-        this.instance.mirror(EnumSet.of(Axis.X, Axis.Z));
+        assertEquals(this.instance, this.instance.mirror(Axis.plain(Axis.X, Axis.Y)));
+        assertEquals(this.instance, this.instance.mirror(Axis.plain(Axis.Z, Axis.Y)));
+        assertEquals(this.instance, this.instance.mirror(Axis.plain(Axis.X, Axis.Z)));
     }
 
 
@@ -44,8 +44,9 @@ public class TestGenericBlockData {
 
     @Test
     public void testRotateAxisInt() {
-        this.instance.rotate(Axis.Y, 90);
-        this.instance.rotate(Axis.Z, -270);
+        assertEquals(this.instance, this.instance.rotate(Axis.Y, 90));
+        assertEquals(this.instance, this.instance.rotate(Axis.X, 180));
+        assertEquals(this.instance, this.instance.rotate(Axis.Z, -270));
     }
 
     @Test(expected = IllegalArgumentException.class)
