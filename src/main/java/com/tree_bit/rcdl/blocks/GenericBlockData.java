@@ -10,7 +10,6 @@ import java.util.Set;
  *
  * <p>
  * Data enum: {@link Data}
- * </p>
  *
  * <p>
  * Allowed axes for rotation (multiple of 90 degree) are:
@@ -19,7 +18,6 @@ import java.util.Set;
  * <li>y</li>
  * <li>z</li>
  * </ul>
- * </p>
  *
  * <p>
  * Allowed plains for mirroring are:
@@ -28,7 +26,6 @@ import java.util.Set;
  * <li>z-y</li>
  * <li>x-z</li>
  * </ul>
- * </p>
  */
 public final class GenericBlockData extends BlockData {
 

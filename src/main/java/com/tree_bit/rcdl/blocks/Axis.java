@@ -8,13 +8,12 @@ import java.util.Set;
 /**
  * Axes of the three dimensional World.
  *
- * <p>
  * <ul>
  * <li>x-Axis (longitude - 'east-west')</li>
  * <li>y-Axis (elevation - 'height')</li>
  * <li>z-Axis (latitude - 'south-north'</li>
  * </ul>
- * </p>
+ *
  */
 public enum Axis {
     /** x-Axis (longitude - 'east-west') */
@@ -27,7 +26,7 @@ public enum Axis {
 
     /**
      * Creates a EnumSet with the two given axes representing a plain in the
-     * cordinate system.
+     * coordinate system.
      *
      * @param a First axis
      * @param b Second axis (mustn't be identical with the first one)

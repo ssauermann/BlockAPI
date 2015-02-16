@@ -16,6 +16,10 @@ import java.util.Set;
 
 /**
  * Minecraft Block
+ *
+ * <p>
+ * Use this class to create blocks. Each block is immutable and therefore
+ * thread-safe.
  */
 public final class Block implements Comparable<Block> {
 

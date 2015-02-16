@@ -15,14 +15,12 @@ import java.util.Set;
  * <li>{@link Repeater}</li>
  * <li>{@link Comparator}</li>
  * </ul>
- * </p>
  *
  * <p>
  * Allowed axes for rotation (multiple of 90 degree) are:
  * <ul>
  * <li>y</li>
  * </ul>
- * </p>
  *
  * <p>
  * Allowed plains for mirroring are:
@@ -30,7 +28,6 @@ import java.util.Set;
  * <li>x-y</li>
  * <li>z-y</li>
  * </ul>
- * </p>
  */
 public enum OrientationNESW implements IDataValueEnum, IOrientationEnum {
 

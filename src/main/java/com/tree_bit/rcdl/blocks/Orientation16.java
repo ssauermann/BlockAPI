@@ -13,7 +13,7 @@ import java.util.Set;
  * <ul>
  * <li>y</li>
  * </ul>
- * </p>
+ *
  *
  * <p>
  * Allowed plains for mirroring are:
@@ -21,7 +21,7 @@ import java.util.Set;
  * <li>x-y</li>
  * <li>z-y</li>
  * </ul>
- * </p>
+ *
  */
 public enum Orientation16 implements IOrientationEnum, IDataValueEnum {
     /** South */

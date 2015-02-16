@@ -15,14 +15,12 @@ import javafx.geometry.Orientation;
  *
  * <p>
  * Data enum: {@link Orientation}
- * </p>
  *
  * <p>
  * Allowed axes for rotation (multiple of 90 degree) are:
  * <ul>
  * <li>y</li>
  * </ul>
- * </p>
  *
  * <p>
  * Allowed plains for mirroring are:
@@ -30,7 +28,6 @@ import javafx.geometry.Orientation;
  * <li>x-y</li>
  * <li>z-y</li>
  * </ul>
- * </p>
  */
 public class Torch extends BlockData {
 

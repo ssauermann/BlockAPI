@@ -10,18 +10,16 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Data values of the 'Repeater' block.
+ * Data values of a 'Repeater' block.
  *
  * <p>
  * Data enum: {@link OrientationNESW}, {@link Delay}
- * </p>
  *
  * <p>
  * Allowed axes for rotation (multiple of 90 degree) are:
  * <ul>
  * <li>y</li>
  * </ul>
- * </p>
  *
  * <p>
  * Allowed plains for mirroring are:
@@ -29,7 +27,6 @@ import java.util.Set;
  * <li>x-y</li>
  * <li>z-y</li>
  * </ul>
- * </p>
  */
 public class Repeater extends BlockData {
 
