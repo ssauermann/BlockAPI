@@ -28,7 +28,7 @@ abstract class BlockData {
      *
      * <p>
      * The given degree have to be a multiple of the allowed rotation step (e.g.
-     * 30°, 90°). This is dependend on the block.
+     * 30Â°, 90Â°). This is dependend on the block.
      * </p>
      * <p>
      * Axes may be excluded for some blocks and throw an
@@ -43,6 +43,9 @@ abstract class BlockData {
 
     /**
      * Mirrors the block at the given plain.
+     * <p>
+     * To create a plain you should use {@link Axis#plain(Axis, Axis)}.
+     * </p>
      * <p>
      * Plains may be excluded for some blocks and throw an
      * {@link UnsupportedOperationException}.

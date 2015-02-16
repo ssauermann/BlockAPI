@@ -98,7 +98,7 @@ public class Repeater extends BlockData {
 
     /**
      * Returns an instance of the 'Repeater' data with a default orientation
-     * (North) and default delay (0 Ticks).
+     * (North) and default delay (1 Tick).
      *
      * @return Instance of a repeater
      */
@@ -127,6 +127,7 @@ public class Repeater extends BlockData {
 
     @Override
     public Repeater mirror(final Set<Axis> plain) {
+        Axis.checkPlain(plain);
         if (!plain.contains(Axis.Y)) {
             throw new UnsupportedOperationException("Can't mirror at this plain: " + Arrays.toString(plain.toArray(new Axis[] {})));
         }
