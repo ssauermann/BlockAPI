@@ -24,6 +24,7 @@ public class TestOrientation16 {
     @SuppressWarnings("static-method")
     @Test
     public void testRotateY() {
+        assertEquals(Orientation16.SSW, Orientation16.SSW.rotate(Axis.Y, 0));
         assertEquals(Orientation16.S, Orientation16.SSE.rotate(Axis.Y, 1));
         assertEquals(Orientation16.NW, Orientation16.N.rotate(Axis.Y, -2));
         assertEquals(Orientation16.NW, Orientation16.SSW.rotate(Axis.Y, 5));
@@ -40,12 +41,14 @@ public class TestOrientation16 {
     public void testMirrorXY() {
         assertEquals(Orientation16.SE, Orientation16.NE.mirror(EnumSet.of(Axis.X, Axis.Y)));
         assertEquals(Orientation16.WNW, Orientation16.WSW.mirror(EnumSet.of(Axis.X, Axis.Y)));
+        assertEquals(Orientation16.E, Orientation16.E.mirror(EnumSet.of(Axis.X, Axis.Y)));
     }
 
     @SuppressWarnings({"static-method", "null"})
     @Test
     public void testMirrorZY() {
         assertEquals(Orientation16.NW, Orientation16.NE.mirror(EnumSet.of(Axis.Z, Axis.Y)));
+        assertEquals(Orientation16.N, Orientation16.N.mirror(EnumSet.of(Axis.Z, Axis.Y)));
     }
 
     @SuppressWarnings({"static-method", "null"})

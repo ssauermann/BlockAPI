@@ -76,8 +76,10 @@ public enum OrientationNESW implements IDataValueEnum, IOrientationEnum {
             } else if (this.next(0) == West) {
                 return East;
             }
+        } else {
+            throw new UnsupportedOperationException("Can't mirror at this plain: " + Arrays.toString(plain.toArray(new Axis[] {})));
         }
-        throw new UnsupportedOperationException("Can't mirror at this plain: " + Arrays.toString(plain.toArray(new Axis[] {})));
+        return this;
     }
 
     @Override
