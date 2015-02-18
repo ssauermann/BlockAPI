@@ -1,30 +1,68 @@
 package com.tree_bit.rcdl.blocks;
 
-/**
- * Everything ready to generate colorful wool
- *
- * @author Alexander
- *
- */
-public class Wool extends Blocks {
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
-    public Wool(WoolColor color) {
-        super(35, color.getColorvalue());
+/**
+ * Data values of a colored block.
+ *
+ * <p>
+ * Data enum: {@link Color}
+ *
+ * <p>
+ * Allowed axes for rotation (multiple of 90 degree) are:
+ * <ul>
+ * <li>x</li>
+ * <li>y</li>
+ * <li>z</li>
+ * </ul>
+ *
+ * <p>
+ * Allowed plains for mirroring are:
+ * <ul>
+ * <li>x-y</li>
+ * <li>z-y</li>
+ * <li>x-z</li>
+ * </ul>
+ */
+public final class ColorBlock extends BlockData {
+
+    private static Map<Color, ColorBlock> instances = new HashMap<>();
+
+    static {
+        for (final Color color : Color.values()) {
+            if (color == null) {
+                throw new NullPointerException();
+            }
+            instances.put(color, new ColorBlock(color));
+        }
     }
 
-    public enum WoolColor {
-        White(0), Orange(1), Magenta(2), LightBlue(3), Yellow(4), Lime(5), Pink(6), Gray(7), LightGray(8), Cyan(9), Purple(10), Blue(11), Brown(12), Green(
-                13), Red(14), Black(15);
+    private final Color color;
 
-        private int value;
+    private ColorBlock(final Color color) {
+        this.color = color;
+    }
 
-        private WoolColor(int value) {
-            this.value = value;
-        }
+    @Override
+    public BlockData rotate(final Axis axis, final int degree) {
+        toCount(degree, 90);
+        return this; // No rotation
+    }
 
-        int getColorvalue() {
-            return this.value;
-        }
+    @Override
+    public BlockData mirror(final Set<Axis> plain) {
+        Axis.checkPlain(plain);
+        return this;
+    }
+
+    @Override
+    @SuppressWarnings("null")
+    public Map<Class<? extends IDataValueEnum>, IDataValueEnum> getData() {
+        final Map<Class<? extends IDataValueEnum>, IDataValueEnum> map = new HashMap<>();
+        map.put(Color.class, this.color);
+        return map;
     }
 
 }

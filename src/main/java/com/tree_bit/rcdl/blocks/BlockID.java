@@ -79,7 +79,7 @@ public enum BlockID {
     /** Piston Head */
     PISTON_HEAD(34),
     /** Wool */
-    WOOL(35),
+    WOOL(35, ColorBlock.class),
     /** Technical piston block */
     PISTON_MOVING_PIECE(36),
     /** Dandelion */
@@ -199,7 +199,7 @@ public enum BlockID {
     /** Redstone repeater (on) */
     REPEATER_ON(94, Repeater.class),
     /** Stained glass */
-    STAINED_GLASS(95),
+    STAINED_GLASS(95, ColorBlock.class),
     /** Wooden trapdoor */
     TRAPDOOR(96),
     /** Monster egg */
@@ -327,9 +327,9 @@ public enum BlockID {
     /** Dropper */
     DROPPER(158),
     /** Stained clay */
-    STAINED_CLAY(159),
+    STAINED_CLAY(159, ColorBlock.class),
     /** Stained glass pane */
-    STAINED_GLASS_PANE(160),
+    STAINED_GLASS_PANE(160, ColorBlock.class),
     /** Leaves 2 */
     LEAVES_2(161),
     /** Log 2 */
