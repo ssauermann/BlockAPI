@@ -28,7 +28,7 @@ import java.util.Set;
  * <li>z-y</li>
  * </ul>
  */
-public class Repeater extends BlockData {
+public final class Repeater extends BlockData {
 
     /**
      * Representing the delay of a 'Repeater' block.

@@ -29,7 +29,7 @@ import javafx.geometry.Orientation;
  * <li>z-y</li>
  * </ul>
  */
-public class Torch extends BlockData {
+public final class Torch extends BlockData {
 
     /**
      * Orientations of a Torch
