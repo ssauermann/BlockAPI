@@ -57,7 +57,7 @@ public final class GenericBlockData extends BlockData {
     }
 
     /**
-     * Returns an instance of the data of a genric block with no special
+     * Returns an instance of the data of a generic block with no special
      * properties.
      *
      * @return Instance of generic data
