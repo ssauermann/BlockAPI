@@ -8,7 +8,7 @@ defaultTasks 'check', 'build'
 
 // Basic project information
 group = 'com.tree_bit'
-archivesBaseName = 'rcdl-core'
+archivesBaseName = 'rcdl-blockapi'
 version = '0.1-SNAPSHOT'
 
 // Minimum version of Java required
