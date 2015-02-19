@@ -373,7 +373,7 @@ public enum BlockID {
     /** Double stone slabs 2 */
     DOUBLE_STONE_SLAB_2(181),
     /** Stone slabs 2 */
-    STONE_SLAB_2(182),
+    STONE_SLAB_2(182, HalfSlab2.class),
     /** Spruce fence gate */
     SPRUCE_FENCE_GATE(183),
     /** Birch fence gate */
