@@ -3,7 +3,6 @@ package com.tree_bit.rcdl.blocks;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 
-import org.eclipse.jdt.annotation.NonNull;
 import org.jnbt.StringTag;
 
 import java.util.Arrays;
@@ -73,8 +72,11 @@ public class HangingSign extends BlockData implements HasTileEntity {
      * @return Instance of a HangingSign
      */
     public static HangingSign getInstance() {
-        final TileEntity e = createEntity(new FormatText @NonNull [0]);
-        return getOrCreate(SignOrientation.North, e);
+        @SuppressWarnings("null")
+        final TileEntity e = createEntity(new FormatText[0]);
+
+        return HangingSign.getOrCreate(SignOrientation.North, e);
+
     }
 
     /**
