@@ -7,6 +7,8 @@ import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Table;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 import java.lang.reflect.InvocationTargetException;
 import java.security.InvalidParameterException;
 import java.util.Collection;
@@ -77,7 +79,7 @@ public final class Block implements Comparable<Block> {
             throw new InvalidParameterException("BlockData [" + data + "] has to match the given BlockID [" + block + "]. \n(Use "
                     + block.getDataClass() + ")");
         }
-        return instances.get(block, data);
+        return getOrCreate(block, data);
     }
 
     /**
@@ -88,8 +90,33 @@ public final class Block implements Comparable<Block> {
      * @param block Id of the block
      * @return Instance of a block
      */
+    @SuppressWarnings("null")
     public static Block getInstance(final BlockID block) {
+        if (instances.row(block).isEmpty()) {
+            @NonNull
+            BlockData data;
+            try {
+                data = (BlockData) block.getDataClass().getDeclaredMethod("getInstance").invoke((Class<?>[]) null);
+            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+                throw new IllegalStateException(e);
+            }
+            return getOrCreate(block, data);
+        }
         return Iterables.get(instances.row(block).values(), 0);
+    }
+
+    private static Block getOrCreate(final BlockID block, final BlockData data) {
+        Block instance = instances.get(block, data);
+        if (instance == null) {
+            synchronized (Block.class) {
+                instance = instances.get(block, data);
+                if (instance == null) {
+                    instance = new Block(block, data);
+                }
+                instances.put(block, data, instance);
+            }
+        }
+        return instance;
     }
 
     /**
