@@ -4,13 +4,14 @@ import org.jnbt.NBTConstants;
 
 /**
  * Enum, containing important fields of a schematic file.
- *
- * @author Sascha Sauermanns
  */
-@SuppressWarnings("nls")
 public enum ESchematicFields {
-    HEIGHT("Height", NBTConstants.TYPE_SHORT), LENGTH("Length", NBTConstants.TYPE_SHORT), WIDTH("Width", NBTConstants.TYPE_SHORT), BLOCKS("Blocks",
-            NBTConstants.TYPE_BYTE_ARRAY), DATA("Data", NBTConstants.TYPE_BYTE_ARRAY), MATERIALS("Materials", NBTConstants.TYPE_STRING);
+    HEIGHT("Height", NBTConstants.TYPE_SHORT),
+    LENGTH("Length", NBTConstants.TYPE_SHORT),
+    WIDTH("Width", NBTConstants.TYPE_SHORT),
+    BLOCKS("Blocks", NBTConstants.TYPE_BYTE_ARRAY),
+    DATA("Data", NBTConstants.TYPE_BYTE_ARRAY),
+    MATERIALS("Materials", NBTConstants.TYPE_STRING);
 
     /**
      * Key of the tag
@@ -27,7 +28,7 @@ public enum ESchematicFields {
      * @param key <b>String</b> key
      * @param type <b>int</b> type
      */
-    private ESchematicFields(String key, int type) {
+    private ESchematicFields(final String key, final int type) {
         this.key = key;
         this.type = type;
     }

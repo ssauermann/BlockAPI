@@ -20,7 +20,7 @@ import java.util.Map;
 /**
  * Wrapper for Minecraft NBT files. Used for MCEdit schematics.
  *
- * @see<a
+ * @see<a 
  *        href="http://minecraft.gamepedia.com/Schematic">http://minecraft.gamepedia
  *        .com/Schematic</a>
  */
@@ -40,7 +40,7 @@ public class SchematicWrapper {
      */
     // Can't be null (checked by Guava)
     @SuppressWarnings("null")
-    public SchematicWrapper(String path) throws FileNotFoundException, IOException {
+    public SchematicWrapper(final String path) throws FileNotFoundException, IOException {
         if (path.equals("")) {
             throw new IllegalArgumentException("Path is empty");
         }
@@ -120,7 +120,7 @@ public class SchematicWrapper {
      * @param field <b>ESchematicFields</b> schematic field
      * @return <b>Tag</b> tag
      */
-    public Tag read(ESchematicFields field) {
+    public Tag read(final ESchematicFields field) {
         return getTag(field.getKey(), this.root);
     }
 
@@ -133,7 +133,7 @@ public class SchematicWrapper {
      */
     // Can't be null (checked by Guava)
     @SuppressWarnings("null")
-    private static Tag getTag(String key, CompoundTag parentTag) {
+    private static Tag getTag(final String key, final CompoundTag parentTag) {
         return checkNotNull(parentTag.getValue().get(key));
     }
 
@@ -148,7 +148,7 @@ public class SchematicWrapper {
      */
     // Can't be null (checked by Guava)
     @SuppressWarnings("null")
-    private static Map<String, Tag> addTag(Tag t, CompoundTag parentTag) {
+    private static Map<String, Tag> addTag(final Tag t, final CompoundTag parentTag) {
         final Map<String, Tag> map = new HashMap<>();
 
         // Copy old Map
@@ -168,7 +168,7 @@ public class SchematicWrapper {
      *
      * @param t <b>Tag</b> tag
      */
-    private void addTagToRoot(Tag t) {
+    private void addTagToRoot(final Tag t) {
         this.root = new CompoundTag(this.root.getName(), addTag(t, this.root));
     }
 
@@ -177,7 +177,7 @@ public class SchematicWrapper {
      *
      * @param value <b>short</b> height
      */
-    public void writeHeight(short value) {
+    public void writeHeight(final short value) {
         final ShortTag t = new ShortTag(ESchematicFields.HEIGHT.getKey(), value);
         this.addTagToRoot(t);
     }
@@ -187,7 +187,7 @@ public class SchematicWrapper {
      *
      * @param value <b>short</b> width
      */
-    public void writeWidth(short value) {
+    public void writeWidth(final short value) {
         final ShortTag t = new ShortTag(ESchematicFields.WIDTH.getKey(), value);
         this.addTagToRoot(t);
     }
@@ -197,7 +197,7 @@ public class SchematicWrapper {
      *
      * @param value <b>short</b> length
      */
-    public void writeLength(short value) {
+    public void writeLength(final short value) {
         final ShortTag t = new ShortTag(ESchematicFields.LENGTH.getKey(), value);
         this.addTagToRoot(t);
     }
@@ -207,7 +207,7 @@ public class SchematicWrapper {
      *
      * @param value <b>byte[]</b> blocks
      */
-    public void writeBlocks(byte[] value) {
+    public void writeBlocks(final byte[] value) {
         final ByteArrayTag t = new ByteArrayTag(ESchematicFields.BLOCKS.getKey(), value);
         this.addTagToRoot(t);
     }
@@ -218,7 +218,7 @@ public class SchematicWrapper {
      *
      * @param value <b>byte[]</b> data values
      */
-    public void writeData(byte[] value) {
+    public void writeData(final byte[] value) {
         final ByteArrayTag t = new ByteArrayTag(ESchematicFields.DATA.getKey(), value);
         this.addTagToRoot(t);
     }
@@ -234,7 +234,7 @@ public class SchematicWrapper {
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public void saveChangesToFile(String path) throws FileNotFoundException, IOException {
+    public void saveChangesToFile(final String path) throws FileNotFoundException, IOException {
         if (path.equals("")) {
             throw new IllegalArgumentException("Path is empty");
         }
