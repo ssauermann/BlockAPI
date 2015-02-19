@@ -102,7 +102,11 @@ public abstract class BlockData {
     @Override
     @SuppressWarnings("null")
     public String toString() {
+        String tileInfo = null;
+        if (this instanceof HasTileEntity) {
+            tileInfo = ((HasTileEntity) this).getTileEntity().toString();
+        }
         return Objects.toStringHelper(this).add("Combined", this.getDataValue())
-                .add("Data", Joiner.on(',').skipNulls().join(this.getData().values().toArray())).toString();
+                .add("Data", Joiner.on(',').skipNulls().join(this.getData().values().toArray())).addValue(tileInfo).omitNullValues().toString();
     }
 }
