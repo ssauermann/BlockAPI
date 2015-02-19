@@ -145,7 +145,7 @@ public enum BlockID {
     /** Cobblestone stairs */
     STONE_STAIRS(67),
     /** Wall-mounted sign block */
-    WALL_SIGN(68),
+    WALL_SIGN(68, HangingSign.class),
     /** lever */
     LEVER(69),
     /** Stone pressure plate */
