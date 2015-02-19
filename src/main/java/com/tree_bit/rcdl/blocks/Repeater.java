@@ -9,6 +9,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.concurrent.Immutable;
+
 /**
  * Data values of a 'Repeater' block.
  *
@@ -28,6 +30,7 @@ import java.util.Set;
  * <li>z-y</li>
  * </ul>
  */
+@Immutable
 public final class Repeater extends BlockData {
 
     /**

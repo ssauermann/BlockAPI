@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.concurrent.Immutable;
+
 /**
  * Data values of a 'Redstone Wire' block.
  *
@@ -25,6 +27,7 @@ import java.util.Set;
  * <li>z-y</li>
  * </ul>
  */
+@Immutable
 public final class Redstone extends BlockData {
 
     /**

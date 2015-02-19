@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.concurrent.Immutable;
+
 /**
  * Data values of a colored block.
  *
@@ -26,6 +28,7 @@ import java.util.Set;
  * <li>x-z</li>
  * </ul>
  */
+@Immutable
 public final class ColorBlock extends BlockData {
 
     private static Map<Color, ColorBlock> instances = new HashMap<>();

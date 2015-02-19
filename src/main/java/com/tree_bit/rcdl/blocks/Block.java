@@ -13,6 +13,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.annotation.concurrent.Immutable;
+
 
 /**
  * Minecraft Block
@@ -21,6 +23,7 @@ import java.util.Set;
  * Use this class to create blocks. Each block is immutable and therefore
  * thread-safe.
  */
+@Immutable
 public final class Block implements Comparable<Block> {
 
     private final BlockID block;

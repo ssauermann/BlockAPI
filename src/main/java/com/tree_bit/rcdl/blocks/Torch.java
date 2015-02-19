@@ -10,6 +10,8 @@ import java.util.Set;
 
 import javafx.geometry.Orientation;
 
+import javax.annotation.concurrent.Immutable;
+
 /**
  * Data values of a 'Torch' block.
  *
@@ -29,6 +31,7 @@ import javafx.geometry.Orientation;
  * <li>z-y</li>
  * </ul>
  */
+@Immutable
 public final class Torch extends BlockData {
 
     /**
