@@ -63,6 +63,7 @@ public final class FormatText {
                     b.append(f.getChar());
                     formatSet = true;
                 }
+                b.append(s);
             }
         }
 
@@ -98,9 +99,11 @@ public final class FormatText {
          * Adds a FormatString to the end of this FormatText.
          *
          * @param string FormatString to add
+         * @return Builder for chaining
          */
-        public void append(final FormatString string) {
+        public Builder append(final FormatString string) {
             this.strings.add(string);
+            return this;
         }
 
         /**
