@@ -2,6 +2,8 @@ package com.tree_bit.rcdl.blocks;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import com.google.common.base.Joiner;
+import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableSet;
 
 import org.eclipse.jdt.annotation.Nullable;
@@ -148,6 +150,12 @@ public final class TileEntity {
             return false;
         }
         return true;
+    }
+
+    @Override
+    @SuppressWarnings("null")
+    public String toString() {
+        return Objects.toStringHelper(this).add("Tags", Joiner.on(',').skipNulls().join(this.getTags().toArray())).toString();
     }
 
 }
