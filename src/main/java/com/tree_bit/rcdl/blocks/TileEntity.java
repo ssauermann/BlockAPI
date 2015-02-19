@@ -4,6 +4,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.common.collect.ImmutableSet;
 
+import org.eclipse.jdt.annotation.Nullable;
 import org.jnbt.StringTag;
 import org.jnbt.Tag;
 
@@ -50,7 +51,6 @@ public final class TileEntity {
     public Set<Tag> getTags() {
         return this.tags;
     }
-
 
     /**
      * Builder for a TileEntity.
@@ -122,6 +122,32 @@ public final class TileEntity {
         ImmutableSet<Tag> getTags() {
             return ImmutableSet.copyOf(this.tags.values());
         }
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = (prime * result) + this.tags.hashCode();
+        return result;
+    }
+
+    @Override
+    public boolean equals(@Nullable final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof TileEntity)) {
+            return false;
+        }
+        final TileEntity other = (TileEntity) obj;
+        if (!this.tags.equals(other.tags)) {
+            return false;
+        }
+        return true;
     }
 
 }
