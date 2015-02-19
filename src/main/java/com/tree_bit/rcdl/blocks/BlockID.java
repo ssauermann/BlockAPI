@@ -97,7 +97,7 @@ public enum BlockID {
     /** Double stone slab */
     DOUBLE_STONE_SLAB(43),
     /** Stone slab */
-    STONE_SLAB(44),
+    STONE_SLAB(44, HalfSlab1.class),
     /** Bricks */
     BRICK_BLOCK(45),
     /** TNT */
@@ -276,7 +276,7 @@ public enum BlockID {
     TRIPWIRE(132),
     /** Emerald block */
     EMERALD_BLOCK(133),
-    /** Spurce wood stairs */
+    /** Spruce wood stairs */
     SPRUCE_STAIRS(134),
     /** Birch wood stairs */
     BIRCH_STAIRS(135),
