@@ -105,6 +105,7 @@ public final class Block implements Comparable<Block> {
         return Iterables.get(instances.row(block).values(), 0);
     }
 
+    @SuppressWarnings({"unused", "null"})
     private static Block getOrCreate(final BlockID block, final BlockData data) {
         Block instance = instances.get(block, data);
         if (instance == null) {
