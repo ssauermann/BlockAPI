@@ -135,7 +135,7 @@ public enum BlockID {
     /** Burning furnace */
     BURNING_FURNACE(62),
     /** Standing sign block */
-    STANDING_SIGN(63),
+    STANDING_SIGN(63, StandingSign.class),
     /** Oak door block */
     WOODEN_DOOR(64),
     /** Ladder */

@@ -1,63 +1,135 @@
 package com.tree_bit.rcdl.blocks;
 
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Table;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 /**
- * A sign which is placed on top of another block (if you want a sign which is
- * on the side of a block use {@link HangingSign} instead).
+ * Data values of a 'Hanging Sign' block.
  *
- * To configure the orientation of this sign use the values of the
- * {@link Orientation16 Orientation16 Enum}.
+ * <p>
+ * Data enum: {@link Orientation16}, {@link FormatText}
  *
- * @author Alexander
- * @author Sascha Sauermann
+ * <p>
+ * Allowed axes for rotation (multiple of 90 degree) are:
+ * <ul>
+ * <li>y</li>
+ * </ul>
  *
+ * <p>
+ * Allowed plains for mirroring are: *
+ * <ul>
+ * <li>x-y</li>
+ * <li>z-y</li>
+ * </ul>
+ * *Note: This mirroring does not include the text.
  */
-public class StandingSign extends Blocks {
+public class StandingSign extends BlockData implements HasTileEntity {
 
-    /** Current orientation */
-    private Orientation16 orientation;
+    private final Orientation16 orientation;
+    private final TileEntity entity;
+
+    @SuppressWarnings("null")
+    private static Table<Orientation16, TileEntity, StandingSign> instances = HashBasedTable.create();
+
+    private StandingSign(final Orientation16 orientation, final TileEntity entity) {
+        this.orientation = orientation;
+        this.entity = entity;
+    }
 
     /**
-     * Creates a new standing sign with the given orientation.
+     * Returns an instance of the 'StandingSign' data with a default orientation
+     * (North) and no text.
      *
-     * @param orientation <b>Orientation16</b> orientation (
-     *        {@link Orientation16})
-     * @param <b>String[]</b> sign text, one line per entry (max array length 4)
+     * @return Instance of a StandingSign
      */
-    public StandingSign(Orientation16 orientation, String[] text) {
-        super(63, orientation.getDataValue());
-        if (text.length > 4) {
-            throw new IllegalArgumentException("Too much text for a sign. String array is too big (max 4): " + text.length); //$NON-NLS-1$
+    public static StandingSign getInstance() {
+        @SuppressWarnings("null")
+        final TileEntity e = HangingSign.createEntity(new FormatText[0]);
+
+        return StandingSign.getOrCreate(Orientation16.N, e);
+
+    }
+
+    /**
+     * Returns an instance of the 'StandingSign' data with the given orientation
+     * and text.
+     *
+     * @param orientation Orientation
+     * @param text Array of text containing a maximum of 4 entries (one per each
+     *        line)
+     * @return Instance of a StandingSign
+     *
+     * @throws IllegalArgumentException if text has length > 4
+     */
+    public static StandingSign getInstance(final Orientation16 orientation, final FormatText[] text) {
+        final TileEntity e = HangingSign.createEntity(text);
+        return getOrCreate(orientation, e);
+    }
+
+    /**
+     * Returns all data instances of 'StandingSign'.
+     *
+     * @return Set of all instances
+     */
+    static Set<StandingSign> getInstances() {
+        return new HashSet<>(instances.values());
+    }
+
+    @SuppressWarnings({"null", "unused"})
+    // THIS IS NOT DEAD CODE!!!! instance can be null
+    private static StandingSign getOrCreate(final Orientation16 orientation, final TileEntity e) {
+        StandingSign instance = instances.get(orientation, e);
+        // No dead code
+        if (instance == null) {
+            synchronized (StandingSign.class) {
+                instance = instances.get(orientation, e);
+                if (instance == null) {
+                    instance = new StandingSign(orientation, e);
+                }
+                instances.put(orientation, e, instance);
+            }
         }
-        this.text = text;
-        this.orientation = orientation;
+        return instance;
     }
 
     @Override
-    public void rotateCount(int count) {
-        this.setOrientation(this.orientation.rotate(count * 4));
+    public TileEntity getTileEntity() {
+        return this.entity;
     }
 
     @Override
-    public void mirror(boolean rotateX) {
-        this.setOrientation(this.orientation.mirror(rotateX));
+    public BlockData rotate(final Axis axis, final int degree) {
+        if (axis != Axis.Y) {
+            throw new UnsupportedOperationException("Can't rotate at this axis: " + axis);
+        }
+
+        final int count = BlockData.toCount(degree, 30);
+        return getOrCreate(this.orientation.rotate(axis, count), this.entity);
     }
 
-    /**
-     * Sets the orientation of this block.
-     *
-     * @param orientation <b>Orientation16</b> orientation
-     */
-    public void setOrientation(Orientation16 orientation) {
-        this.orientation = orientation;
-        this.datavalue = orientation.getDataValue();
+    @Override
+    public BlockData mirror(final Set<Axis> plain) {
+        Axis.checkPlain(plain);
+        if (!plain.contains(Axis.Y)) {
+            throw new UnsupportedOperationException("Can't mirror at this plain: " + Arrays.toString(plain.toArray(new Axis[] {})));
+        }
+
+        return getOrCreate(this.orientation.mirror(plain), this.entity);
     }
 
-    /**
-     * Returns the orientation of this block.
-     *
-     * @return <b>Orientation16</b> orientation
-     */
-    public Orientation16 getOrientation() {
-        return this.orientation;
+    @Override
+    @SuppressWarnings("null")
+    public Map<Class<? extends IDataValueEnum>, IDataValueEnum> getData() {
+        final Map<Class<? extends IDataValueEnum>, IDataValueEnum> map = new HashMap<>();
+        map.put(Orientation16.class, this.orientation);
+        return map;
     }
+
+
 }
