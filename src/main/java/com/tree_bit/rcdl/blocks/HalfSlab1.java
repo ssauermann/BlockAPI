@@ -12,9 +12,25 @@ import javax.annotation.concurrent.Immutable;
 
 /**
  * Data class for Stone Half Slabs. (Type 1)
+ *
+ * <p>
+ * Allowed axes for rotation (multiple of 90/180 degree) are:
+ * <ul>
+ * <li>x (180°)</li>
+ * <li>y (90°)</li>
+ * <li>z (180°)</li>
+ * </ul>
+ *
+ * <p>
+ * Allowed plains for mirroring are:
+ * <ul>
+ * <li>x-y</li>
+ * <li>z-y</li>
+ * <li>x-z</li>
+ * </ul>
  */
 @Immutable
-public class HalfSlab1 extends BlockData {
+public final class HalfSlab1 extends BlockData {
 
     private final SlabType1 type;
     private final SlabPosition position;
