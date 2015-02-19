@@ -5,21 +5,21 @@ package com.tree_bit.rcdl.blocks;
  */
 public enum SlabType1 implements IDataValueEnum {
     /** Stone */
-    Stone(0),
+    STONE(0),
     /** Sandstone */
-    Sandstone(1),
+    SANDSTONE(1),
     /** Wood (old type of not burning oak wood slab) */
-    Wood(2),
+    WOOD(2),
     /** Cobblestone */
-    Cobblestone(3),
+    COBBLESTONE(3),
     /** Bricks */
-    Bricks(4),
-    /** StoneBricks */
-    StoneBricks(5),
+    BRICKS(4),
+    /** StoneBrick */
+    STONEBRICK(5),
     /** Netherbrick */
-    Netherbrick(6),
+    NETHERBRICK(6),
     /** Quartz */
-    Quartz(7);
+    QUARTZ(7);
 
     private int value;
 

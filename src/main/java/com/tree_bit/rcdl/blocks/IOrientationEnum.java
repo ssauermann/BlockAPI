@@ -11,7 +11,7 @@ interface IOrientationEnum {
 
     /**
      * Rotates the orientation n times (clockwise). The new orientation is
-     * independant of the degree and only dependant of the number of possible
+     * independent of the degree and only dependent of the number of possible
      * fix rotations. Use negative numbers for counterclockwise rotations.
      * (Clockwise {@literal -> } Axis viewed from +infinity to -infinity/zero)
      *

@@ -35,7 +35,7 @@ public enum SlabPosition implements IDataValueEnum, IOrientationEnum {
     /** Upper half of the block - upside-down */
     UP(8),
     /** Lower half of the block - right-side-up */
-    Down(0);
+    DOWN(0);
 
     private int value;
 

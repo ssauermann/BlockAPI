@@ -60,7 +60,7 @@ public class HalfSlab1 extends BlockData {
      * @return Instance of a HalfSlab (Type 1)
      */
     public static HalfSlab1 getInstance() {
-        return instances.get(SlabType1.Stone, SlabPosition.Down);
+        return instances.get(SlabType1.STONE, SlabPosition.DOWN);
     }
 
     /**
