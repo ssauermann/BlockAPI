@@ -65,7 +65,7 @@ public class StandingSign extends BlockData implements HasTileEntity {
      *        line)
      * @return Instance of a StandingSign
      *
-     * @throws IllegalArgumentException if text has length > 4
+     * @throws IllegalArgumentException if text has {@literal length>4}
      */
     public static StandingSign getInstance(final Orientation16 orientation, final FormatText[] text) {
         final TileEntity e = HangingSign.createEntity(text);

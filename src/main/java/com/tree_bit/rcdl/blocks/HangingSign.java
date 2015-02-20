@@ -51,7 +51,7 @@ public class HangingSign extends BlockData implements HasTileEntity {
      * @param text Array containing text for each line of the sign. (max 4)
      * @return TileEntity
      *
-     * @throws IllegalArgumentException if text[] has length>4
+     * @throws IllegalArgumentException if text[] has {@literal length>4}
      */
     static TileEntity createEntity(final FormatText[] text) {
         if (text.length > 4) {
@@ -88,7 +88,7 @@ public class HangingSign extends BlockData implements HasTileEntity {
      *        line)
      * @return Instance of a HangingSign
      *
-     * @throws IllegalArgumentException if text has length > 4
+     * @throws IllegalArgumentException if text has {@literal length>4}
      */
     public static HangingSign getInstance(final SignOrientation orientation, final FormatText[] text) {
         final TileEntity e = createEntity(text);
