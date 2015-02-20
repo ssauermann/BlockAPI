@@ -12,7 +12,7 @@ defaultTasks 'check', 'build'
 
 // Basic project information
 group = 'com.tree_bit'
-archivesBaseName = 'rcdl-blockapi'
+archivesBaseName = 'blockapi'
 version = '0.1-SNAPSHOT'
 
 // Minimum version of Java required
@@ -23,8 +23,6 @@ targetCompatibility = '1.8'
 repositories {
 	mavenCentral()
 }
-
-test { finalizedBy jacocoTestReport }
 
 buildscript {
     repositories {
