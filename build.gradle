@@ -4,21 +4,25 @@ apply plugin: 'checkstyle'
 apply plugin: 'eclipse'
 apply plugin: 'jacoco'
 apply plugin: 'com.github.kt3k.coveralls'
+apply plugin: 'maven'
+apply plugin: 'signing'
 
-compileJava.options.encoding = 'UTF-8'
+//Java compile settings
+[ compileJava, compileTestJava ]*.options*.encoding = 'UTF-8'
 
 // Default tasks
 defaultTasks 'check', 'build'
 
 // Basic project information
-group = 'com.tree_bit'
-archivesBaseName = 'blockapi'
-version = '0.1-SNAPSHOT'
+group = theGroup
+version = theVersion
+description = theDescription
+sourceCompatibility = theSourceCompatibility
+archivesBaseName = theName
 
 // Minimum version of Java required
-sourceCompatibility = '1.8'
-targetCompatibility = '1.8'
-
+sourceCompatibility = theSourceCompatibility
+targetCompatibility = theSourceCompatibility
 
 repositories {
 	mavenCentral()
@@ -51,4 +55,26 @@ dependencies {
 
 checkstyle {
 	configFile = file('checkstyle.xml')
+}
+
+//command line arguments for utf8 support
+//-encoding UTF-8 -charset UTF-8 -docencoding UTF-8
+javadoc {
+	options.addStringOption("encoding","UTF-8")
+	options.addStringOption("charset","UTF-8")
+	options.addStringOption("docencoding","UTF-8")
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
 }
