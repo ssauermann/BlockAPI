@@ -90,7 +90,6 @@ public final class HalfSlab1 extends BlockData {
 
     @Override
     public BlockData rotate(final Axis axis, final int degree) {
-
         if (axis == Axis.Y) {
             final int count = BlockData.toCount(degree, 90);
             return getInstance(this.type, this.position.rotate(axis, count));
