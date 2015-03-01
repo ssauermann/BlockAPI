@@ -1,8 +1,10 @@
 package com.tree_bit.rcdl.blocks;
 
+import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableSet;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -161,6 +163,17 @@ final class SingleInstanceSet<T> implements Iterable<T> {
     }
 
     /**
+     * Returns the set constraints.
+     *
+     * @return Collection of constraints
+     */
+    @SuppressWarnings("null")
+    // Set is not null
+    public Collection<Class<? extends T>> getConstraints() {
+        return ImmutableSet.copyOf(this.constraints);
+    }
+
+    /**
      * Creates a SingleInstanceSet with the elements of given collection.
      *
      * @param collection Collection
@@ -172,6 +185,38 @@ final class SingleInstanceSet<T> implements Iterable<T> {
             set.add(element);
         }
         return set;
+    }
+
+    @Override
+    public String toString() {
+        return "" + Objects.toStringHelper(this).add("Constraints", this.constraints).add("Map", this.map).toString();
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = (prime * result) + this.constraints.hashCode();
+        result = (prime * result) + this.map.hashCode();
+        return result;
+    }
+
+    @Override
+    public boolean equals(final @Nullable Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof SingleInstanceSet)) {
+            return false;
+        }
+        final SingleInstanceSet<?> other = (SingleInstanceSet<?>) obj;
+        if (!this.constraints.equals(other.constraints)) {
+            return false;
+        }
+        if (!this.map.equals(other.map)) {
+            return false;
+        }
+        return true;
     }
 
 }
