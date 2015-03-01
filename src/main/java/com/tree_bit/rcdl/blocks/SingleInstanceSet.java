@@ -1,129 +1,59 @@
 package com.tree_bit.rcdl.blocks;
 
-import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
+import com.google.common.collect.ImmutableSet;
 
-import java.util.Collection;
+import org.eclipse.jdt.annotation.NonNull;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-final class SingleInstanceSet<E> implements Set<E> {
+/**
+ * Set that can contain a maximum of one instance per class.
+ *
+ * @param <T> Type
+ */
+final class SingleInstanceSet<T> implements Iterable<T> {
 
-    private Map<Class<? extends E>, E> map = new HashMap<>();
+    private final Map<Class<? extends T>, T> map = new HashMap<>();
 
-    @Override
-    public int size() {
-        // TODO Auto-generated method stub
-        return 0;
+    /**
+     * Adds a value to this set. A value with the same class as this one is
+     * replaced.
+     *
+     * @param value Value
+     */
+    @SuppressWarnings("unchecked")
+    public void add(final T value) {
+        this.map.put((@NonNull Class<? extends T>) value.getClass(), value);
     }
 
-    @Override
-    public boolean isEmpty() {
-        // TODO Auto-generated method stub
-        return false;
+    /**
+     * Returns an immutable Java Collections set representation of this set.
+     *
+     * @return Set
+     */
+    @SuppressWarnings("null")
+    public Set<T> asSet() {
+        return ImmutableSet.copyOf(this.map.values());
     }
 
+    @SuppressWarnings("null")
     @Override
-    public boolean contains(final Object o) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
-    public Iterator<E> iterator() {
+    public Iterator<T> iterator() {
         return this.map.values().iterator();
     }
 
-    @Override
-    public Object[] toArray() {
-        // TODO Auto-generated method stub
-        return null;
+    /**
+     * Gets an value by its class.
+     *
+     * @param clazz Class of the value
+     * @return Value
+     */
+    @SuppressWarnings("null")
+    public T get(final Class<? extends T> clazz) {
+        return this.map.get(clazz);
     }
-
-    @Override
-    public <T> T[] toArray(final T[] a) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public boolean add(final @Nullable E e) {
-        if (e == null) {
-            throw new NullPointerException("Parameter musn't be null");
-        }
-        if (this.map.put((@NonNull Class<? extends E>) e.getClass(), e) == null) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public boolean remove(final @Nullable Object o) {
-        if (o == null) {
-            throw new NullPointerException("Parameter musn't be null");
-        }
-        return (this.map.remove(o.getClass()) != null);
-    }
-
-    @Override
-    public boolean containsAll(final @Nullable Collection<?> c) {
-        if (c == null) {
-            throw new NullPointerException("Parameter musn't be null");
-        }
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
-    public boolean addAll(final @Nullable Collection<? extends E> c) {
-        if (c == null) {
-            throw new NullPointerException("Parameter musn't be null");
-        }
-        boolean wasChanged = false;
-        for (final E element : c) {
-            wasChanged |= this.add(element);
-        }
-        return wasChanged;
-    }
-
-    @Override
-    public boolean retainAll(final @Nullable Collection<?> c) {
-        if (c == null) {
-            throw new NullPointerException("Parameter musn't be null");
-        }
-        boolean wasChanged = false;
-        final Map<Class<? extends E>, E> hm = new HashMap<>();
-        for (final Class<? extends E> elementClass : this.map.keySet()) {
-            final E element = this.map.get(elementClass);
-            if (c.contains(element)) {
-                hm.put(elementClass, element);
-                wasChanged = true;
-            }
-        }
-        this.map = hm;
-        return wasChanged;
-    }
-
-    @Override
-    public boolean removeAll(final @Nullable Collection<?> c) {
-        if (c == null) {
-            throw new NullPointerException("Parameter musn't be null");
-        }
-        boolean wasChanged = false;
-        for (final Object o : c) {
-            wasChanged |= this.remove(o);
-        }
-        return wasChanged;
-    }
-
-    @Override
-    public void clear() {
-        this.map.clear();
-    }
-
-
 
 }
