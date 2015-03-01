@@ -3,7 +3,6 @@ package com.tree_bit.rcdl.blocks;
 import com.google.common.base.Joiner;
 import com.google.common.base.Objects;
 
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -21,6 +20,36 @@ import java.util.Set;
  */
 public abstract class BlockData {
 
+    private enum Orientation implements IOrientationEnum {
+        NONE;
+
+        @Override
+        public IOrientationEnum rotate(final Axis axis, final int n) {
+            return NONE;
+        }
+
+        @Override
+        public IOrientationEnum mirror(final Set<Axis> plain) {
+            return NONE;
+        }
+
+        @Override
+        public IOrientationEnum next(final int n) {
+            return NONE;
+        }
+
+        @Override
+        public int getDataValue() {
+            return 0;
+        }
+
+        @Override
+        public int getStep() {
+            return 90;
+        }
+    }
+
+    private final IOrientationEnum orientation = Orientation.NONE;
 
     /**
      * Rotates the block the given amount of degree. (Axis viewed from +infinity
@@ -38,8 +67,14 @@ public abstract class BlockData {
      * @param axis Axis of rotation
      * @param degree Degree
      * @return Data with new orientation
+     *
+     * @throws UnsupportedOperationException if the axis is not supported
+     * @throws IllegalArgumentException if the given degree are no multiple of
+     *         the allowed step
      */
-    public abstract BlockData rotate(final Axis axis, final int degree);
+    public final BlockData rotate(final Axis axis, final int degree) {
+        return this.setData(this.orientation.rotateDegree(axis, degree));
+    }
 
     /**
      * Mirrors the block at the given plain.
@@ -53,38 +88,30 @@ public abstract class BlockData {
      *
      * @param plain Mirror at the given plain
      * @return Data with new orientation
+     *
+     * @throws UnsupportedOperationException if the axes are not supported
      */
     public abstract BlockData mirror(final Set<Axis> plain);
 
     /**
-     * Calculates the number of single turn steps from the given degrees and the
-     * minimum rotation step in degree.
-     *
-     * @param degree Degree of the rotation
-     * @param step Degree for one step
-     * @return Number of single rotation steps.
-     *
-     * @throws IllegalArgumentException if the given degree are no multiple of
-     *         the step.
-     */
-    static int toCount(final int degree, final int step) {
-        if ((degree % step) != 0) {
-            throw new IllegalArgumentException("Rotation is only allowed for multiples of " + step + " degree");
-        }
-
-        final int count = degree / step;
-
-        return count;
-    }
-
-    /**
-     * Returns the data of this block. This method returns a map, mapping the
-     * class of a subtype of IDataValueEnum to a specific value of the same (!)
-     * type/class.
+     * Returns the data of this block as a SingleInstanceSet.
      *
      * @return Map containing all data of the block
      */
-    public abstract Map<Class<? extends IDataValueEnum>, IDataValueEnum> getData();
+    public abstract SingleInstanceSet<IDataValueEnum> getData();
+
+    /**
+     * Sets a data value of this BlockData to the given value.
+     *
+     * @param data New data value
+     * @return BlockData instance with the changed data values.
+     */
+    @SuppressWarnings("null")
+    BlockData setData(final IDataValueEnum data) {
+        final SingleInstanceSet<IDataValueEnum> newData = this.getData();
+        newData.add(data);
+        return BlockDataFactory.getInstance(this.getClass(), newData.asSet());
+    }
 
     /**
      * Returns the combined data value for this block data.
@@ -93,7 +120,7 @@ public abstract class BlockData {
      */
     int getDataValue() {
         int sum = 0;
-        for (final IDataValueEnum data : this.getData().values()) {
+        for (final IDataValueEnum data : this.getData()) {
             sum += data.getDataValue();
         }
         return sum;
@@ -107,6 +134,7 @@ public abstract class BlockData {
             tileInfo = ((HasTileEntity) this).getTileEntity().toString();
         }
         return Objects.toStringHelper(this).add("Combined", this.getDataValue())
-                .add("Data", Joiner.on(',').skipNulls().join(this.getData().values().toArray())).addValue(tileInfo).omitNullValues().toString();
+                .add("Data", Joiner.on(',').skipNulls().join(this.getData().asSet().toArray())).addValue(tileInfo).omitNullValues().toString();
     }
+
 }
