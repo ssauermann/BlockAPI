@@ -180,11 +180,36 @@ final class SingleInstanceSet<T> implements Iterable<T> {
      * @return Set
      */
     public static <@NonNull E> SingleInstanceSet<E> copyOf(final Collection<E> collection) {
-        final SingleInstanceSet<E> set = new SingleInstanceSet<>();
+        return copyOf(collection, new HashSet<>());
+    }
+
+    /**
+     * Creates a SingleInstanceSet with the elements of given collection with
+     * the given constraints.
+     *
+     * @param collection Collection
+     * @param constraints Set of constraints
+     * @return Set
+     */
+    public static <@NonNull E> SingleInstanceSet<E> copyOf(final Collection<E> collection, final Set<Class<? extends E>> constraints) {
+        final SingleInstanceSet<E> set = new SingleInstanceSet<>(constraints);
         for (final E element : collection) {
             set.add(element);
         }
         return set;
+    }
+
+    /**
+     * Creates a SingleInstanceSet with the elements of given collection with
+     * the given constraints.
+     *
+     * @param collection Collection
+     * @param constraint Constraint class
+     * @return Set
+     */
+    @SuppressWarnings("null")
+    public static <@NonNull E> SingleInstanceSet<E> copyOf(final Collection<E> collection, final Class<? extends E> constraint) {
+        return copyOf(collection, ImmutableSet.of(constraint));
     }
 
     @Override

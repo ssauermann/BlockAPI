@@ -4,6 +4,7 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableSet;
 
+import java.util.Arrays;
 import java.util.Set;
 
 /**
@@ -31,6 +32,7 @@ public abstract class BlockData {
 
         @Override
         public IOrientationEnum mirror(final Set<Axis> plain) {
+            Axis.checkPlain(plain);
             return NONE;
         }
 
@@ -61,11 +63,23 @@ public abstract class BlockData {
      *
      * @param data Data values
      */
-    @SuppressWarnings({"null", "unused"})
-    // Can't remove type parameter, else T of Set would be inferred to
-    // IOrientationEnum
+    @SuppressWarnings("null")
     protected BlockData(final Set<IDataValueEnum> data) {
-        this.data = new SingleInstanceSet<IDataValueEnum>(IOrientationEnum.class);
+        this.data = SingleInstanceSet.copyOf(data, IOrientationEnum.class);
+    }
+
+    /**
+     * Creates a BlockData instance and sets the data value of this instance.
+     *
+     * <p>
+     * Only one orientation data value could be added. If more than one are
+     * added a single one is chosen depending on the implementation.
+     *
+     * @param data Data values
+     */
+    @SuppressWarnings("null")
+    protected BlockData(final IDataValueEnum... data) {
+        this.data = SingleInstanceSet.copyOf(Arrays.asList(data), IOrientationEnum.class);
     }
 
     /**

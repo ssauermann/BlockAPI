@@ -4,6 +4,8 @@ import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Table;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
@@ -117,5 +119,16 @@ class BlockDataFactory {
         // @NonNull IDataValueEnum[] == IDataValueEnum @NonNull[]
         final T ret = getInstance(clazz, Arrays.asList(dataValues));
         return ret;
+    }
+
+    /**
+     * Returns all BlockData instances of a given class.
+     *
+     * @param clazz Class of a subtype of BlockData
+     * @return BlockData
+     */
+    @SuppressWarnings("unchecked")
+    static <T extends BlockData> Set<T> getInstances(final Class<T> clazz) {
+        return (@NonNull Set<T>) map.row(clazz).values();
     }
 }
