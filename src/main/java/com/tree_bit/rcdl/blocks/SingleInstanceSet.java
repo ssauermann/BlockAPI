@@ -4,10 +4,10 @@ import com.google.common.collect.ImmutableSet;
 
 import org.eclipse.jdt.annotation.NonNull;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Set that can contain a maximum of one instance per class.
@@ -17,6 +17,11 @@ import java.util.Set;
 final class SingleInstanceSet<T> implements Iterable<T> {
 
     private final Map<Class<? extends T>, T> map = new HashMap<>();
+
+    /**
+     * Creates an empty SingleInstanceSet.
+     */
+    public SingleInstanceSet() {}
 
     /**
      * Adds a value to this set. A value with the same class as this one is
@@ -35,7 +40,7 @@ final class SingleInstanceSet<T> implements Iterable<T> {
      * @return Set
      */
     @SuppressWarnings("null")
-    public Set<T> asSet() {
+    public ImmutableSet<T> asSet() {
         return ImmutableSet.copyOf(this.map.values());
     }
 
@@ -54,6 +59,20 @@ final class SingleInstanceSet<T> implements Iterable<T> {
     @SuppressWarnings("null")
     public T get(final Class<? extends T> clazz) {
         return this.map.get(clazz);
+    }
+
+    /**
+     * Creates a SingleInstanceSet with the elements of given collection.
+     *
+     * @param collection Collection
+     * @return Set
+     */
+    public static <@NonNull E> SingleInstanceSet<E> copyOf(final Collection<E> collection) {
+        final SingleInstanceSet<E> set = new SingleInstanceSet<>();
+        for (final E element : collection) {
+            set.add(element);
+        }
+        return set;
     }
 
 }

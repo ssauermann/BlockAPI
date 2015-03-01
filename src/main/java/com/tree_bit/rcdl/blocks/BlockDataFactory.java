@@ -4,8 +4,6 @@ import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Table;
 
-import org.eclipse.jdt.annotation.NonNull;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
@@ -19,7 +17,7 @@ class BlockDataFactory {
 
     @SuppressWarnings("null")
     // Never null
-    private static final Table<Class<? extends BlockData>, Set<? extends IDataValueEnum>, BlockData> map = HashBasedTable.create();
+    private static final Table<Class<? extends BlockData>, Set<IDataValueEnum>, BlockData> map = HashBasedTable.create();
 
     /**
      * Registers an BlockData instance of the given class with the given data
@@ -32,11 +30,8 @@ class BlockDataFactory {
     static <T extends BlockData> void register(final Class<T> clazz, final T instance, final Collection<IDataValueEnum> dataValues) {
 
         // Defensive copy
-        @SuppressWarnings("null")
-        // Never null
-        final @NonNull ImmutableSet<IDataValueEnum> dv = ImmutableSet.copyOf(dataValues);
-
-        map.put(clazz, dv, instance);
+        final SingleInstanceSet<IDataValueEnum> dv = SingleInstanceSet.copyOf(dataValues);
+        map.put(clazz, dv.asSet(), instance);
     }
 
     /**
@@ -58,6 +53,11 @@ class BlockDataFactory {
      * Returns a BlockData instance of the given class and data values. The
      * given data values have to match the allowed values of this class.
      *
+     * <p>
+     * Only one instance per data value class is accepted. If given more than
+     * one instances per class a single one is selected. Which one gets selected
+     * is unspecified and dependent of the implementation.
+     *
      * @param clazz Class of a subtype of BlockData
      * @param dataValues Collection of data values this BlockData should have
      * @return BlockData of the given class with the given data values
@@ -70,7 +70,7 @@ class BlockDataFactory {
     static <T extends BlockData> T getInstance(final Class<T> clazz, final Collection<IDataValueEnum> dataValues) {
 
         // Defensive copy
-        final ImmutableSet<IDataValueEnum> dv = ImmutableSet.copyOf(dataValues);
+        final ImmutableSet<IDataValueEnum> dv = SingleInstanceSet.copyOf(dataValues).asSet();
 
         BlockData bd = BlockDataFactory.map.get(clazz, dv);
         if (bd == null) {
@@ -99,6 +99,11 @@ class BlockDataFactory {
     /**
      * Returns a BlockData instance of the given class and data values. The
      * given data values have to match the allowed values of this class.
+     *
+     * <p>
+     * Only one instance per data value class is accepted. If given more than
+     * one instances per class a single one is selected. Which one gets selected
+     * is unspecified and dependent of the implementation.
      *
      * @param clazz Class of a subtype of BlockData
      * @param dataValues Data values this BlockData should have
