@@ -2,6 +2,7 @@ package com.tree_bit.rcdl.blocks;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Objects;
+import com.google.common.collect.ImmutableSet;
 
 import java.util.Set;
 
@@ -49,7 +50,23 @@ public abstract class BlockData {
         }
     }
 
-    private final IOrientationEnum orientation = Orientation.NONE;
+    private final SingleInstanceSet<IDataValueEnum> data;
+
+    /**
+     * Creates a BlockData instance and sets the data value of this instance.
+     *
+     * <p>
+     * Only one orientation data value could be added. If more than one are
+     * added a single one is chosen depending on the implementation.
+     *
+     * @param data Data values
+     */
+    @SuppressWarnings({"null", "unused"})
+    // Can't remove type parameter, else T of Set would be inferred to
+    // IOrientationEnum
+    protected BlockData(final Set<IDataValueEnum> data) {
+        this.data = new SingleInstanceSet<IDataValueEnum>(IOrientationEnum.class);
+    }
 
     /**
      * Rotates the block the given amount of degree. (Axis viewed from +infinity
@@ -73,7 +90,7 @@ public abstract class BlockData {
      *         the allowed step
      */
     public final BlockData rotate(final Axis axis, final int degree) {
-        return this.setData(this.orientation.rotateDegree(axis, degree));
+        return this.setData(this.getOrientation().rotateDegree(axis, degree));
     }
 
     /**
@@ -91,14 +108,28 @@ public abstract class BlockData {
      *
      * @throws UnsupportedOperationException if the axes are not supported
      */
-    public abstract BlockData mirror(final Set<Axis> plain);
+    public final BlockData mirror(final Set<Axis> plain) {
+        return this.setData(this.getOrientation().mirror(plain));
+    }
 
     /**
      * Returns the data of this block as a SingleInstanceSet.
      *
      * @return Map containing all data of the block
      */
-    public abstract SingleInstanceSet<IDataValueEnum> getData();
+    public final SingleInstanceSet<IDataValueEnum> getData() {
+        return SingleInstanceSet.copyOf(this.data.asSet());
+    }
+
+    @SuppressWarnings("null")
+    // Classes are not null
+    private IOrientationEnum getOrientation() {
+        final ImmutableSet<IOrientationEnum> instances = this.data.getInstancesOf(IOrientationEnum.class);
+        if (instances.isEmpty()) {
+            return Orientation.NONE;
+        }
+        return instances.asList().get(0);
+    }
 
     /**
      * Sets a data value of this BlockData to the given value.
@@ -107,7 +138,7 @@ public abstract class BlockData {
      * @return BlockData instance with the changed data values.
      */
     @SuppressWarnings("null")
-    BlockData setData(final IDataValueEnum data) {
+    final BlockData setData(final IDataValueEnum data) {
         final SingleInstanceSet<IDataValueEnum> newData = this.getData();
         newData.add(data);
         return BlockDataFactory.getInstance(this.getClass(), newData.asSet());
@@ -118,7 +149,7 @@ public abstract class BlockData {
      *
      * @return Combined data value
      */
-    int getDataValue() {
+    final int getDataValue() {
         int sum = 0;
         for (final IDataValueEnum data : this.getData()) {
             sum += data.getDataValue();
