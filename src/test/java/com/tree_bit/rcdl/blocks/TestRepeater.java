@@ -38,13 +38,6 @@ public class TestRepeater {
         assertEquals(Repeater.getInstance(OrientationNESW.North, Delay.D1), Repeater.getInstance());
     }
 
-    @Test
-    public void testGetInstances() {
-        assertTrue(Repeater.getInstances().contains(this.fixedInstance));
-        assertTrue(Repeater.getInstances().contains(this.someInstance));
-        assertTrue(Repeater.getInstances().contains(Repeater.getInstance(OrientationNESW.West, Delay.D2)));
-    }
-
     @SuppressWarnings("null")
     @Test(expected = IllegalArgumentException.class)
     public void testMirrorSetOfAxisXX() {

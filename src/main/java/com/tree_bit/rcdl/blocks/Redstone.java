@@ -1,10 +1,5 @@
 package com.tree_bit.rcdl.blocks;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 import javax.annotation.concurrent.Immutable;
 
 /**
@@ -78,19 +73,25 @@ public final class Redstone extends BlockData {
         }
     }
 
-    private static Map<PowerLevel, Redstone> instances = new HashMap<>();
-
     static {
+        @SuppressWarnings("null")
+        final Class<Redstone> clazz = Redstone.class;
         for (final PowerLevel power : PowerLevel.values()) {
             if (power == null) {
                 throw new NullPointerException();
             }
-            instances.put(power, new Redstone(power));
+            BlockDataFactory.register(clazz, new Redstone(power));
         }
+
+        BlockDataFactory.registerDefault(clazz, new Redstone(PowerLevel.L0));
     }
 
     private Redstone(final PowerLevel level) {
-        super(level);
+        super(level, DummyOrientation.NONE);
+    }
+
+    private Redstone(final IDataValueEnum[] values) {
+        super(validateDV(values, PowerLevel.class, DummyOrientation.class));
     }
 
     /**
@@ -100,7 +101,9 @@ public final class Redstone extends BlockData {
      * @return Instance of 'Redstone Wire' data
      */
     public static Redstone getInstance() {
-        return getInstance(PowerLevel.L0);
+        @SuppressWarnings("null")
+        final Class<Redstone> clazz = Redstone.class;
+        return BlockDataFactory.getDefaultInstance(clazz);
     }
 
     /**
@@ -111,16 +114,10 @@ public final class Redstone extends BlockData {
      * @return Instance of 'Redstone Wire' data
      */
     public static Redstone getInstance(final PowerLevel level) {
-        return instances.get(level);
+        @SuppressWarnings("null")
+        final Class<Redstone> clazz = Redstone.class;
+        return BlockDataFactory.getInstance(clazz, level, DummyOrientation.NONE);
     }
 
-    /**
-     * Returns all data instances of 'Redstone Wire'.
-     *
-     * @return Set of all instances
-     */
-    static Set<Redstone> getInstances() {
-        return new HashSet<>(instances.values());
-    }
 
 }

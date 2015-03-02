@@ -1,8 +1,5 @@
 package com.tree_bit.rcdl.blocks;
 
-import java.util.HashSet;
-import java.util.Set;
-
 
 
 /**
@@ -26,8 +23,6 @@ import java.util.Set;
  */
 public final class GenericBlockData extends BlockData {
 
-    private static final GenericBlockData INSTANCE = new GenericBlockData();
-
     /**
      * Data of a generic block.
      */
@@ -47,8 +42,19 @@ public final class GenericBlockData extends BlockData {
         }
     }
 
+    static {
+        @SuppressWarnings("null")
+        final Class<GenericBlockData> clazz = GenericBlockData.class;
+        BlockDataFactory.registerDefault(clazz, new GenericBlockData(), Data.NONE);
+    }
+
     private GenericBlockData() {
         super(Data.NONE);
+    }
+
+    @SuppressWarnings("null")
+    private GenericBlockData(final IDataValueEnum[] values) {
+        super(validateDV(values, Data.class));
     }
 
     /**
@@ -57,18 +63,9 @@ public final class GenericBlockData extends BlockData {
      *
      * @return Instance of generic data
      */
+    @SuppressWarnings("null")
     public static GenericBlockData getInstance() {
-        return INSTANCE;
+        return BlockDataFactory.getDefaultInstance(GenericBlockData.class);
     }
 
-    /**
-     * Returns all data instances of 'Generic Block Data'.
-     *
-     * @return Set of all instances
-     */
-    static Set<GenericBlockData> getInstances() {
-        final HashSet<GenericBlockData> set = new HashSet<>();
-        set.add(INSTANCE);
-        return set;
-    }
 }

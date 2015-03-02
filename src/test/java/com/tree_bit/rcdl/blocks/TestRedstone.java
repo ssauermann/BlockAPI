@@ -37,13 +37,6 @@ public class TestRedstone {
         assertEquals(this.fixedInstance, Redstone.getInstance(PowerLevel.L10));
     }
 
-    @Test
-    public void testGetInstances() {
-        assertTrue(Redstone.getInstances().contains(this.fixedInstance));
-        assertTrue(Redstone.getInstances().contains(this.someInstance));
-        assertTrue(Redstone.getInstances().contains(Redstone.getInstance(PowerLevel.L5)));
-    }
-
     @SuppressWarnings("null")
     @Test(expected = IllegalArgumentException.class)
     public void testMirrorSetOfAxisXX() {

@@ -13,16 +13,6 @@ import java.util.Set;
 
 /**
  * Representing a data value object of a block.
- *
- * <p>
- * Child classes have to implement the singleton pattern (for each valid data
- * combination) and have a static method 'public static getInstance()' without
- * parameters which returns a default Data object. Additional
- * getInstance(params) methods may be added.
- *
- * <p>
- * Additionally a method 'static getInstances()' without parameters has to
- * provide all instances of this data object as a Set.
  */
 public abstract class BlockData {
 
@@ -68,6 +58,15 @@ public abstract class BlockData {
      * Only one orientation data value could be added. If more than one are
      * added a single one is chosen depending on the implementation.
      *
+     * <p>
+     * Child classes have to have a constructor without parameters which returns
+     * a default Data object. Additional a constructor which accepts an
+     * {@link IDataValueEnum} array has to exist. The validity of the array
+     * should be checked by
+     * {@link BlockData#validateDV(IDataValueEnum[], Class...)}. A default
+     * instance of each class should be registered at the
+     * {@link BlockDataFactory}
+     *
      * @param entity Tile entity
      * @param data Data values
      */
@@ -84,6 +83,15 @@ public abstract class BlockData {
      * Only one orientation data value could be added. If more than one are
      * added a single one is chosen depending on the implementation.
      *
+     * <p>
+     * Child classes have to have a constructor without parameters which returns
+     * a default Data object. Additional a constructor which accepts an
+     * {@link IDataValueEnum} array has to exist. The validity of the array
+     * should be checked by
+     * {@link BlockData#validateDV(IDataValueEnum[], Class...)}. A default
+     * instance of each class should be registered at the
+     * {@link BlockDataFactory}
+     *
      * @param data Data values
      */
     protected BlockData(final Set<IDataValueEnum> data) {
@@ -97,6 +105,15 @@ public abstract class BlockData {
      * Only one orientation data value could be added. If more than one are
      * added a single one is chosen depending on the implementation.
      *
+     * <p>
+     * Child classes have to have a constructor without parameters which returns
+     * a default Data object. Additional a constructor which accepts an
+     * {@link IDataValueEnum} array has to exist. The validity of the array
+     * should be checked by
+     * {@link BlockData#validateDV(IDataValueEnum[], Class...)}. A default
+     * instance of each class should be registered at the
+     * {@link BlockDataFactory}
+     *
      * @param data Data values
      */
     protected BlockData(final IDataValueEnum... data) {
@@ -109,6 +126,15 @@ public abstract class BlockData {
      * <p>
      * Only one orientation data value could be added. If more than one are
      * added a single one is chosen depending on the implementation.
+     *
+     * <p>
+     * Child classes have to have a constructor without parameters which returns
+     * a default Data object. Additional a constructor which accepts an
+     * {@link IDataValueEnum} array has to exist. The validity of the array
+     * should be checked by
+     * {@link BlockData#validateDV(IDataValueEnum[], Class...)}. A default
+     * instance of each class should be registered at the
+     * {@link BlockDataFactory}
      *
      * @param entity Tile entity
      * @param data Data values

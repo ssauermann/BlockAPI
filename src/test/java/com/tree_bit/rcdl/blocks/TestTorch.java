@@ -36,13 +36,6 @@ public class TestTorch {
         assertEquals(Torch.getInstance(TorchOrientation.Up), Torch.getInstance());
     }
 
-    @Test
-    public void testGetInstances() {
-        assertTrue(Torch.getInstances().contains(this.fixedInstance));
-        assertTrue(Torch.getInstances().contains(this.someInstance));
-        assertTrue(Torch.getInstances().contains(Torch.getInstance(TorchOrientation.North)));
-    }
-
     @SuppressWarnings("null")
     @Test(expected = IllegalArgumentException.class)
     public void testMirrorSetOfAxisXX() {

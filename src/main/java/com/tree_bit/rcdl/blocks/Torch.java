@@ -3,9 +3,6 @@ package com.tree_bit.rcdl.blocks;
 import com.google.common.math.IntMath;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import javafx.geometry.Orientation;
@@ -111,19 +108,27 @@ public final class Torch extends BlockData {
 
     }
 
-    private static Map<TorchOrientation, Torch> instances = new HashMap<>();
-
     static {
+        @SuppressWarnings("null")
+        final Class<Torch> clazz = Torch.class;
+
         for (final TorchOrientation orientation : TorchOrientation.values()) {
             if (orientation == null) {
                 throw new NullPointerException();
             }
-            instances.put(orientation, new Torch(orientation));
+            BlockDataFactory.register(clazz, new Torch(orientation));
         }
+
+        BlockDataFactory.registerDefault(clazz, new Torch(TorchOrientation.Up));
     }
 
     private Torch(final TorchOrientation data) {
         super(data);
+    }
+
+    @SuppressWarnings("null")
+    private Torch(final IDataValueEnum[] values) {
+        super(validateDV(values, TorchOrientation.class));
     }
 
     /**
@@ -132,8 +137,9 @@ public final class Torch extends BlockData {
      * @param orientation Torch orientation
      * @return Instance of Torch data
      */
+    @SuppressWarnings("null")
     public static Torch getInstance(final TorchOrientation orientation) {
-        return instances.get(orientation);
+        return BlockDataFactory.getInstance(Torch.class, orientation);
     }
 
     /**
@@ -141,17 +147,9 @@ public final class Torch extends BlockData {
      *
      * @return Instance of Torch data
      */
+    @SuppressWarnings("null")
     public static Torch getInstance() {
-        return getInstance(TorchOrientation.Up);
-    }
-
-    /**
-     * Returns all data instances of 'Torch'.
-     *
-     * @return Set of all instances
-     */
-    static Set<Torch> getInstances() {
-        return new HashSet<>(instances.values());
+        return BlockDataFactory.getDefaultInstance(Torch.class);
     }
 
 }

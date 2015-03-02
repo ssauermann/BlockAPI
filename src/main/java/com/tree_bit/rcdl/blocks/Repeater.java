@@ -1,11 +1,5 @@
 package com.tree_bit.rcdl.blocks;
 
-import com.google.common.collect.HashBasedTable;
-import com.google.common.collect.Table;
-
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.annotation.concurrent.Immutable;
 
 /**
@@ -55,10 +49,9 @@ public final class Repeater extends BlockData {
         }
     }
 
-    @SuppressWarnings("null")
-    private static Table<OrientationNESW, Delay, Repeater> instances = HashBasedTable.create();
-
     static {
+        @SuppressWarnings("null")
+        final Class<Repeater> clazz = Repeater.class;
         for (final OrientationNESW orientation : OrientationNESW.values()) {
             if (orientation == null) {
                 throw new NullPointerException();
@@ -67,9 +60,10 @@ public final class Repeater extends BlockData {
                 if (delay == null) {
                     throw new NullPointerException();
                 }
-                instances.put(orientation, delay, new Repeater(orientation, delay));
+                BlockDataFactory.register(clazz, new Repeater(orientation, delay));
             }
         }
+        BlockDataFactory.registerDefault(clazz, new Repeater(OrientationNESW.North, Delay.D1));
     }
 
     private Repeater(final OrientationNESW orientation, final Delay delay) {
@@ -84,8 +78,9 @@ public final class Repeater extends BlockData {
      * @param delay Delay
      * @return Instance of a repeater
      */
+    @SuppressWarnings("null")
     public static Repeater getInstance(final OrientationNESW orientation, final Delay delay) {
-        return instances.get(orientation, delay);
+        return BlockDataFactory.getInstance(Repeater.class, orientation, delay);
     }
 
     /**
@@ -94,17 +89,9 @@ public final class Repeater extends BlockData {
      *
      * @return Instance of a repeater
      */
+    @SuppressWarnings("null")
     public static Repeater getInstance() {
-        return getInstance(OrientationNESW.North, Delay.D1);
-    }
-
-    /**
-     * Returns all data instances of 'Repeater'.
-     *
-     * @return Set of all instances
-     */
-    static Set<Repeater> getInstances() {
-        return new HashSet<>(instances.values());
+        return BlockDataFactory.getDefaultInstance(Repeater.class);
     }
 
 }
