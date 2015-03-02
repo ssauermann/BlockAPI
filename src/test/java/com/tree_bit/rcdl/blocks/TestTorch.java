@@ -16,6 +16,7 @@ public class TestTorch {
     Torch someInstance = Torch.getInstance();
     Torch fixedInstance = Torch.getInstance(TorchOrientation.South);
 
+    @SuppressWarnings("null")
     @Test
     public void testGetData() {
         assertEquals(TorchOrientation.South, this.fixedInstance.getData().get(TorchOrientation.class));

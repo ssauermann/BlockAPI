@@ -17,6 +17,7 @@ public class TestRepeater {
     Repeater someInstance = Repeater.getInstance();
     Repeater fixedInstance = Repeater.getInstance(OrientationNESW.East, Delay.D3);
 
+    @SuppressWarnings("null")
     @Test
     public void testGetData() {
         assertEquals(Repeater.Delay.D3, this.fixedInstance.getData().get(Repeater.Delay.class));

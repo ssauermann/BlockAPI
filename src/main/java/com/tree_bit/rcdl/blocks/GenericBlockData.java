@@ -28,7 +28,11 @@ public final class GenericBlockData extends BlockData {
 
     private static final GenericBlockData INSTANCE = new GenericBlockData();
 
+    /**
+     * Data of a generic block.
+     */
     enum Data implements IDataValueEnum {
+        /** No data */
         NONE(0);
 
         private final int datavalue;
