@@ -7,9 +7,6 @@ import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Table;
 
-import org.eclipse.jdt.annotation.NonNull;
-
-import java.lang.reflect.InvocationTargetException;
 import java.security.InvalidParameterException;
 import java.util.Set;
 
@@ -31,7 +28,6 @@ public final class Block implements Comparable<Block> {
 
     @SuppressWarnings("null")
     private static final Table<BlockID, BlockData, Block> instances = HashBasedTable.create();
-
 
     static {
         for (final BlockID id : BlockID.values()) {
@@ -78,16 +74,9 @@ public final class Block implements Comparable<Block> {
      * @param block Id of the block
      * @return Instance of a block
      */
-    @SuppressWarnings("null")
     public static Block getInstance(final BlockID block) {
         if (instances.row(block).isEmpty()) {
-            @NonNull
-            BlockData data;
-            try {
-                data = (BlockData) block.getDataClass().getDeclaredMethod("getInstance").invoke((Class<?>[]) null);
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-                throw new IllegalStateException(e);
-            }
+            final BlockData data = BlockDataFactory.getDefaultInstance(block.getDataClass());
             return getOrCreate(block, data);
         }
         return Iterables.get(instances.row(block).values(), 0);

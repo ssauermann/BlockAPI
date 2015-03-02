@@ -10,16 +10,27 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
  * Factory class for BlockData instances.
+ *
+ * <p>
+ * Each supported class has to have a constructor (can be private) with no
+ * arguments which returns a default data object and one with one parameter of
+ * type: IDataValueEnum[] <br>
+ * If the given data values are invalid for the block data type, a
+ * IllegalArgumentException should be thrown.
  */
 class BlockDataFactory {
 
     @SuppressWarnings("null")
     // Never null
     private static final Table<Class<? extends BlockData>, Set<IDataValueEnum>, BlockData> map = HashBasedTable.create();
+    private static final Map<Class<? extends BlockData>, BlockData> defaults = new HashMap<>();
+
 
     /**
      * Registers an BlockData instance of the given class with the given data
@@ -30,7 +41,6 @@ class BlockDataFactory {
      * @param dataValues Collection of data values
      */
     static <T extends BlockData> void register(final Class<T> clazz, final T instance, final Collection<IDataValueEnum> dataValues) {
-
         // Defensive copy
         final SingleInstanceSet<IDataValueEnum> dv = SingleInstanceSet.copyOf(dataValues);
         map.put(clazz, dv.asSet(), instance);
@@ -48,6 +58,16 @@ class BlockDataFactory {
     // @NonNull IDataValueEnum[] == IDataValueEnum @NonNull[]
     static <T extends BlockData> void register(final Class<T> clazz, final T instance, final IDataValueEnum... dataValues) {
         BlockDataFactory.register(clazz, instance, Arrays.asList(dataValues));
+    }
+
+    /**
+     * Registers an BlockData instance of the given class.
+     *
+     * @param clazz Class of a subtype of BlockData
+     * @param instance Instance
+     */
+    static <T extends BlockData> void register(final Class<T> clazz, final T instance) {
+        BlockDataFactory.register(clazz, instance, instance.getData().asSet());
     }
 
 
@@ -83,7 +103,7 @@ class BlockDataFactory {
                     try {
                         final Constructor<T> construct = clazz.getDeclaredConstructor(IDataValueEnum[].class);
                         construct.setAccessible(true);
-                        final T instance = construct.newInstance(dv);
+                        final T instance = construct.newInstance(dv.toArray());
                         BlockDataFactory.register(clazz, instance, dv);
                         return instance;
                     } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException
@@ -131,4 +151,75 @@ class BlockDataFactory {
     static <T extends BlockData> Set<T> getInstances(final Class<T> clazz) {
         return (@NonNull Set<T>) map.row(clazz).values();
     }
+
+    /**
+     * Registers an BlockData instance of the given class with the given data
+     * values as default. An existing default reference will be overwritten.
+     *
+     * @param clazz Class of a subtype of BlockData
+     * @param instance Instance
+     * @param dataValues Data values
+     */
+    @SuppressWarnings("null")
+    static <T extends BlockData> void registerDefault(final Class<T> clazz, final T instance, final IDataValueEnum... dataValues) {
+        BlockDataFactory.registerDefault(clazz, instance, Arrays.asList(dataValues));
+    }
+
+    /**
+     * Registers an BlockData instance of the given class with the given data
+     * values as default. An existing default reference will be overwritten.
+     *
+     * @param clazz Class of a subtype of BlockData
+     * @param instance Instance
+     * @param dataValues Collection of data values
+     */
+    static <T extends BlockData> void registerDefault(final Class<T> clazz, final T instance, final Collection<IDataValueEnum> dataValues) {
+        BlockDataFactory.register(clazz, instance, dataValues);
+        defaults.put(clazz, instance);
+    }
+
+    /**
+     * Returns the default BlockData instance of the given class.
+     *
+     * @param clazz Class of a subtype of BlockData
+     * @return BlockData of the given class with the default data values
+     */
+    @SuppressWarnings({"unused", "null"})
+    // Cast is safe
+    static <T extends BlockData> T getDefaultInstance(final Class<T> clazz) {
+
+        BlockData bd = defaults.get(clazz);
+        if (bd == null) {
+            // Create new instance if not existing
+            synchronized (BlockDataFactory.class) {
+                bd = defaults.get(clazz);
+                if (bd == null) {
+                    try {
+                        final Constructor<T> construct = clazz.getDeclaredConstructor();
+                        construct.setAccessible(true);
+                        final T instance = construct.newInstance();
+                        // Check if equal instance was already existing?
+                        // Y: Register existing as default and return.
+                        // N: Register new one and return.
+                        @SuppressWarnings("unchecked")
+                        // Cast is safe
+                        final T existingInstance = (T) map.get(clazz, instance.getData().asSet());
+                        if (instance.equals(existingInstance)) {
+                            BlockDataFactory.registerDefault(clazz, existingInstance);
+                            return existingInstance;
+                        }
+                        BlockDataFactory.registerDefault(clazz, instance);
+                        return instance;
+                    } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException
+                            | InvocationTargetException e) {
+                        throw new AssertionError(e);
+                    }
+                }
+            }
+        } else if (bd.getClass() == clazz) {
+            return clazz.cast(bd);
+        }
+        throw new AssertionError();
+    }
+
 }
