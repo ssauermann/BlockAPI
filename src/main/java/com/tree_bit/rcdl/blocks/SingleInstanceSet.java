@@ -91,19 +91,29 @@ final class SingleInstanceSet<T> implements Iterable<T> {
     @SuppressWarnings({"unchecked", "null"})
     public void add(final T value) {
         final Class<? extends T> clazz = (Class<? extends T>) value.getClass();
-        if (!this.checkConstraints(clazz)) {
-            this.map.remove(clazz);
+        final Class<? extends T> theConstraint = this.checkConstraints(value);
+        if (theConstraint != null) {
+            this.removeAllInstances(theConstraint);
         }
         this.map.put(clazz, value);
     }
 
-    private boolean checkConstraints(final Class<? extends Object> clazz) {
-        for (final Class<? extends T> constraint : this.constraints) {
-            if (constraint.isInstance(clazz)) {
-                return false;
+    private void removeAllInstances(final Class<? extends T> clazz) {
+        for (final Iterator<T> it = this.map.values().iterator(); it.hasNext();) {
+            final T value = it.next();
+            if (clazz.isInstance(value)) {
+                it.remove();
             }
         }
-        return true;
+    }
+
+    private @Nullable Class<? extends T> checkConstraints(final T obj) {
+        for (final Class<? extends T> constraint : this.constraints) {
+            if (constraint.isInstance(obj)) {
+                return constraint;
+            }
+        }
+        return null;
     }
 
     /**
@@ -149,14 +159,9 @@ final class SingleInstanceSet<T> implements Iterable<T> {
     // set is never null
     public <X extends T> ImmutableSet<X> getInstancesOf(final Class<X> clazz) {
         final Set<X> set = new HashSet<>();
-        for (final Class<? extends T> c : this.map.keySet()) {
-            if (clazz.isInstance(c)) {
-                final T ret = this.map.get(c);
-                if (ret.getClass() == clazz) {
-                    set.add((X) ret);
-                } else {
-                    throw new AssertionError("Can't cast " + ret + " to " + clazz.getName());
-                }
+        for (final T v : this.map.values()) {
+            if (clazz.isInstance(v)) {
+                set.add((X) v);
             }
         }
         return ImmutableSet.copyOf(set);

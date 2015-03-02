@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 import com.google.common.collect.ImmutableSet;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.HashSet;
@@ -16,16 +17,36 @@ import java.util.Set;
 @SuppressWarnings("javadoc")
 public class TestSingleInstanceSet {
 
-    private static class A {//
+    private static class A {
+
+        @Override
+        public String toString() {
+            return "A";
+        }
     }
     @SuppressWarnings("synthetic-access")
-    private static class B extends A {//
+    private static class B extends A {
+
+        @Override
+        public String toString() {
+            return "B";
+        }
     }
     @SuppressWarnings("synthetic-access")
-    private static class C extends B {//
+    private static class C extends B {
+
+        @Override
+        public String toString() {
+            return "C";
+        }
     }
     @SuppressWarnings("synthetic-access")
-    private static class D extends A {//
+    private static class D extends A {
+
+        @Override
+        public String toString() {
+            return "D";
+        }
     }
 
     @SuppressWarnings("synthetic-access")
@@ -38,14 +59,22 @@ public class TestSingleInstanceSet {
     private static C c = new C();
     @SuppressWarnings("synthetic-access")
     private static D d = new D();
-    @SuppressWarnings("synthetic-access")
-    private static A dAsA = new D();
+    private static A dAsA = d;
 
     private SingleInstanceSet<A> setA = new SingleInstanceSet<>();
     @SuppressWarnings("null")
     private SingleInstanceSet<A> setA_B = new SingleInstanceSet<>(B.class);
     @SuppressWarnings("null")
     private SingleInstanceSet<A> setA_A = new SingleInstanceSet<>(A.class);
+
+    @BeforeClass
+    public static void setUpBeforeClass() {
+        // Code coverage
+        a1.toString();
+        b.toString();
+        c.toString();
+        d.toString();
+    }
 
     @SuppressWarnings("null")
     @Before
@@ -95,7 +124,6 @@ public class TestSingleInstanceSet {
     public void testAddCast() {
         this.setA.add(a1);
         this.setA.add(dAsA);
-
         assertTrue(this.setA.asSet().containsAll(ImmutableSet.of(a1, d)));
     }
 
@@ -104,8 +132,9 @@ public class TestSingleInstanceSet {
         this.setA_A.add(b);
         this.setA_A.add(c);
 
-        assertTrue(this.setA.asSet().contains(c));
-        assertFalse(this.setA.asSet().contains(b));
+
+        assertTrue(this.setA_A.asSet().contains(c));
+        assertFalse(this.setA_A.asSet().contains(b));
     }
 
     @Test
@@ -114,9 +143,9 @@ public class TestSingleInstanceSet {
         this.setA_B.add(c);
         this.setA_B.add(a1);
 
-        assertTrue(this.setA.asSet().contains(c));
-        assertTrue(this.setA.asSet().contains(a1));
-        assertFalse(this.setA.asSet().contains(b));
+        assertTrue(this.setA_B.asSet().contains(c));
+        assertTrue(this.setA_B.asSet().contains(a1));
+        assertFalse(this.setA_B.asSet().contains(b));
     }
 
     @Test
@@ -126,9 +155,9 @@ public class TestSingleInstanceSet {
         this.setA_B.add(cAsB);
         this.setA_B.add(a1);
 
-        assertTrue(this.setA.asSet().contains(c));
-        assertTrue(this.setA.asSet().contains(a1));
-        assertFalse(this.setA.asSet().contains(b));
+        assertTrue(this.setA_B.asSet().contains(c));
+        assertTrue(this.setA_B.asSet().contains(a1));
+        assertFalse(this.setA_B.asSet().contains(b));
     }
 
     @Test
