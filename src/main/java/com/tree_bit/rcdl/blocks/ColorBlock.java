@@ -43,10 +43,8 @@ public final class ColorBlock extends BlockData {
         }
     }
 
-    private final Color color;
-
     private ColorBlock(final Color color) {
-        this.color = color;
+        super(color);
     }
 
     /**
@@ -76,26 +74,6 @@ public final class ColorBlock extends BlockData {
      */
     static Set<ColorBlock> getInstances() {
         return new HashSet<>(instances.values());
-    }
-
-    @Override
-    public BlockData rotate(final Axis axis, final int degree) {
-        toCount(degree, 90);
-        return this; // No rotation
-    }
-
-    @Override
-    public BlockData mirror(final Set<Axis> plain) {
-        Axis.checkPlain(plain);
-        return this;
-    }
-
-    @Override
-    @SuppressWarnings("null")
-    public Map<Class<? extends IDataValueEnum>, IDataValueEnum> getData() {
-        final Map<Class<? extends IDataValueEnum>, IDataValueEnum> map = new HashMap<>();
-        map.put(Color.class, this.color);
-        return map;
     }
 
 }

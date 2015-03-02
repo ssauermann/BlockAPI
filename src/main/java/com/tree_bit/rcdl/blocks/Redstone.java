@@ -1,6 +1,5 @@
 package com.tree_bit.rcdl.blocks;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -90,10 +89,8 @@ public final class Redstone extends BlockData {
         }
     }
 
-    private final PowerLevel level;
-
     private Redstone(final PowerLevel level) {
-        this.level = level;
+        super(level);
     }
 
     /**
@@ -126,29 +123,4 @@ public final class Redstone extends BlockData {
         return new HashSet<>(instances.values());
     }
 
-    @Override
-    public Redstone mirror(final Set<Axis> plain) {
-        Axis.checkPlain(plain);
-        if (!plain.contains(Axis.Y)) {
-            throw new UnsupportedOperationException("Can't mirror at this plain: " + Arrays.toString(plain.toArray(new Axis[] {})));
-        }
-        return this;
-    }
-
-    @Override
-    public Redstone rotate(final Axis axis, final int degree) {
-        if (axis != Axis.Y) {
-            throw new UnsupportedOperationException("Can't rotate at this axis: " + axis);
-        }
-        BlockData.toCount(degree, 90); // Validates 'degree' as multiple of 90
-        return this;
-    }
-
-    @Override
-    @SuppressWarnings("null")
-    public Map<Class<? extends IDataValueEnum>, IDataValueEnum> getData() {
-        final Map<Class<? extends IDataValueEnum>, IDataValueEnum> map = new HashMap<>();
-        map.put(PowerLevel.class, this.level);
-        return map;
-    }
 }

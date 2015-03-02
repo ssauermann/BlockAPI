@@ -3,9 +3,7 @@ package com.tree_bit.rcdl.blocks;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.concurrent.Immutable;
@@ -32,9 +30,6 @@ import javax.annotation.concurrent.Immutable;
 @Immutable
 public final class HalfSlab1 extends BlockData {
 
-    private final SlabType1 type;
-    private final SlabPosition position;
-
     @SuppressWarnings("null")
     private static Table<SlabType1, SlabPosition, HalfSlab1> instances = HashBasedTable.create();
 
@@ -53,8 +48,7 @@ public final class HalfSlab1 extends BlockData {
     }
 
     private HalfSlab1(final SlabType1 type, final SlabPosition position) {
-        this.type = type;
-        this.position = position;
+        super(type, position);
     }
 
     /**
@@ -86,30 +80,5 @@ public final class HalfSlab1 extends BlockData {
      */
     static Set<HalfSlab1> getInstances() {
         return new HashSet<>(instances.values());
-    }
-
-    @Override
-    public BlockData rotate(final Axis axis, final int degree) {
-        if (axis == Axis.Y) {
-            final int count = BlockData.toCount(degree, 90);
-            return getInstance(this.type, this.position.rotate(axis, count));
-        }
-        final int count = BlockData.toCount(degree, 180);
-        return getInstance(this.type, this.position.rotate(axis, count));
-    }
-
-    @Override
-    public BlockData mirror(final Set<Axis> plain) {
-        Axis.checkPlain(plain);
-        return getInstance(this.type, this.position.mirror(plain));
-    }
-
-    @Override
-    @SuppressWarnings("null")
-    public Map<Class<? extends IDataValueEnum>, IDataValueEnum> getData() {
-        final Map<Class<? extends IDataValueEnum>, IDataValueEnum> map = new HashMap<>();
-        map.put(SlabPosition.class, this.position);
-        map.put(SlabType1.class, this.type);
-        return map;
     }
 }

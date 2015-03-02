@@ -37,7 +37,7 @@ public final class Torch extends BlockData {
     /**
      * Orientations of a Torch
      */
-    public enum TorchOrientation implements IDataValueEnum, IOrientationEnum {
+    public enum TorchOrientation implements IOrientationEnum {
 
         /** The Facing east. */
         East(1),
@@ -74,6 +74,7 @@ public final class Torch extends BlockData {
 
         @Override
         public TorchOrientation mirror(final Set<Axis> plain) {
+            Axis.checkPlain(plain);
             if ((this == Up) && plain.contains(Axis.Y)) {
                 return Up;
             } else if (plain.contains(Axis.Y) && plain.contains(Axis.X)) {
@@ -103,6 +104,11 @@ public final class Torch extends BlockData {
             throw new NullPointerException();
         }
 
+        @Override
+        public int getStep() {
+            return 90;
+        }
+
     }
 
     private static Map<TorchOrientation, Torch> instances = new HashMap<>();
@@ -116,10 +122,8 @@ public final class Torch extends BlockData {
         }
     }
 
-    private final TorchOrientation data;
-
     private Torch(final TorchOrientation data) {
-        this.data = data;
+        super(data);
     }
 
     /**
@@ -150,23 +154,4 @@ public final class Torch extends BlockData {
         return new HashSet<>(instances.values());
     }
 
-    @Override
-    public Torch rotate(final Axis axis, final int degree) {
-        final int count = BlockData.toCount(degree, 90);
-        return Torch.getInstance(this.data.rotate(axis, count));
-    }
-
-    @Override
-    public Torch mirror(final Set<Axis> plain) {
-        Axis.checkPlain(plain);
-        return Torch.getInstance(this.data.mirror(plain));
-    }
-
-    @Override
-    @SuppressWarnings("null")
-    public Map<Class<? extends IDataValueEnum>, IDataValueEnum> getData() {
-        final Map<Class<? extends IDataValueEnum>, IDataValueEnum> map = new HashMap<>();
-        map.put(TorchOrientation.class, this.data);
-        return map;
-    }
 }

@@ -224,8 +224,8 @@ public abstract class BlockData {
     @SuppressWarnings("null")
     public String toString() {
         String tileInfo = null;
-        if (this instanceof HasTileEntity) {
-            tileInfo = ((HasTileEntity) this).getTileEntity().toString();
+        if (this.getTileEntity().isPresent()) {
+            tileInfo = this.getTileEntity().get().toString();
         }
         return Objects.toStringHelper(this).add("Combined", this.getDataValue())
                 .add("Data", Joiner.on(',').skipNulls().join(this.getData().asSet().toArray())).addValue(tileInfo).omitNullValues().toString();

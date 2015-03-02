@@ -31,7 +31,7 @@ import java.util.Set;
  * <li>x-z</li>
  * </ul>
  */
-public enum SlabPosition implements IDataValueEnum, IOrientationEnum {
+public enum SlabPosition implements IOrientationEnum {
     /** Upper half of the block - upside-down */
     UP(8),
     /** Lower half of the block - right-side-up */
@@ -46,6 +46,14 @@ public enum SlabPosition implements IDataValueEnum, IOrientationEnum {
     @Override
     public int getDataValue() {
         return this.value;
+    }
+
+    @Override
+    public IOrientationEnum rotateDegree(final Axis axis, final int degree) {
+        if (axis == Axis.Y) {
+            return IOrientationEnum.super.rotateDegree(axis, degree);
+        }
+        return this.rotate(axis, IOrientationEnum.toCount(degree, 180));
     }
 
     @Override
@@ -72,5 +80,10 @@ public enum SlabPosition implements IDataValueEnum, IOrientationEnum {
             return temp;
         }
         throw new NullPointerException();
+    }
+
+    @Override
+    public int getStep() {
+        return 90;
     }
 }

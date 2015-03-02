@@ -6,9 +6,7 @@ import com.google.common.collect.Table;
 import org.jnbt.StringTag;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 
@@ -32,17 +30,13 @@ import java.util.Set;
  * </ul>
  * *Note: This mirroring does not include the text.
  */
-public class HangingSign extends BlockData implements HasTileEntity {
-
-    private final SignOrientation orientation;
-    private final TileEntity entity;
+public class HangingSign extends BlockData {
 
     @SuppressWarnings("null")
     private static Table<SignOrientation, TileEntity, HangingSign> instances = HashBasedTable.create();
 
     private HangingSign(final SignOrientation orientation, final TileEntity entity) {
-        this.orientation = orientation;
-        this.entity = entity;
+        super(entity, orientation);
     }
 
     /**
@@ -125,7 +119,7 @@ public class HangingSign extends BlockData implements HasTileEntity {
      * Enum of the four directions (North, East, South, West), mapping those to
      * their block data value.
      */
-    public enum SignOrientation implements IDataValueEnum, IOrientationEnum {
+    public enum SignOrientation implements IOrientationEnum {
         /** North */
         North(2),
         /** East */
@@ -183,38 +177,11 @@ public class HangingSign extends BlockData implements HasTileEntity {
         public int getDataValue() {
             return this.value;
         }
-    }
 
-    @Override
-    public TileEntity getTileEntity() {
-        return this.entity;
-    }
-
-    @Override
-    public BlockData rotate(final Axis axis, final int degree) {
-        if (axis != Axis.Y) {
-            throw new UnsupportedOperationException("Can't rotate at this axis: " + axis);
+        @Override
+        public int getStep() {
+            return 30;
         }
-
-        final int count = BlockData.toCount(degree, 90);
-        return getOrCreate(this.orientation.rotate(axis, count), this.entity);
     }
 
-    @Override
-    public BlockData mirror(final Set<Axis> plain) {
-        Axis.checkPlain(plain);
-        if (!plain.contains(Axis.Y)) {
-            throw new UnsupportedOperationException("Can't mirror at this plain: " + Arrays.toString(plain.toArray(new Axis[] {})));
-        }
-
-        return getOrCreate(this.orientation.mirror(plain), this.entity);
-    }
-
-    @Override
-    @SuppressWarnings("null")
-    public Map<Class<? extends IDataValueEnum>, IDataValueEnum> getData() {
-        final Map<Class<? extends IDataValueEnum>, IDataValueEnum> map = new HashMap<>();
-        map.put(SignOrientation.class, this.orientation);
-        return map;
-    }
 }

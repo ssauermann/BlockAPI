@@ -3,10 +3,7 @@ package com.tree_bit.rcdl.blocks;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -29,17 +26,13 @@ import java.util.Set;
  * </ul>
  * *Note: This mirroring does not include the text.
  */
-public class StandingSign extends BlockData implements HasTileEntity {
-
-    private final Orientation16 orientation;
-    private final TileEntity entity;
+public class StandingSign extends BlockData {
 
     @SuppressWarnings("null")
     private static Table<Orientation16, TileEntity, StandingSign> instances = HashBasedTable.create();
 
     private StandingSign(final Orientation16 orientation, final TileEntity entity) {
-        this.orientation = orientation;
-        this.entity = entity;
+        super(entity, orientation);
     }
 
     /**
@@ -97,39 +90,5 @@ public class StandingSign extends BlockData implements HasTileEntity {
         }
         return instance;
     }
-
-    @Override
-    public TileEntity getTileEntity() {
-        return this.entity;
-    }
-
-    @Override
-    public BlockData rotate(final Axis axis, final int degree) {
-        if (axis != Axis.Y) {
-            throw new UnsupportedOperationException("Can't rotate at this axis: " + axis);
-        }
-
-        final int count = BlockData.toCount(degree, 30);
-        return getOrCreate(this.orientation.rotate(axis, count), this.entity);
-    }
-
-    @Override
-    public BlockData mirror(final Set<Axis> plain) {
-        Axis.checkPlain(plain);
-        if (!plain.contains(Axis.Y)) {
-            throw new UnsupportedOperationException("Can't mirror at this plain: " + Arrays.toString(plain.toArray(new Axis[] {})));
-        }
-
-        return getOrCreate(this.orientation.mirror(plain), this.entity);
-    }
-
-    @Override
-    @SuppressWarnings("null")
-    public Map<Class<? extends IDataValueEnum>, IDataValueEnum> getData() {
-        final Map<Class<? extends IDataValueEnum>, IDataValueEnum> map = new HashMap<>();
-        map.put(Orientation16.class, this.orientation);
-        return map;
-    }
-
 
 }

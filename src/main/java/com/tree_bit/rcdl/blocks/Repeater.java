@@ -3,10 +3,7 @@ package com.tree_bit.rcdl.blocks;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.concurrent.Immutable;
@@ -75,13 +72,8 @@ public final class Repeater extends BlockData {
         }
     }
 
-    private final OrientationNESW orientation;
-
-    private final Delay delay;
-
     private Repeater(final OrientationNESW orientation, final Delay delay) {
-        this.orientation = orientation;
-        this.delay = delay;
+        super(orientation, delay);
     }
 
     /**
@@ -113,35 +105,6 @@ public final class Repeater extends BlockData {
      */
     static Set<Repeater> getInstances() {
         return new HashSet<>(instances.values());
-    }
-
-    @Override
-    public Repeater rotate(final Axis axis, final int degree) {
-        if (axis != Axis.Y) {
-            throw new UnsupportedOperationException("Can't rotate at this axis: " + axis);
-        }
-
-        final int count = BlockData.toCount(degree, 90);
-        return getInstance(this.orientation.rotate(axis, count), this.delay);
-    }
-
-    @Override
-    public Repeater mirror(final Set<Axis> plain) {
-        Axis.checkPlain(plain);
-        if (!plain.contains(Axis.Y)) {
-            throw new UnsupportedOperationException("Can't mirror at this plain: " + Arrays.toString(plain.toArray(new Axis[] {})));
-        }
-
-        return getInstance(this.orientation.mirror(plain), this.delay);
-    }
-
-    @Override
-    @SuppressWarnings("null")
-    public Map<Class<? extends IDataValueEnum>, IDataValueEnum> getData() {
-        final Map<Class<? extends IDataValueEnum>, IDataValueEnum> map = new HashMap<>();
-        map.put(OrientationNESW.class, this.orientation);
-        map.put(Delay.class, this.delay);
-        return map;
     }
 
 }

@@ -29,7 +29,7 @@ import java.util.Set;
  * <li>z-y</li>
  * </ul>
  */
-public enum OrientationNESW implements IDataValueEnum, IOrientationEnum {
+public enum OrientationNESW implements IOrientationEnum {
 
     /** The Facing north. */
     North(0),
@@ -87,5 +87,10 @@ public enum OrientationNESW implements IDataValueEnum, IOrientationEnum {
             return temp;
         }
         throw new NullPointerException();
+    }
+
+    @Override
+    public int getStep() {
+        return 90;
     }
 }
