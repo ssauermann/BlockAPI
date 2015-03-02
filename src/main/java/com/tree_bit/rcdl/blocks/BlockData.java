@@ -4,7 +4,10 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableSet;
 
+import org.eclipse.jdt.annotation.Nullable;
+
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -54,6 +57,9 @@ public abstract class BlockData {
 
     private final SingleInstanceSet<IDataValueEnum> data;
 
+
+    private final @Nullable TileEntity entity;
+
     /**
      * Creates a BlockData instance and sets the data value of this instance.
      *
@@ -61,11 +67,13 @@ public abstract class BlockData {
      * Only one orientation data value could be added. If more than one are
      * added a single one is chosen depending on the implementation.
      *
+     * @param entity Tile entity
      * @param data Data values
      */
     @SuppressWarnings("null")
-    protected BlockData(final Set<IDataValueEnum> data) {
+    protected BlockData(@Nullable final TileEntity entity, final Set<IDataValueEnum> data) {
         this.data = SingleInstanceSet.copyOf(data, IOrientationEnum.class);
+        this.entity = entity;
     }
 
     /**
@@ -77,9 +85,37 @@ public abstract class BlockData {
      *
      * @param data Data values
      */
-    @SuppressWarnings("null")
+    protected BlockData(final Set<IDataValueEnum> data) {
+        this(null, data);
+    }
+
+    /**
+     * Creates a BlockData instance and sets the data value of this instance.
+     *
+     * <p>
+     * Only one orientation data value could be added. If more than one are
+     * added a single one is chosen depending on the implementation.
+     *
+     * @param data Data values
+     */
     protected BlockData(final IDataValueEnum... data) {
+        this(null, data);
+    }
+
+    /**
+     * Creates a BlockData instance and sets the data value of this instance.
+     *
+     * <p>
+     * Only one orientation data value could be added. If more than one are
+     * added a single one is chosen depending on the implementation.
+     *
+     * @param entity Tile entity
+     * @param data Data values
+     */
+    @SuppressWarnings("null")
+    protected BlockData(@Nullable final TileEntity entity, final IDataValueEnum... data) {
         this.data = SingleInstanceSet.copyOf(Arrays.asList(data), IOrientationEnum.class);
+        this.entity = entity;
     }
 
     /**
@@ -133,6 +169,19 @@ public abstract class BlockData {
      */
     public final SingleInstanceSet<IDataValueEnum> getData() {
         return SingleInstanceSet.copyOf(this.data.asSet());
+    }
+
+    /**
+     * Returns the TileEntity of this block.
+     *
+     * @return TileEntity
+     */
+    @SuppressWarnings("null")
+    public Optional<TileEntity> getTileEntity() {
+        if (this.entity != null) {
+            return Optional.of(this.entity);
+        }
+        return Optional.empty();
     }
 
     @SuppressWarnings("null")
