@@ -11,8 +11,6 @@ import org.eclipse.jdt.annotation.NonNull;
 
 import java.lang.reflect.InvocationTargetException;
 import java.security.InvalidParameterException;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.annotation.concurrent.Immutable;
@@ -48,18 +46,8 @@ public final class Block implements Comparable<Block> {
         }
     }
 
-    @SuppressWarnings("unchecked")
-    private static Set<BlockData> getInstances(final BlockID id) {
-        Set<BlockData> instances;
-        try {
-            final Object o = id.getDataClass().getDeclaredMethod("getInstances").invoke((Class<?>[]) null);
-
-            instances = new HashSet<>((Collection<? extends BlockData>) o);
-
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-            throw new IllegalStateException(e);
-        }
-        return instances;
+    private static Set<? extends BlockData> getInstances(final BlockID id) {
+        return BlockDataFactory.getInstances(id.getDataClass());
     }
 
     private Block(final BlockID block, final BlockData data) {
