@@ -4,6 +4,7 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableSet;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.Arrays;
@@ -203,7 +204,14 @@ public abstract class BlockData {
     @SuppressWarnings("null")
     final BlockData setData(final IDataValueEnum data) {
         final SingleInstanceSet<IDataValueEnum> newData = this.getData();
+        // Exclude Orientation.NONE
+        if (data instanceof Orientation) {
+            return this;
+        }
         newData.add(data);
+        if (newData.equals(this.getData())) {
+            return this;
+        }
         return BlockDataFactory.getInstance(this.getClass(), newData.asSet());
     }
 
@@ -231,4 +239,63 @@ public abstract class BlockData {
                 .add("Data", Joiner.on(',').skipNulls().join(this.getData().asSet().toArray())).addValue(tileInfo).omitNullValues().toString();
     }
 
+    /**
+     * Checks the validity of data values as constructor parameters. Each data
+     * value has to match exactly one of the given classes.
+     *
+     * @param data Data values
+     * @param classes Allowed data value classes
+     * @return Checked data values
+     *
+     * @throws IllegalArgumentException if the given data values are invalid for
+     *         the given class
+     */
+    @SafeVarargs
+    protected static IDataValueEnum[] validateDV(final IDataValueEnum[] data, final Class<? extends @NonNull IDataValueEnum>... classes) {
+        if (data.length != classes.length) {
+            throw new IllegalArgumentException("The amount of given data values has to match the number of classes. Given: " + Arrays.toString(data)
+                    + " Expected: " + Arrays.toString(classes));
+        }
+        outer: for (final IDataValueEnum dv : data) {
+            for (final Class<? extends IDataValueEnum> clazz : classes) {
+                if (dv.getClass() == clazz) {
+                    continue outer;
+                }
+                throw new IllegalArgumentException("Can't construct a BlockData object with the given data values. Given: " + Arrays.toString(data)
+                        + " Expected: " + Arrays.toString(classes));
+            }
+        }
+        return data;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = (prime * result) + (this.data.hashCode());
+        result = (prime * result) + ((this.entity != null) ? this.entity.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public boolean equals(final @Nullable Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof BlockData)) {
+            return false;
+        }
+        final BlockData other = (BlockData) obj;
+        if (!this.data.equals(other.data)) {
+            return false;
+        }
+        if (this.entity != null) {
+            if (!this.entity.equals(other.entity)) {
+                return false;
+            }
+        } else if (other.entity != null) {
+            return false;
+        }
+        return true;
+    }
 }

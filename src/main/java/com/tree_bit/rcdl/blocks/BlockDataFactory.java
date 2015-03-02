@@ -32,6 +32,17 @@ class BlockDataFactory {
     private static final Map<Class<? extends BlockData>, BlockData> defaults = new HashMap<>();
 
 
+    @SuppressWarnings("unchecked")
+    private static <T extends BlockData> T equalOrThis(final Class<T> clazz, final T instance, final Collection<IDataValueEnum> dataValues) {
+        // Defensive copy
+        final SingleInstanceSet<IDataValueEnum> dv = SingleInstanceSet.copyOf(dataValues);
+        final BlockData current = map.get(clazz, dv.asSet());
+        if (instance.equals(current)) {
+            return (@NonNull T) current;
+        }
+        return instance;
+    }
+
     /**
      * Registers an BlockData instance of the given class with the given data
      * values.
@@ -48,7 +59,8 @@ class BlockDataFactory {
 
     /**
      * Registers an BlockData instance of the given class with the given data
-     * values.
+     * values. If no data values are given, they are extracted from the
+     * instance.
      *
      * @param clazz Class of a subtype of BlockData
      * @param instance Instance
@@ -57,17 +69,13 @@ class BlockDataFactory {
     @SuppressWarnings("null")
     // @NonNull IDataValueEnum[] == IDataValueEnum @NonNull[]
     static <T extends BlockData> void register(final Class<T> clazz, final T instance, final IDataValueEnum... dataValues) {
-        BlockDataFactory.register(clazz, instance, Arrays.asList(dataValues));
-    }
-
-    /**
-     * Registers an BlockData instance of the given class.
-     *
-     * @param clazz Class of a subtype of BlockData
-     * @param instance Instance
-     */
-    static <T extends BlockData> void register(final Class<T> clazz, final T instance) {
-        BlockDataFactory.register(clazz, instance, instance.getData().asSet());
+        Collection<IDataValueEnum> dv;
+        if (dataValues.length == 0) {
+            dv = instance.getData().asSet();
+        } else {
+            dv = Arrays.asList(dataValues);
+        }
+        BlockDataFactory.register(clazz, instance, dv);
     }
 
 
@@ -85,7 +93,7 @@ class BlockDataFactory {
      * @return BlockData of the given class with the given data values
      *
      * @throws IllegalArgumentException if the given data values are invalid for
-     *         the given class.
+     *         the given class
      */
     @SuppressWarnings({"null", "unused"})
     // Return value of map can be null
@@ -103,12 +111,12 @@ class BlockDataFactory {
                     try {
                         final Constructor<T> construct = clazz.getDeclaredConstructor(IDataValueEnum[].class);
                         construct.setAccessible(true);
-                        final T instance = construct.newInstance(dv.toArray());
+                        final T instance = construct.newInstance(new Object[] {dv.toArray(new IDataValueEnum[0])});
                         BlockDataFactory.register(clazz, instance, dv);
                         return instance;
                     } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException
                             | InvocationTargetException e) {
-                        throw new AssertionError(e);
+                        throw new AssertionError("Class: " + clazz + " DV: " + dataValues.toString(), e);
                     }
                 }
             }
@@ -132,7 +140,7 @@ class BlockDataFactory {
      * @return BlockData of the given class with the given data values
      *
      * @throws IllegalArgumentException if the given data values are invalid for
-     *         the given class.
+     *         the given class
      */
     static <T extends BlockData> T getInstance(final Class<T> clazz, final IDataValueEnum... dataValues) {
         @SuppressWarnings("null")
@@ -149,12 +157,17 @@ class BlockDataFactory {
      */
     @SuppressWarnings("unchecked")
     static <T extends BlockData> Set<T> getInstances(final Class<T> clazz) {
-        return (@NonNull Set<T>) map.row(clazz).values();
+        return (@NonNull Set<T>) ImmutableSet.copyOf(map.row(clazz).values());
     }
 
     /**
      * Registers an BlockData instance of the given class with the given data
-     * values as default. An existing default reference will be overwritten.
+     * values as default. An existing default reference will be overwritten. If
+     * no data values are given, they are extracted from the instance.
+     *
+     * <p>
+     * If an equal instance was already registered the equal one will be used as
+     * default.
      *
      * @param clazz Class of a subtype of BlockData
      * @param instance Instance
@@ -162,20 +175,31 @@ class BlockDataFactory {
      */
     @SuppressWarnings("null")
     static <T extends BlockData> void registerDefault(final Class<T> clazz, final T instance, final IDataValueEnum... dataValues) {
-        BlockDataFactory.registerDefault(clazz, instance, Arrays.asList(dataValues));
+        Collection<IDataValueEnum> dv;
+        if (dataValues.length == 0) {
+            dv = instance.getData().asSet();
+        } else {
+            dv = Arrays.asList(dataValues);
+        }
+        BlockDataFactory.registerDefault(clazz, instance, dv);
     }
 
     /**
      * Registers an BlockData instance of the given class with the given data
      * values as default. An existing default reference will be overwritten.
      *
+     * <p>
+     * If an equal instance was already registered the equal one will be used as
+     * default.
+     *
      * @param clazz Class of a subtype of BlockData
      * @param instance Instance
      * @param dataValues Collection of data values
      */
     static <T extends BlockData> void registerDefault(final Class<T> clazz, final T instance, final Collection<IDataValueEnum> dataValues) {
-        BlockDataFactory.register(clazz, instance, dataValues);
-        defaults.put(clazz, instance);
+        final T instanceReg = BlockDataFactory.equalOrThis(clazz, instance, dataValues);
+        register(clazz, instanceReg, dataValues);
+        defaults.put(clazz, instanceReg);
     }
 
     /**
