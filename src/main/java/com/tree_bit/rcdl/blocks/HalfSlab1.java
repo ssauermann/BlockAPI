@@ -1,5 +1,8 @@
 package com.tree_bit.rcdl.blocks;
 
+import com.tree_bit.rcdl.blocks.dv.SlabPosition;
+import com.tree_bit.rcdl.blocks.dv.SlabType1;
+
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 

@@ -1,5 +1,7 @@
 package com.tree_bit.rcdl.blocks;
 
+import com.tree_bit.rcdl.blocks.dv.IDataValueEnum;
+
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Table;

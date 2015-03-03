@@ -1,4 +1,5 @@
-package com.tree_bit.rcdl.blocks;
+package com.tree_bit.rcdl.blocks.dv;
+
 
 /**
  * Representing the Minecraft colors.

@@ -1,5 +1,8 @@
 package com.tree_bit.rcdl.blocks;
 
+import com.tree_bit.rcdl.blocks.dv.IDataValueEnum;
+import com.tree_bit.rcdl.blocks.dv.IOrientationEnum;
+
 import com.google.common.base.Joiner;
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableSet;
@@ -277,7 +280,7 @@ public abstract class BlockData {
      *         the given class
      */
     @SafeVarargs
-    protected static IDataValueEnum[] validateDV(final IDataValueEnum[] data, final Class<? extends @NonNull IDataValueEnum>... classes) {
+    protected static IDataValueEnum[] validateDV(final IDataValueEnum[] data, final Class<? extends com.tree_bit.rcdl.blocks.dv.IDataValueEnum>... classes) {
         if (data.length != classes.length) {
             throw new IllegalArgumentException("The amount of given data values has to match the number of classes. Given: " + Arrays.toString(data)
                     + " Expected: " + Arrays.toString(classes));

@@ -1,4 +1,6 @@
-package com.tree_bit.rcdl.blocks;
+package com.tree_bit.rcdl.blocks.dv;
+
+import com.tree_bit.rcdl.blocks.Axis;
 
 import org.eclipse.jdt.annotation.NonNull;
 

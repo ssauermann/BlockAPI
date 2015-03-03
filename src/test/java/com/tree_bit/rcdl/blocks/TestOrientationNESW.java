@@ -3,7 +3,7 @@ package com.tree_bit.rcdl.blocks;
 import static org.junit.Assert.assertEquals;
 
 import com.tree_bit.rcdl.blocks.Axis;
-import com.tree_bit.rcdl.blocks.OrientationNESW;
+import com.tree_bit.rcdl.blocks.dv.OrientationNESW;
 
 import org.junit.Test;
 

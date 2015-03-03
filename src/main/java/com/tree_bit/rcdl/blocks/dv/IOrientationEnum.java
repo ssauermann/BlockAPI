@@ -1,4 +1,6 @@
-package com.tree_bit.rcdl.blocks;
+package com.tree_bit.rcdl.blocks.dv;
+
+import com.tree_bit.rcdl.blocks.Axis;
 
 import java.util.Set;
 
@@ -7,7 +9,7 @@ import java.util.Set;
  *
  * This includes rotating, mirroring and getting the next orientation (cyclic).
  */
-interface IOrientationEnum extends IDataValueEnum {
+public interface IOrientationEnum extends IDataValueEnum {
 
     /**
      * Rotates the orientation n times (clockwise). The new orientation is

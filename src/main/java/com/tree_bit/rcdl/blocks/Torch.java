@@ -1,5 +1,8 @@
 package com.tree_bit.rcdl.blocks;
 
+import com.tree_bit.rcdl.blocks.dv.IDataValueEnum;
+import com.tree_bit.rcdl.blocks.dv.IOrientationEnum;
+
 import com.google.common.math.IntMath;
 
 import java.util.Arrays;
