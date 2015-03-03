@@ -8,7 +8,6 @@ import com.google.common.cache.LoadingCache;
 import com.google.common.collect.ImmutableSet;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -16,7 +15,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Factory class for BlockData instances.
@@ -30,69 +28,6 @@ import java.util.Set;
  */
 class BlockDataFactory {
 
-    private static class DataKey<R, C> {
-
-        private final R row;
-        private final C column;
-
-        DataKey(final R row, final C column) {
-            this.row = row;
-            this.column = column;
-        }
-
-        static <R, C> DataKey<R, C> of(final R r, final C c) {
-            return new DataKey<R, C>(r, c);
-        }
-
-        R getRow() {
-            return this.row;
-        }
-
-        C getColumn() {
-            return this.column;
-        }
-
-        @SuppressWarnings("null")
-        @Override
-        public int hashCode() {
-            final int prime = 31;
-            int result = 1;
-            result = (prime * result) + ((this.column == null) ? 0 : this.column.hashCode());
-            result = (prime * result) + ((this.row == null) ? 0 : this.row.hashCode());
-            return result;
-        }
-
-        @SuppressWarnings({"unused", "null"})
-        @Override
-        public boolean equals(final @Nullable Object obj) {
-            if (this == obj) {
-                return true;
-            }
-            if (obj == null) {
-                return false;
-            }
-            if (!(obj instanceof DataKey)) {
-                return false;
-            }
-            final DataKey<?, ?> other = (DataKey<?, ?>) obj;
-            if (this.column == null) {
-                if (other.column != null) {
-                    return false;
-                }
-            } else if (!this.column.equals(other.column)) {
-                return false;
-            }
-            if (this.row == null) {
-                if (other.row != null) {
-                    return false;
-                }
-            } else if (!this.row.equals(other.row)) {
-                return false;
-            }
-            return true;
-        }
-    }
-
     private static class Loader extends CacheLoader<DataKey<Class<? extends BlockData>, ImmutableSet<IDataValueEnum>>, BlockData> {
 
         Loader() {}
@@ -100,7 +35,6 @@ class BlockDataFactory {
         @Override
         public BlockData load(final DataKey<Class<? extends BlockData>, ImmutableSet<IDataValueEnum>> key) throws Exception {
             final Class<? extends BlockData> clazz = key.getRow();
-            // Defensive copy
             final ImmutableSet<IDataValueEnum> dv = key.getColumn();
             return create(clazz, dv);
         }
@@ -235,17 +169,6 @@ class BlockDataFactory {
         // @NonNull IDataValueEnum[] == IDataValueEnum @NonNull[]
         final T ret = getInstance(clazz, Arrays.asList(dataValues));
         return ret;
-    }
-
-    /**
-     * Returns all BlockData instances of a given class.
-     *
-     * @param clazz Class of a subtype of BlockData
-     * @return BlockData
-     */
-    @Deprecated
-    static <T extends BlockData> Set<T> getInstances(final Class<T> clazz) {
-        throw new UnsupportedOperationException(); // TODO: Remove
     }
 
     /**

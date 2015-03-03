@@ -7,7 +7,6 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableSet;
 
-import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.Arrays;
@@ -280,7 +279,8 @@ public abstract class BlockData {
      *         the given class
      */
     @SafeVarargs
-    protected static IDataValueEnum[] validateDV(final IDataValueEnum[] data, final Class<? extends com.tree_bit.rcdl.blocks.dv.IDataValueEnum>... classes) {
+    protected static IDataValueEnum[] validateDV(final IDataValueEnum[] data,
+            final Class<? extends com.tree_bit.rcdl.blocks.dv.IDataValueEnum>... classes) {
         if (data.length != classes.length) {
             throw new IllegalArgumentException("The amount of given data values has to match the number of classes. Given: " + Arrays.toString(data)
                     + " Expected: " + Arrays.toString(classes));

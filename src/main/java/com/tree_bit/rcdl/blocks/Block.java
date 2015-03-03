@@ -3,9 +3,9 @@ package com.tree_bit.rcdl.blocks;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.common.base.Objects;
-import com.google.common.collect.HashBasedTable;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Table;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 
 import java.security.InvalidParameterException;
 import java.util.Set;
@@ -23,27 +23,31 @@ import javax.annotation.concurrent.Immutable;
 @Immutable
 public final class Block implements Comparable<Block> {
 
-    private final BlockID block;
-    private final BlockData data;
+    private static class Loader extends CacheLoader<DataKey<BlockID, BlockData>, Block> {
 
-    @SuppressWarnings("null")
-    private static final Table<BlockID, BlockData, Block> instances = HashBasedTable.create();
+        Loader() {}
 
-    static {
-        for (final BlockID id : BlockID.values()) {
-
-            if (id == null) {
-                throw new NullPointerException();
-            }
-
-            for (final BlockData data : getInstances(id)) {
-                instances.put(id, data, new Block(id, data));
-            }
+        @SuppressWarnings("synthetic-access")
+        @Override
+        public Block load(final DataKey<BlockID, BlockData> key) throws Exception {
+            final BlockID id = key.getRow();
+            final BlockData data = key.getColumn();
+            return new Block(id, data);
         }
     }
 
-    private static Set<? extends BlockData> getInstances(final BlockID id) {
-        return BlockDataFactory.getInstances(id.getDataClass());
+    private final BlockID block;
+    private final BlockData data;
+
+    private static final LoadingCache<DataKey<BlockID, BlockData>, Block> cache;
+
+    static {
+        final LoadingCache<DataKey<BlockID, BlockData>, Block> c = CacheBuilder.newBuilder().weakValues().build(new Loader());
+        if (c != null) {
+            cache = c;
+        } else {
+            throw new AssertionError();
+        }
     }
 
     private Block(final BlockID block, final BlockData data) {
@@ -63,7 +67,7 @@ public final class Block implements Comparable<Block> {
             throw new InvalidParameterException("BlockData [" + data + "] has to match the given BlockID [" + block + "]. \n(Use "
                     + block.getDataClass() + ")");
         }
-        return getOrCreate(block, data);
+        return cache.getUnchecked(DataKey.of(block, data));
     }
 
     /**
@@ -75,26 +79,11 @@ public final class Block implements Comparable<Block> {
      * @return Instance of a block
      */
     public static Block getInstance(final BlockID block) {
-        if (instances.row(block).isEmpty()) {
-            final BlockData data = BlockDataFactory.getDefaultInstance(block.getDataClass());
-            return getOrCreate(block, data);
-        }
-        return Iterables.get(instances.row(block).values(), 0);
-    }
+        @SuppressWarnings("null")
+        final Class<? extends BlockData> clazz = block.getDataClass();
+        final BlockData data = BlockDataFactory.getDefaultInstance(clazz);
 
-    @SuppressWarnings({"unused", "null"})
-    private static Block getOrCreate(final BlockID block, final BlockData data) {
-        Block instance = instances.get(block, data);
-        if (instance == null) {
-            synchronized (Block.class) {
-                instance = instances.get(block, data);
-                if (instance == null) {
-                    instance = new Block(block, data);
-                }
-                instances.put(block, data, instance);
-            }
-        }
-        return instance;
+        return cache.getUnchecked(DataKey.of(block, data));
     }
 
     /**
