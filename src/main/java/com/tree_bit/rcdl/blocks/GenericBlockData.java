@@ -44,12 +44,6 @@ public final class GenericBlockData extends BlockData {
         }
     }
 
-    static {
-        @SuppressWarnings("null")
-        final Class<GenericBlockData> clazz = GenericBlockData.class;
-        BlockDataFactory.registerDefault(clazz, new GenericBlockData(), Data.NONE);
-    }
-
     private GenericBlockData() {
         super(Data.NONE);
     }
