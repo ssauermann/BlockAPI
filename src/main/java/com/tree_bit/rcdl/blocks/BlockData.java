@@ -2,6 +2,7 @@ package com.tree_bit.rcdl.blocks;
 
 import com.tree_bit.rcdl.blocks.dv.IDataValueEnum;
 import com.tree_bit.rcdl.blocks.dv.IOrientationEnum;
+import com.tree_bit.rcdl.blocks.entities.TileEntity;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Objects;

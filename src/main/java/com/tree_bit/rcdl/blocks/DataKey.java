@@ -7,11 +7,13 @@ import org.eclipse.jdt.annotation.Nullable;
  *
  * @param <R> Row
  * @param <C> Column
+ * @param <L> Layer
  */
-class DataKey<R, C> {
+class DataKey<R, C, L> {
 
     private final R row;
     private final C column;
+    private @Nullable final L layer;
 
     /**
      * Creates a new DataKey.
@@ -22,6 +24,20 @@ class DataKey<R, C> {
     DataKey(final R row, final C column) {
         this.row = row;
         this.column = column;
+        this.layer = null;
+    }
+
+    /**
+     * Creates a new DataKey.
+     *
+     * @param row Row value
+     * @param column Column value
+     * @param layer Layer value
+     */
+    DataKey(final R row, final C column, @Nullable final L layer) {
+        this.row = row;
+        this.column = column;
+        this.layer = layer;
     }
 
 
@@ -33,8 +49,21 @@ class DataKey<R, C> {
      *
      * @return New DataKey
      */
-    static <R, C> DataKey<R, C> of(final R r, final C c) {
-        return new DataKey<R, C>(r, c);
+    static <R, C> DataKey<R, C, ?> of(final R r, final C c) {
+        return new DataKey<R, C, Object>(r, c);
+    }
+
+    /**
+     * Creates a new DataKey.
+     *
+     * @param r Row value
+     * @param c Column value
+     * @param l Layer value
+     *
+     * @return New DataKey
+     */
+    static <R, C, L> DataKey<R, C, L> of(final R r, final C c, final @Nullable L l) {
+        return new DataKey<R, C, L>(r, c, l);
     }
 
     /**
@@ -53,6 +82,16 @@ class DataKey<R, C> {
      */
     C getColumn() {
         return this.column;
+    }
+
+    /**
+     * Returns the layer value.
+     *
+     * @return Layer value
+     */
+    @Nullable
+    L getLayer() {
+        return this.layer;
     }
 
     @SuppressWarnings("null")
@@ -77,7 +116,7 @@ class DataKey<R, C> {
         if (!(obj instanceof DataKey)) {
             return false;
         }
-        final DataKey<?, ?> other = (DataKey<?, ?>) obj;
+        final DataKey<?, ?, ?> other = (DataKey<?, ?, ?>) obj;
         if (this.column == null) {
             if (other.column != null) {
                 return false;
@@ -90,6 +129,13 @@ class DataKey<R, C> {
                 return false;
             }
         } else if (!this.row.equals(other.row)) {
+            return false;
+        }
+        if (this.layer != null) {
+            if (!this.layer.equals(other.layer)) {
+                return false;
+            }
+        } else if (other.layer != null) {
             return false;
         }
         return true;

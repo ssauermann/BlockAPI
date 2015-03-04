@@ -23,13 +23,13 @@ import javax.annotation.concurrent.Immutable;
 @Immutable
 public final class Block implements Comparable<Block> {
 
-    private static class Loader extends CacheLoader<DataKey<BlockID, BlockData>, Block> {
+    private static class Loader extends CacheLoader<DataKey<BlockID, BlockData, ?>, Block> {
 
         Loader() {}
 
         @SuppressWarnings("synthetic-access")
         @Override
-        public Block load(final DataKey<BlockID, BlockData> key) throws Exception {
+        public Block load(final DataKey<BlockID, BlockData, ?> key) throws Exception {
             final BlockID id = key.getRow();
             final BlockData data = key.getColumn();
             return new Block(id, data);
@@ -39,10 +39,10 @@ public final class Block implements Comparable<Block> {
     private final BlockID block;
     private final BlockData data;
 
-    private static final LoadingCache<DataKey<BlockID, BlockData>, Block> cache;
+    private static final LoadingCache<DataKey<BlockID, BlockData, ?>, Block> cache;
 
     static {
-        final LoadingCache<DataKey<BlockID, BlockData>, Block> c = CacheBuilder.newBuilder().weakValues().build(new Loader());
+        final LoadingCache<DataKey<BlockID, BlockData, ?>, Block> c = CacheBuilder.newBuilder().weakValues().build(new Loader());
         if (c != null) {
             cache = c;
         } else {
