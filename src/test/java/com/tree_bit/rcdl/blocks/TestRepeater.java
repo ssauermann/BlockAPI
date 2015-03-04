@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import com.tree_bit.rcdl.blocks.Repeater.Delay;
+import com.tree_bit.rcdl.blocks.dv.OrientationNESW;
 
 import org.junit.Test;
 
@@ -17,6 +18,7 @@ public class TestRepeater {
     Repeater someInstance = Repeater.getInstance();
     Repeater fixedInstance = Repeater.getInstance(OrientationNESW.East, Delay.D3);
 
+    @SuppressWarnings("null")
     @Test
     public void testGetData() {
         assertEquals(Repeater.Delay.D3, this.fixedInstance.getData().get(Repeater.Delay.class));
@@ -35,13 +37,6 @@ public class TestRepeater {
         assertEquals(this.someInstance, Repeater.getInstance());
 
         assertEquals(Repeater.getInstance(OrientationNESW.North, Delay.D1), Repeater.getInstance());
-    }
-
-    @Test
-    public void testGetInstances() {
-        assertTrue(Repeater.getInstances().contains(this.fixedInstance));
-        assertTrue(Repeater.getInstances().contains(this.someInstance));
-        assertTrue(Repeater.getInstances().contains(Repeater.getInstance(OrientationNESW.West, Delay.D2)));
     }
 
     @SuppressWarnings("null")

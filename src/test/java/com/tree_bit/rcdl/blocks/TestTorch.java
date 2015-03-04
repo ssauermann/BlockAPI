@@ -16,6 +16,7 @@ public class TestTorch {
     Torch someInstance = Torch.getInstance();
     Torch fixedInstance = Torch.getInstance(TorchOrientation.South);
 
+    @SuppressWarnings("null")
     @Test
     public void testGetData() {
         assertEquals(TorchOrientation.South, this.fixedInstance.getData().get(TorchOrientation.class));
@@ -33,13 +34,6 @@ public class TestTorch {
         assertEquals(this.someInstance, Torch.getInstance());
 
         assertEquals(Torch.getInstance(TorchOrientation.Up), Torch.getInstance());
-    }
-
-    @Test
-    public void testGetInstances() {
-        assertTrue(Torch.getInstances().contains(this.fixedInstance));
-        assertTrue(Torch.getInstances().contains(this.someInstance));
-        assertTrue(Torch.getInstances().contains(Torch.getInstance(TorchOrientation.North)));
     }
 
     @SuppressWarnings("null")

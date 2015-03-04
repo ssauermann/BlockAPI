@@ -1,22 +1,16 @@
 package com.tree_bit.rcdl.blocks;
 
-import com.google.common.collect.HashBasedTable;
-import com.google.common.collect.Table;
-
-import org.jnbt.StringTag;
-
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import com.tree_bit.rcdl.blocks.dv.IDataValueEnum;
+import com.tree_bit.rcdl.blocks.dv.SignOrientation;
+import com.tree_bit.rcdl.blocks.entities.SignEntity;
+import com.tree_bit.rcdl.blocks.entities.TileEntity;
 
 
 /**
  * Data values of a 'Hanging Sign' block.
  *
  * <p>
- * Data enum: {@link SignOrientation}, {@link FormatText}
+ * Data enum: {@link SignOrientation}
  *
  * <p>
  * Allowed axes for rotation (multiple of 90 degree) are:
@@ -32,38 +26,20 @@ import java.util.Set;
  * </ul>
  * *Note: This mirroring does not include the text.
  */
-public class HangingSign extends BlockData implements HasTileEntity {
+public class HangingSign extends BlockData {
 
-    private final SignOrientation orientation;
-    private final TileEntity entity;
-
-    @SuppressWarnings("null")
-    private static Table<SignOrientation, TileEntity, HangingSign> instances = HashBasedTable.create();
-
-    private HangingSign(final SignOrientation orientation, final TileEntity entity) {
-        this.orientation = orientation;
-        this.entity = entity;
+    private HangingSign() {
+        super(SignEntity.empty(), SignOrientation.North);
     }
 
-    /**
-     * Creates a Sign TileEntity from a FormatText array.
-     *
-     * @param text Array containing text for each line of the sign. (max 4)
-     * @return TileEntity
-     *
-     * @throws IllegalArgumentException if text[] has {@literal length>4}
-     */
-    static TileEntity createEntity(final FormatText[] text) {
-        if (text.length > 4) {
-            throw new IllegalArgumentException("Sign can't have more than 4 lines of text! Given: " + text.length);
-        }
-        final TileEntity.Builder b = new TileEntity.Builder("Sign");
-        for (int i = 0; i < 4; i++) {
-            final String s = (i < text.length) ? text[i].getStringWithCodes() : "";
-            b.add(new StringTag("Text" + (i + 1), s));
-        }
-        return b.build();
+    private HangingSign(final IDataValueEnum[] values) {
+        super(SignEntity.empty(), validateDV(values, SignOrientation.class));
     }
+
+    private HangingSign(final IDataValueEnum[] values, final TileEntity entity) {
+        super(entity, validateDV(values, SignOrientation.class));
+    }
+
 
     /**
      * Returns an instance of the 'HangingSign' data with a default orientation
@@ -72,11 +48,18 @@ public class HangingSign extends BlockData implements HasTileEntity {
      * @return Instance of a HangingSign
      */
     public static HangingSign getInstance() {
-        @SuppressWarnings("null")
-        final TileEntity e = createEntity(new FormatText[0]);
+        return BlockDataFactory.getDefaultInstance(HangingSign.class);
+    }
 
-        return HangingSign.getOrCreate(SignOrientation.North, e);
-
+    /**
+     * Returns an instance of the 'HangingSign' data with the given orientation
+     * and no text.
+     *
+     * @param orientation Orientation
+     * @return Instance of a HangingSign
+     */
+    public static HangingSign getInstance(final SignOrientation orientation) {
+        return getInstance(orientation, SignEntity.empty());
     }
 
     /**
@@ -84,137 +67,13 @@ public class HangingSign extends BlockData implements HasTileEntity {
      * and text.
      *
      * @param orientation Orientation
-     * @param text Array of text containing a maximum of 4 entries (one per each
-     *        line)
+     * @param entity Sign tile entity
      * @return Instance of a HangingSign
      *
      * @throws IllegalArgumentException if text has {@literal length>4}
      */
-    public static HangingSign getInstance(final SignOrientation orientation, final FormatText[] text) {
-        final TileEntity e = createEntity(text);
-        return getOrCreate(orientation, e);
+    public static HangingSign getInstance(final SignOrientation orientation, final SignEntity entity) {
+        return BlockDataFactory.getInstance(HangingSign.class, entity, orientation);
     }
 
-    /**
-     * Returns all data instances of 'HangingSign'.
-     *
-     * @return Set of all instances
-     */
-    static Set<HangingSign> getInstances() {
-        return new HashSet<>(instances.values());
-    }
-
-    @SuppressWarnings({"null", "unused"})
-    // THIS IS NOT DEAD CODE!!!! instance can be null
-    private static HangingSign getOrCreate(final SignOrientation orientation, final TileEntity e) {
-        HangingSign instance = instances.get(orientation, e);
-        // No dead code
-        if (instance == null) {
-            synchronized (HangingSign.class) {
-                instance = instances.get(orientation, e);
-                if (instance == null) {
-                    instance = new HangingSign(orientation, e);
-                }
-                instances.put(orientation, e, instance);
-            }
-        }
-        return instance;
-    }
-
-    /**
-     * Enum of the four directions (North, East, South, West), mapping those to
-     * their block data value.
-     */
-    public enum SignOrientation implements IDataValueEnum, IOrientationEnum {
-        /** North */
-        North(2),
-        /** East */
-        East(5),
-        /** South */
-        South(3),
-        /** West */
-        West(4);
-
-        private int value;
-
-        private SignOrientation(final int value) {
-            this.value = value;
-        }
-
-        @Override
-        public SignOrientation rotate(final Axis axis, final int n) {
-            if (axis == Axis.Y) {
-                return this.next(n);
-            }
-            throw new UnsupportedOperationException("Can't rotate at this axis: " + axis);
-        }
-
-        @Override
-        public SignOrientation mirror(final Set<Axis> plain) {
-            Axis.checkPlain(plain);
-            if (plain.contains(Axis.Y) && plain.contains(Axis.X)) {
-                if (this.next(0) == South) {
-                    return North;
-                } else if (this.next(0) == North) {
-                    return South;
-                }
-            } else if (plain.contains(Axis.Y) && plain.contains(Axis.Z)) {
-                if (this.next(0) == East) {
-                    return West;
-                } else if (this.next(0) == West) {
-                    return East;
-                }
-            } else {
-                throw new UnsupportedOperationException("Can't mirror at this plain: " + Arrays.toString(plain.toArray(new Axis[] {})));
-            }
-            return this;
-        }
-
-        @Override
-        public SignOrientation next(final int i) {
-            final SignOrientation temp = values()[(this.ordinal() + i) % values().length];
-            if (temp != null) {
-                return temp;
-            }
-            throw new NullPointerException();
-        }
-
-        @Override
-        public int getDataValue() {
-            return this.value;
-        }
-    }
-
-    @Override
-    public TileEntity getTileEntity() {
-        return this.entity;
-    }
-
-    @Override
-    public BlockData rotate(final Axis axis, final int degree) {
-        if (axis != Axis.Y) {
-            throw new UnsupportedOperationException("Can't rotate at this axis: " + axis);
-        }
-
-        final int count = BlockData.toCount(degree, 90);
-        return getOrCreate(this.orientation.rotate(axis, count), this.entity);
-    }
-
-    @Override
-    public BlockData mirror(final Set<Axis> plain) {
-        Axis.checkPlain(plain);
-        if (!plain.contains(Axis.Y)) {
-            throw new UnsupportedOperationException("Can't mirror at this plain: " + Arrays.toString(plain.toArray(new Axis[] {})));
-        }
-
-        return getOrCreate(this.orientation.mirror(plain), this.entity);
-    }
-
-    @Override
-    @SuppressWarnings("null")
-    public Map<Class<? extends IDataValueEnum>, IDataValueEnum> getData() {
-        final Map<Class<? extends IDataValueEnum>, IDataValueEnum> map = new HashMap<>();
-        map.put(SignOrientation.class, this.orientation);
-        return map;
-    }
 }

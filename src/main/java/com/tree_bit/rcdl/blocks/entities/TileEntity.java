@@ -1,4 +1,4 @@
-package com.tree_bit.rcdl.blocks;
+package com.tree_bit.rcdl.blocks.entities;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -22,7 +22,7 @@ import javax.annotation.concurrent.Immutable;
  * z) are excluded from this tag list although they have to be saved in files.
  */
 @Immutable
-public final class TileEntity {
+public class TileEntity {
 
     private final ImmutableSet<Tag> tags;
 
@@ -123,6 +123,41 @@ public final class TileEntity {
         // Guava
         ImmutableSet<Tag> getTags() {
             return ImmutableSet.copyOf(this.tags.values());
+        }
+
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = (prime * result) + ((this.tags == null) ? 0 : this.tags.hashCode());
+            return result;
+        }
+
+        @Override
+        public boolean equals(final Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (obj == null) {
+                return false;
+            }
+            if (!(obj instanceof Builder)) {
+                return false;
+            }
+            final Builder other = (Builder) obj;
+            if (this.tags == null) {
+                if (other.tags != null) {
+                    return false;
+                }
+            } else if (!this.tags.equals(other.tags)) {
+                return false;
+            }
+            return true;
+        }
+
+        @Override
+        public String toString() {
+            return Objects.toStringHelper(this).addValue(this.tags).toString();
         }
     }
 

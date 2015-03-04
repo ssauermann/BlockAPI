@@ -25,11 +25,6 @@ public class TestGenericBlockData {
     }
 
     @Test
-    public void testGetInstances() {
-        assertTrue(GenericBlockData.getInstances().contains(this.instance));
-    }
-
-    @Test
     public void testMirrorSetOfAxis() {
         assertEquals(this.instance, this.instance.mirror(Axis.plain(Axis.X, Axis.Y)));
         assertEquals(this.instance, this.instance.mirror(Axis.plain(Axis.Z, Axis.Y)));
