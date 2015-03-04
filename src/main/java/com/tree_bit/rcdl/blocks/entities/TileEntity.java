@@ -1,4 +1,4 @@
-package com.tree_bit.rcdl.blocks;
+package com.tree_bit.rcdl.blocks.entities;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -22,7 +22,7 @@ import javax.annotation.concurrent.Immutable;
  * z) are excluded from this tag list although they have to be saved in files.
  */
 @Immutable
-public final class TileEntity {
+public class TileEntity {
 
     private final ImmutableSet<Tag> tags;
 

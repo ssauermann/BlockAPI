@@ -1,4 +1,4 @@
-package com.tree_bit.rcdl.blocks;
+package com.tree_bit.rcdl.blocks.entities;
 
 import com.google.common.collect.ImmutableList;
 
@@ -22,8 +22,17 @@ public final class FormatText {
      */
     @SuppressWarnings("null")
     // Guava
-    FormatText(final List<FormatString> strings) {
+    public FormatText(final List<FormatString> strings) {
         this.strings = ImmutableList.copyOf(strings);
+    }
+
+    /**
+     * Creates a new FormatText with no format.
+     *
+     * @param string String
+     */
+    public FormatText(final String string) {
+        this(ImmutableList.of(new FormatString(string)));
     }
 
     /**
