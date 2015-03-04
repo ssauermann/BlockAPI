@@ -1,6 +1,7 @@
 package com.tree_bit.rcdl.blocks.entities;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import com.tree_bit.rcdl.blocks.entities.FormatText.Format;
 import com.tree_bit.rcdl.blocks.entities.FormatText.FormatString;
@@ -8,6 +9,7 @@ import com.tree_bit.rcdl.blocks.entities.FormatText.FormatString;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -41,6 +43,16 @@ public class TestFormatText {
     public void testGetStringWithCodes() {
         final FormatText txt = FormatText.builder().append(new FormatString("Test", FormatText.Format.BOLD)).build();
         assertEquals(txt.getStringWithCodes(), "§lTest");
+    }
+
+    @SuppressWarnings("static-method")
+    @Test
+    public void testHashEqualToString() {
+        final FormatText txt = FormatText.builder().append(new FormatString("Test", FormatText.Format.BOLD)).build();
+        final HashMap<FormatText, FormatText> map = new HashMap<>();
+        map.put(txt, txt);
+        assertEquals(map.get(txt), txt);
+        assertFalse(txt.toString().contains("@"));
     }
 
 }

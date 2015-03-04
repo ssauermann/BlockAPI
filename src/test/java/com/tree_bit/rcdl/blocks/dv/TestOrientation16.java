@@ -3,7 +3,6 @@ package com.tree_bit.rcdl.blocks.dv;
 import static org.junit.Assert.assertEquals;
 
 import com.tree_bit.rcdl.blocks.Axis;
-import com.tree_bit.rcdl.blocks.dv.Orientation16;
 
 import org.junit.Test;
 
@@ -34,6 +33,12 @@ public class TestOrientation16 {
     @Test(expected = UnsupportedOperationException.class)
     public void testRotateX() {
         Orientation16.N.rotate(Axis.X, 4);
+    }
+
+    @SuppressWarnings("static-method")
+    @Test(expected = UnsupportedOperationException.class)
+    public void testRotateZ() {
+        Orientation16.N.rotate(Axis.Z, 4);
     }
 
     @SuppressWarnings({"static-method", "null"})

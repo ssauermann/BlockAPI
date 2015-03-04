@@ -2,6 +2,8 @@ package com.tree_bit.rcdl.blocks.dv;
 
 import com.tree_bit.rcdl.blocks.Axis;
 
+import com.google.common.math.IntMath;
+
 import java.util.Arrays;
 import java.util.Set;
 
@@ -56,7 +58,7 @@ public enum SignOrientation implements IOrientationEnum {
 
     @Override
     public SignOrientation next(final int i) {
-        final SignOrientation temp = values()[(this.ordinal() + i) % values().length];
+        final SignOrientation temp = values()[IntMath.mod(this.ordinal() + i, values().length)];
         if (temp != null) {
             return temp;
         }

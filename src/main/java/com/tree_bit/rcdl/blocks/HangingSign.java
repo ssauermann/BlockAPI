@@ -28,12 +28,12 @@ import com.tree_bit.rcdl.blocks.entities.TileEntity;
  */
 public class HangingSign extends BlockData {
 
-    private HangingSign(final SignOrientation orientation, final SignEntity entity) {
-        super(entity, orientation);
-    }
-
     private HangingSign() {
         super(SignEntity.empty(), SignOrientation.North);
+    }
+
+    private HangingSign(final IDataValueEnum[] values) {
+        super(SignEntity.empty(), validateDV(values, SignOrientation.class));
     }
 
     private HangingSign(final IDataValueEnum[] values, final TileEntity entity) {

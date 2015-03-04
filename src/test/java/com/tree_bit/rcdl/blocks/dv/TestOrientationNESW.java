@@ -3,7 +3,6 @@ package com.tree_bit.rcdl.blocks.dv;
 import static org.junit.Assert.assertEquals;
 
 import com.tree_bit.rcdl.blocks.Axis;
-import com.tree_bit.rcdl.blocks.dv.OrientationNESW;
 
 import org.junit.Test;
 
@@ -61,5 +60,4 @@ public class TestOrientationNESW {
     public void testGetDataValue() {
         assertEquals(1, OrientationNESW.East.getDataValue());
     }
-
 }
