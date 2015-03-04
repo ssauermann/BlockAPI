@@ -10,6 +10,7 @@ import com.google.common.collect.ImmutableSet;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -54,7 +55,8 @@ public abstract class BlockData {
     private final @Nullable TileEntity entity;
 
     /**
-     * Creates a BlockData instance and sets the data value of this instance.
+     * Creates a BlockData instance and sets the data value and the tile entity
+     * of this instance.
      *
      * <p>
      * Only one orientation data value could be added. If more than one are
@@ -123,7 +125,8 @@ public abstract class BlockData {
     }
 
     /**
-     * Creates a BlockData instance and sets the data value of this instance.
+     * Creates a BlockData instance and sets the data value and the tile entity
+     * of this instance.
      *
      * <p>
      * Only one orientation data value could be added. If more than one are
@@ -272,27 +275,32 @@ public abstract class BlockData {
      * value has to match exactly one of the given classes.
      *
      * @param data Data values
-     * @param classes Allowed data value classes
+     * @param clas Allowed data value class
+     * @param classes Additional data value classes
      * @return Checked data values
      *
      * @throws IllegalArgumentException if the given data values are invalid for
      *         the given class
      */
+    @SuppressWarnings("null")
     @SafeVarargs
-    protected static IDataValueEnum[] validateDV(final IDataValueEnum[] data,
-            final Class<? extends com.tree_bit.rcdl.blocks.dv.IDataValueEnum>... classes) {
-        if (data.length != classes.length) {
+    protected static IDataValueEnum[] validateDV(final IDataValueEnum[] data, final Class<? extends IDataValueEnum> clas,
+            final Class<? extends IDataValueEnum>... classes) {
+        final Set<Class<? extends IDataValueEnum>> clazzes = new HashSet<>();
+        clazzes.add(clas);
+        clazzes.addAll(Arrays.asList(classes));
+        if (data.length != clazzes.size()) {
             throw new IllegalArgumentException("The amount of given data values has to match the number of classes. Given: " + Arrays.toString(data)
-                    + " Expected: " + Arrays.toString(classes));
+                    + " Expected: " + clazzes.toString());
         }
         outer: for (final IDataValueEnum dv : data) {
-            for (final Class<? extends IDataValueEnum> clazz : classes) {
+            for (final Class<? extends IDataValueEnum> clazz : clazzes) {
                 if (dv.getClass() == clazz) {
                     continue outer;
                 }
             }
             throw new IllegalArgumentException("Can't construct a BlockData object with the given data values. Given: " + Arrays.toString(data)
-                    + " Expected: " + Arrays.toString(classes));
+                    + " Expected: " + clazzes.toString());
         }
         return data;
     }

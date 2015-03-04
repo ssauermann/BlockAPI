@@ -14,7 +14,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Factory class for BlockData instances.
@@ -158,16 +160,21 @@ class BlockDataFactory {
      * is unspecified and dependent of the implementation.
      *
      * @param clazz Class of a subtype of BlockData
-     * @param dataValues Data values this BlockData should have
+     * @param dataValue Data value this BlockData should have
+     * @param dataValues Additional data values this BlockData should have
      * @return BlockData of the given class with the given data values
      *
      * @throws IllegalArgumentException if the given data values are invalid for
      *         the given class
      */
-    static <T extends BlockData> T getInstance(final Class<T> clazz, final IDataValueEnum... dataValues) {
-        @SuppressWarnings("null")
+    @SuppressWarnings("null")
+    static <T extends BlockData> T getInstance(final Class<T> clazz, final IDataValueEnum dataValue, final IDataValueEnum... dataValues) {
+
+        final Set<IDataValueEnum> dvs = new HashSet<>();
+        dvs.addAll(Arrays.asList(dataValues));
+        dvs.add(dataValue);
         // @NonNull IDataValueEnum[] == IDataValueEnum @NonNull[]
-        final T ret = getInstance(clazz, Arrays.asList(dataValues));
+        final T ret = getInstance(clazz, dvs);
         return ret;
     }
 

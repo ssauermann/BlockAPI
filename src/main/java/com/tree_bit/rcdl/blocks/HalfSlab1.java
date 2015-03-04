@@ -1,13 +1,8 @@
 package com.tree_bit.rcdl.blocks;
 
+import com.tree_bit.rcdl.blocks.dv.IDataValueEnum;
 import com.tree_bit.rcdl.blocks.dv.SlabPosition;
 import com.tree_bit.rcdl.blocks.dv.SlabType1;
-
-import com.google.common.collect.HashBasedTable;
-import com.google.common.collect.Table;
-
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.annotation.concurrent.Immutable;
 
@@ -33,25 +28,16 @@ import javax.annotation.concurrent.Immutable;
 @Immutable
 public final class HalfSlab1 extends BlockData {
 
-    @SuppressWarnings("null")
-    private static Table<SlabType1, SlabPosition, HalfSlab1> instances = HashBasedTable.create();
-
-    static {
-        for (final SlabType1 type : SlabType1.values()) {
-            if (type == null) {
-                throw new NullPointerException();
-            }
-            for (final SlabPosition pos : SlabPosition.values()) {
-                if (pos == null) {
-                    throw new NullPointerException();
-                }
-                instances.put(type, pos, new HalfSlab1(type, pos));
-            }
-        }
-    }
-
     private HalfSlab1(final SlabType1 type, final SlabPosition position) {
         super(type, position);
+    }
+
+    private HalfSlab1() {
+        super(SlabType1.STONE, SlabPosition.DOWN);
+    }
+
+    private HalfSlab1(final IDataValueEnum[] values) {
+        super(validateDV(values, SlabType1.class, SlabPosition.class));
     }
 
     /**
@@ -62,8 +48,9 @@ public final class HalfSlab1 extends BlockData {
      * @param position Position
      * @return Instance of a HalfSlab (Type 1)
      */
+    @SuppressWarnings("null")
     public static HalfSlab1 getInstance(final SlabType1 type, final SlabPosition position) {
-        return instances.get(type, position);
+        return BlockDataFactory.getInstance(HalfSlab1.class, type, position);
     }
 
     /**
@@ -72,16 +59,8 @@ public final class HalfSlab1 extends BlockData {
      *
      * @return Instance of a HalfSlab (Type 1)
      */
+    @SuppressWarnings("null")
     public static HalfSlab1 getInstance() {
-        return instances.get(SlabType1.STONE, SlabPosition.DOWN);
-    }
-
-    /**
-     * Returns all data instances of 'HalfSlab1'.
-     *
-     * @return Set of all instances
-     */
-    static Set<HalfSlab1> getInstances() {
-        return new HashSet<>(instances.values());
+        return BlockDataFactory.getDefaultInstance(HalfSlab1.class);
     }
 }

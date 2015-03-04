@@ -79,7 +79,6 @@ public final class Block implements Comparable<Block> {
      * @return Instance of a block
      */
     public static Block getInstance(final BlockID block) {
-        @SuppressWarnings("null")
         final Class<? extends BlockData> clazz = block.getDataClass();
         final BlockData data = BlockDataFactory.getDefaultInstance(clazz);
 

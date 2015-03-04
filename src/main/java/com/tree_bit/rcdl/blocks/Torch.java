@@ -111,25 +111,14 @@ public final class Torch extends BlockData {
 
     }
 
-    static {
-        @SuppressWarnings("null")
-        final Class<Torch> clazz = Torch.class;
-
-        for (final TorchOrientation orientation : TorchOrientation.values()) {
-            if (orientation == null) {
-                throw new NullPointerException();
-            }
-            BlockDataFactory.register(clazz, new Torch(orientation));
-        }
-
-        BlockDataFactory.registerDefault(clazz, new Torch(TorchOrientation.Up));
+    private Torch() {
+        super(TorchOrientation.Up);
     }
 
-    private Torch(final TorchOrientation data) {
-        super(data);
+    private Torch(final TorchOrientation orientation) {
+        super(orientation);
     }
 
-    @SuppressWarnings("null")
     private Torch(final IDataValueEnum[] values) {
         super(validateDV(values, TorchOrientation.class));
     }

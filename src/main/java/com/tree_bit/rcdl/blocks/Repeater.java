@@ -52,25 +52,16 @@ public final class Repeater extends BlockData {
         }
     }
 
-    static {
-        @SuppressWarnings("null")
-        final Class<Repeater> clazz = Repeater.class;
-        for (final OrientationNESW orientation : OrientationNESW.values()) {
-            if (orientation == null) {
-                throw new NullPointerException();
-            }
-            for (final Delay delay : Delay.values()) {
-                if (delay == null) {
-                    throw new NullPointerException();
-                }
-                BlockDataFactory.register(clazz, new Repeater(orientation, delay));
-            }
-        }
-        BlockDataFactory.registerDefault(clazz, new Repeater(OrientationNESW.North, Delay.D1));
-    }
-
     private Repeater(final OrientationNESW orientation, final Delay delay) {
         super(orientation, delay);
+    }
+
+    private Repeater() {
+        super(OrientationNESW.North, Delay.D1);
+    }
+
+    private Repeater(final IDataValueEnum[] values) {
+        super(validateDV(values, OrientationNESW.class, Delay.class));
     }
 
     /**

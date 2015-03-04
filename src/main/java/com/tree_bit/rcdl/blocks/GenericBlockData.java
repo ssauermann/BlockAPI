@@ -54,7 +54,6 @@ public final class GenericBlockData extends BlockData {
         super(Data.NONE);
     }
 
-    @SuppressWarnings("null")
     private GenericBlockData(final IDataValueEnum[] values) {
         super(validateDV(values, Data.class));
     }

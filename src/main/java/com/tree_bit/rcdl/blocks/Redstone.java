@@ -76,17 +76,8 @@ public final class Redstone extends BlockData {
         }
     }
 
-    static {
-        @SuppressWarnings("null")
-        final Class<Redstone> clazz = Redstone.class;
-        for (final PowerLevel power : PowerLevel.values()) {
-            if (power == null) {
-                throw new NullPointerException();
-            }
-            BlockDataFactory.register(clazz, new Redstone(power));
-        }
-
-        BlockDataFactory.registerDefault(clazz, new Redstone(PowerLevel.L0));
+    private Redstone() {
+        super(PowerLevel.L0, DummyOrientation.NONE);
     }
 
     private Redstone(final PowerLevel level) {

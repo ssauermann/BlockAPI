@@ -1,11 +1,7 @@
 package com.tree_bit.rcdl.blocks;
 
 import com.tree_bit.rcdl.blocks.dv.Color;
-
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import com.tree_bit.rcdl.blocks.dv.IDataValueEnum;
 
 import javax.annotation.concurrent.Immutable;
 
@@ -34,19 +30,16 @@ import javax.annotation.concurrent.Immutable;
 @Immutable
 public final class ColorBlock extends BlockData {
 
-    private static Map<Color, ColorBlock> instances = new HashMap<>();
-
-    static {
-        for (final Color color : Color.values()) {
-            if (color == null) {
-                throw new NullPointerException();
-            }
-            instances.put(color, new ColorBlock(color));
-        }
-    }
-
     private ColorBlock(final Color color) {
         super(color);
+    }
+
+    private ColorBlock() {
+        super(Color.White);
+    }
+
+    private ColorBlock(final IDataValueEnum[] values) {
+        super(validateDV(values, Color.class));
     }
 
     /**
@@ -55,8 +48,9 @@ public final class ColorBlock extends BlockData {
      *
      * @return Instance of a ColorBlock
      */
+    @SuppressWarnings("null")
     public static ColorBlock getInstance() {
-        return instances.get(Color.White);
+        return BlockDataFactory.getDefaultInstance(ColorBlock.class);
     }
 
     /**
@@ -65,17 +59,9 @@ public final class ColorBlock extends BlockData {
      * @param color Color
      * @return Instance of a ColorBlock
      */
+    @SuppressWarnings("null")
     public static ColorBlock getInstance(final Color color) {
-        return instances.get(color);
-    }
-
-    /**
-     * Returns all data instances of 'ColorBlock'.
-     *
-     * @return Set of all instances
-     */
-    static Set<ColorBlock> getInstances() {
-        return new HashSet<>(instances.values());
+        return BlockDataFactory.getInstance(ColorBlock.class, color);
     }
 
 }
