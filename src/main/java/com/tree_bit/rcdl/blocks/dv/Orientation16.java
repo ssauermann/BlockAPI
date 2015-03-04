@@ -1,4 +1,6 @@
-package com.tree_bit.rcdl.blocks;
+package com.tree_bit.rcdl.blocks.dv;
+
+import com.tree_bit.rcdl.blocks.Axis;
 
 import com.google.common.math.IntMath;
 
@@ -23,7 +25,7 @@ import java.util.Set;
  * </ul>
  *
  */
-public enum Orientation16 implements IOrientationEnum, IDataValueEnum {
+public enum Orientation16 implements IOrientationEnum {
     /** South */
     S(0),
     /** South-south-west */
@@ -111,5 +113,10 @@ public enum Orientation16 implements IOrientationEnum, IDataValueEnum {
     @Override
     public int getDataValue() {
         return this.value;
+    }
+
+    @Override
+    public int getStep() {
+        return 30;
     }
 }

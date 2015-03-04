@@ -3,16 +3,11 @@ package com.tree_bit.rcdl.blocks;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.common.base.Objects;
-import com.google.common.collect.HashBasedTable;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Table;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 
-import org.eclipse.jdt.annotation.NonNull;
-
-import java.lang.reflect.InvocationTargetException;
 import java.security.InvalidParameterException;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.annotation.concurrent.Immutable;
@@ -28,38 +23,31 @@ import javax.annotation.concurrent.Immutable;
 @Immutable
 public final class Block implements Comparable<Block> {
 
-    private final BlockID block;
-    private final BlockData data;
+    private static class Loader extends CacheLoader<DataKey<BlockID, BlockData, ?>, Block> {
 
-    @SuppressWarnings("null")
-    private static final Table<BlockID, BlockData, Block> instances = HashBasedTable.create();
+        Loader() {}
 
-
-    static {
-        for (final BlockID id : BlockID.values()) {
-
-            if (id == null) {
-                throw new NullPointerException();
-            }
-
-            for (final BlockData data : getInstances(id)) {
-                instances.put(id, data, new Block(id, data));
-            }
+        @SuppressWarnings("synthetic-access")
+        @Override
+        public Block load(final DataKey<BlockID, BlockData, ?> key) throws Exception {
+            final BlockID id = key.getRow();
+            final BlockData data = key.getColumn();
+            return new Block(id, data);
         }
     }
 
-    @SuppressWarnings("unchecked")
-    private static Set<BlockData> getInstances(final BlockID id) {
-        Set<BlockData> instances;
-        try {
-            final Object o = id.getDataClass().getDeclaredMethod("getInstances").invoke((Class<?>[]) null);
+    private final BlockID block;
+    private final BlockData data;
 
-            instances = new HashSet<>((Collection<? extends BlockData>) o);
+    private static final LoadingCache<DataKey<BlockID, BlockData, ?>, Block> cache;
 
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-            throw new IllegalStateException(e);
+    static {
+        final LoadingCache<DataKey<BlockID, BlockData, ?>, Block> c = CacheBuilder.newBuilder().weakValues().build(new Loader());
+        if (c != null) {
+            cache = c;
+        } else {
+            throw new AssertionError();
         }
-        return instances;
     }
 
     private Block(final BlockID block, final BlockData data) {
@@ -79,7 +67,7 @@ public final class Block implements Comparable<Block> {
             throw new InvalidParameterException("BlockData [" + data + "] has to match the given BlockID [" + block + "]. \n(Use "
                     + block.getDataClass() + ")");
         }
-        return getOrCreate(block, data);
+        return cache.getUnchecked(DataKey.of(block, data));
     }
 
     /**
@@ -90,34 +78,11 @@ public final class Block implements Comparable<Block> {
      * @param block Id of the block
      * @return Instance of a block
      */
-    @SuppressWarnings("null")
     public static Block getInstance(final BlockID block) {
-        if (instances.row(block).isEmpty()) {
-            @NonNull
-            BlockData data;
-            try {
-                data = (BlockData) block.getDataClass().getDeclaredMethod("getInstance").invoke((Class<?>[]) null);
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-                throw new IllegalStateException(e);
-            }
-            return getOrCreate(block, data);
-        }
-        return Iterables.get(instances.row(block).values(), 0);
-    }
+        final Class<? extends BlockData> clazz = block.getDataClass();
+        final BlockData data = BlockDataFactory.getDefaultInstance(clazz);
 
-    @SuppressWarnings({"unused", "null"})
-    private static Block getOrCreate(final BlockID block, final BlockData data) {
-        Block instance = instances.get(block, data);
-        if (instance == null) {
-            synchronized (Block.class) {
-                instance = instances.get(block, data);
-                if (instance == null) {
-                    instance = new Block(block, data);
-                }
-                instances.put(block, data, instance);
-            }
-        }
-        return instance;
+        return cache.getUnchecked(DataKey.of(block, data));
     }
 
     /**

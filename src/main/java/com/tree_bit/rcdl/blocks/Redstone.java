@@ -1,10 +1,7 @@
 package com.tree_bit.rcdl.blocks;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import com.tree_bit.rcdl.blocks.dv.DummyOrientation;
+import com.tree_bit.rcdl.blocks.dv.IDataValueEnum;
 
 import javax.annotation.concurrent.Immutable;
 
@@ -79,21 +76,16 @@ public final class Redstone extends BlockData {
         }
     }
 
-    private static Map<PowerLevel, Redstone> instances = new HashMap<>();
-
-    static {
-        for (final PowerLevel power : PowerLevel.values()) {
-            if (power == null) {
-                throw new NullPointerException();
-            }
-            instances.put(power, new Redstone(power));
-        }
+    private Redstone() {
+        super(PowerLevel.L0, DummyOrientation.NONE);
     }
 
-    private final PowerLevel level;
-
     private Redstone(final PowerLevel level) {
-        this.level = level;
+        super(level, DummyOrientation.NONE);
+    }
+
+    private Redstone(final IDataValueEnum[] values) {
+        super(validateDV(values, PowerLevel.class, DummyOrientation.class));
     }
 
     /**
@@ -103,7 +95,9 @@ public final class Redstone extends BlockData {
      * @return Instance of 'Redstone Wire' data
      */
     public static Redstone getInstance() {
-        return getInstance(PowerLevel.L0);
+        @SuppressWarnings("null")
+        final Class<Redstone> clazz = Redstone.class;
+        return BlockDataFactory.getDefaultInstance(clazz);
     }
 
     /**
@@ -114,41 +108,10 @@ public final class Redstone extends BlockData {
      * @return Instance of 'Redstone Wire' data
      */
     public static Redstone getInstance(final PowerLevel level) {
-        return instances.get(level);
+        @SuppressWarnings("null")
+        final Class<Redstone> clazz = Redstone.class;
+        return BlockDataFactory.getInstance(clazz, level, DummyOrientation.NONE);
     }
 
-    /**
-     * Returns all data instances of 'Redstone Wire'.
-     *
-     * @return Set of all instances
-     */
-    static Set<Redstone> getInstances() {
-        return new HashSet<>(instances.values());
-    }
 
-    @Override
-    public Redstone mirror(final Set<Axis> plain) {
-        Axis.checkPlain(plain);
-        if (!plain.contains(Axis.Y)) {
-            throw new UnsupportedOperationException("Can't mirror at this plain: " + Arrays.toString(plain.toArray(new Axis[] {})));
-        }
-        return this;
-    }
-
-    @Override
-    public Redstone rotate(final Axis axis, final int degree) {
-        if (axis != Axis.Y) {
-            throw new UnsupportedOperationException("Can't rotate at this axis: " + axis);
-        }
-        BlockData.toCount(degree, 90); // Validates 'degree' as multiple of 90
-        return this;
-    }
-
-    @Override
-    @SuppressWarnings("null")
-    public Map<Class<? extends IDataValueEnum>, IDataValueEnum> getData() {
-        final Map<Class<? extends IDataValueEnum>, IDataValueEnum> map = new HashMap<>();
-        map.put(PowerLevel.class, this.level);
-        return map;
-    }
 }

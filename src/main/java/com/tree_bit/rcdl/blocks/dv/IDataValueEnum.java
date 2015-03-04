@@ -1,4 +1,4 @@
-package com.tree_bit.rcdl.blocks;
+package com.tree_bit.rcdl.blocks.dv;
 
 /**
  * Defining methods a enum containing Minecraft data values has to implement.

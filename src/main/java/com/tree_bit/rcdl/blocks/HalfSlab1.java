@@ -1,12 +1,8 @@
 package com.tree_bit.rcdl.blocks;
 
-import com.google.common.collect.HashBasedTable;
-import com.google.common.collect.Table;
-
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import com.tree_bit.rcdl.blocks.dv.IDataValueEnum;
+import com.tree_bit.rcdl.blocks.dv.SlabPosition;
+import com.tree_bit.rcdl.blocks.dv.SlabType1;
 
 import javax.annotation.concurrent.Immutable;
 
@@ -32,29 +28,16 @@ import javax.annotation.concurrent.Immutable;
 @Immutable
 public final class HalfSlab1 extends BlockData {
 
-    private final SlabType1 type;
-    private final SlabPosition position;
-
-    @SuppressWarnings("null")
-    private static Table<SlabType1, SlabPosition, HalfSlab1> instances = HashBasedTable.create();
-
-    static {
-        for (final SlabType1 type : SlabType1.values()) {
-            if (type == null) {
-                throw new NullPointerException();
-            }
-            for (final SlabPosition pos : SlabPosition.values()) {
-                if (pos == null) {
-                    throw new NullPointerException();
-                }
-                instances.put(type, pos, new HalfSlab1(type, pos));
-            }
-        }
+    private HalfSlab1(final SlabType1 type, final SlabPosition position) {
+        super(type, position);
     }
 
-    private HalfSlab1(final SlabType1 type, final SlabPosition position) {
-        this.type = type;
-        this.position = position;
+    private HalfSlab1() {
+        super(SlabType1.STONE, SlabPosition.DOWN);
+    }
+
+    private HalfSlab1(final IDataValueEnum[] values) {
+        super(validateDV(values, SlabType1.class, SlabPosition.class));
     }
 
     /**
@@ -65,8 +48,9 @@ public final class HalfSlab1 extends BlockData {
      * @param position Position
      * @return Instance of a HalfSlab (Type 1)
      */
+    @SuppressWarnings("null")
     public static HalfSlab1 getInstance(final SlabType1 type, final SlabPosition position) {
-        return instances.get(type, position);
+        return BlockDataFactory.getInstance(HalfSlab1.class, type, position);
     }
 
     /**
@@ -75,41 +59,8 @@ public final class HalfSlab1 extends BlockData {
      *
      * @return Instance of a HalfSlab (Type 1)
      */
-    public static HalfSlab1 getInstance() {
-        return instances.get(SlabType1.STONE, SlabPosition.DOWN);
-    }
-
-    /**
-     * Returns all data instances of 'HalfSlab1'.
-     *
-     * @return Set of all instances
-     */
-    static Set<HalfSlab1> getInstances() {
-        return new HashSet<>(instances.values());
-    }
-
-    @Override
-    public BlockData rotate(final Axis axis, final int degree) {
-        if (axis == Axis.Y) {
-            final int count = BlockData.toCount(degree, 90);
-            return getInstance(this.type, this.position.rotate(axis, count));
-        }
-        final int count = BlockData.toCount(degree, 180);
-        return getInstance(this.type, this.position.rotate(axis, count));
-    }
-
-    @Override
-    public BlockData mirror(final Set<Axis> plain) {
-        Axis.checkPlain(plain);
-        return getInstance(this.type, this.position.mirror(plain));
-    }
-
-    @Override
     @SuppressWarnings("null")
-    public Map<Class<? extends IDataValueEnum>, IDataValueEnum> getData() {
-        final Map<Class<? extends IDataValueEnum>, IDataValueEnum> map = new HashMap<>();
-        map.put(SlabPosition.class, this.position);
-        map.put(SlabType1.class, this.type);
-        return map;
+    public static HalfSlab1 getInstance() {
+        return BlockDataFactory.getDefaultInstance(HalfSlab1.class);
     }
 }

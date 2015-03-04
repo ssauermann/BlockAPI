@@ -17,6 +17,7 @@ public class TestRedstone {
     Redstone someInstance = Redstone.getInstance();
     Redstone fixedInstance = Redstone.getInstance(PowerLevel.L10);
 
+    @SuppressWarnings("null")
     @Test
     public void testGetData() {
         assertEquals(PowerLevel.L10, this.fixedInstance.getData().get(PowerLevel.class));
@@ -34,13 +35,6 @@ public class TestRedstone {
     public void testGetInstancePowerLevel() {
         assertTrue(this.fixedInstance == Redstone.getInstance(PowerLevel.L10));
         assertEquals(this.fixedInstance, Redstone.getInstance(PowerLevel.L10));
-    }
-
-    @Test
-    public void testGetInstances() {
-        assertTrue(Redstone.getInstances().contains(this.fixedInstance));
-        assertTrue(Redstone.getInstances().contains(this.someInstance));
-        assertTrue(Redstone.getInstances().contains(Redstone.getInstance(PowerLevel.L5)));
     }
 
     @SuppressWarnings("null")

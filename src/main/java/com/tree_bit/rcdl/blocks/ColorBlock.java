@@ -1,9 +1,7 @@
 package com.tree_bit.rcdl.blocks;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import com.tree_bit.rcdl.blocks.dv.Color;
+import com.tree_bit.rcdl.blocks.dv.IDataValueEnum;
 
 import javax.annotation.concurrent.Immutable;
 
@@ -32,21 +30,16 @@ import javax.annotation.concurrent.Immutable;
 @Immutable
 public final class ColorBlock extends BlockData {
 
-    private static Map<Color, ColorBlock> instances = new HashMap<>();
-
-    static {
-        for (final Color color : Color.values()) {
-            if (color == null) {
-                throw new NullPointerException();
-            }
-            instances.put(color, new ColorBlock(color));
-        }
+    private ColorBlock(final Color color) {
+        super(color);
     }
 
-    private final Color color;
+    private ColorBlock() {
+        super(Color.White);
+    }
 
-    private ColorBlock(final Color color) {
-        this.color = color;
+    private ColorBlock(final IDataValueEnum[] values) {
+        super(validateDV(values, Color.class));
     }
 
     /**
@@ -55,8 +48,9 @@ public final class ColorBlock extends BlockData {
      *
      * @return Instance of a ColorBlock
      */
+    @SuppressWarnings("null")
     public static ColorBlock getInstance() {
-        return instances.get(Color.White);
+        return BlockDataFactory.getDefaultInstance(ColorBlock.class);
     }
 
     /**
@@ -65,37 +59,9 @@ public final class ColorBlock extends BlockData {
      * @param color Color
      * @return Instance of a ColorBlock
      */
-    public static ColorBlock getInstance(final Color color) {
-        return instances.get(color);
-    }
-
-    /**
-     * Returns all data instances of 'ColorBlock'.
-     *
-     * @return Set of all instances
-     */
-    static Set<ColorBlock> getInstances() {
-        return new HashSet<>(instances.values());
-    }
-
-    @Override
-    public BlockData rotate(final Axis axis, final int degree) {
-        toCount(degree, 90);
-        return this; // No rotation
-    }
-
-    @Override
-    public BlockData mirror(final Set<Axis> plain) {
-        Axis.checkPlain(plain);
-        return this;
-    }
-
-    @Override
     @SuppressWarnings("null")
-    public Map<Class<? extends IDataValueEnum>, IDataValueEnum> getData() {
-        final Map<Class<? extends IDataValueEnum>, IDataValueEnum> map = new HashMap<>();
-        map.put(Color.class, this.color);
-        return map;
+    public static ColorBlock getInstance(final Color color) {
+        return BlockDataFactory.getInstance(ColorBlock.class, color);
     }
 
 }

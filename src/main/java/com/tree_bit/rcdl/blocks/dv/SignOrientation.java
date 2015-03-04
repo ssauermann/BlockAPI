@@ -1,4 +1,6 @@
-package com.tree_bit.rcdl.blocks;
+package com.tree_bit.rcdl.blocks.dv;
+
+import com.tree_bit.rcdl.blocks.Axis;
 
 import com.google.common.math.IntMath;
 
@@ -8,51 +10,25 @@ import java.util.Set;
 /**
  * Enum of the four directions (North, East, South, West), mapping those to
  * their block data value.
- *
- * <p>
- * This orientation is used by:
- * <ul>
- * <li>{@link Repeater}</li>
- * <li>{@link Comparator}</li>
- * </ul>
- *
- * <p>
- * Allowed axes for rotation (multiple of 90 degree) are:
- * <ul>
- * <li>y</li>
- * </ul>
- *
- * <p>
- * Allowed plains for mirroring are:
- * <ul>
- * <li>x-y</li>
- * <li>z-y</li>
- * </ul>
  */
-public enum OrientationNESW implements IDataValueEnum, IOrientationEnum {
-
-    /** The Facing north. */
-    North(0),
-    /** The Facing east. */
-    East(1),
-    /** The Facing south. */
-    South(2),
-    /** The Facing west. */
-    West(3);
+public enum SignOrientation implements IOrientationEnum {
+    /** North */
+    North(2),
+    /** East */
+    East(5),
+    /** South */
+    South(3),
+    /** West */
+    West(4);
 
     private int value;
 
-    private OrientationNESW(final int value) {
+    private SignOrientation(final int value) {
         this.value = value;
     }
 
     @Override
-    public int getDataValue() {
-        return this.value;
-    }
-
-    @Override
-    public OrientationNESW rotate(final Axis axis, final int n) {
+    public SignOrientation rotate(final Axis axis, final int n) {
         if (axis == Axis.Y) {
             return this.next(n);
         }
@@ -60,7 +36,7 @@ public enum OrientationNESW implements IDataValueEnum, IOrientationEnum {
     }
 
     @Override
-    public OrientationNESW mirror(final Set<Axis> plain) {
+    public SignOrientation mirror(final Set<Axis> plain) {
         Axis.checkPlain(plain);
         if (plain.contains(Axis.Y) && plain.contains(Axis.X)) {
             if (this.next(0) == South) {
@@ -81,11 +57,21 @@ public enum OrientationNESW implements IDataValueEnum, IOrientationEnum {
     }
 
     @Override
-    public OrientationNESW next(final int i) {
-        final OrientationNESW temp = values()[IntMath.mod((this.ordinal() + i), 4)];
+    public SignOrientation next(final int i) {
+        final SignOrientation temp = values()[IntMath.mod(this.ordinal() + i, values().length)];
         if (temp != null) {
             return temp;
         }
         throw new NullPointerException();
+    }
+
+    @Override
+    public int getDataValue() {
+        return this.value;
+    }
+
+    @Override
+    public int getStep() {
+        return 30;
     }
 }
