@@ -290,9 +290,9 @@ public abstract class BlockData {
                 if (dv.getClass() == clazz) {
                     continue outer;
                 }
-                throw new IllegalArgumentException("Can't construct a BlockData object with the given data values. Given: " + Arrays.toString(data)
-                        + " Expected: " + Arrays.toString(classes));
             }
+            throw new IllegalArgumentException("Can't construct a BlockData object with the given data values. Given: " + Arrays.toString(data)
+                    + " Expected: " + Arrays.toString(classes));
         }
         return data;
     }
