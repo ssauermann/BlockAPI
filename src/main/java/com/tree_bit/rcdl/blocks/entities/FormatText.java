@@ -1,5 +1,6 @@
 package com.tree_bit.rcdl.blocks.entities;
 
+import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 
 import java.util.LinkedList;
@@ -116,12 +117,28 @@ public final class FormatText {
         }
 
         /**
+         * Adds a unformatted String to the end of this FormatText.
+         *
+         * @param string String to add
+         * @return Builder for chaining
+         */
+        public Builder append(final String string) {
+            this.strings.add(new FormatString(string));
+            return this;
+        }
+
+        /**
          * Finishes building and returns an instance of FormatText.
          *
          * @return FormatText instance
          */
         public FormatText build() {
             return new FormatText(this.strings);
+        }
+
+        @Override
+        public String toString() {
+            return Objects.toStringHelper(this).addValue(this.strings).toString();
         }
 
     }
@@ -171,6 +188,45 @@ public final class FormatText {
          */
         public Format getFormat() {
             return this.format;
+        }
+
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = (prime * result) + ((this.format == null) ? 0 : this.format.hashCode());
+            result = (prime * result) + ((this.string == null) ? 0 : this.string.hashCode());
+            return result;
+        }
+
+        @Override
+        public boolean equals(final Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (obj == null) {
+                return false;
+            }
+            if (!(obj instanceof FormatString)) {
+                return false;
+            }
+            final FormatString other = (FormatString) obj;
+            if (this.format != other.format) {
+                return false;
+            }
+            if (this.string == null) {
+                if (other.string != null) {
+                    return false;
+                }
+            } else if (!this.string.equals(other.string)) {
+                return false;
+            }
+            return true;
+        }
+
+        @Override
+        public String toString() {
+            return Objects.toStringHelper(this).add("String", this.string).add("Format", this.format).toString();
         }
     }
 
@@ -245,5 +301,40 @@ public final class FormatText {
         public char getChar() {
             return this.c;
         }
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = (prime * result) + ((this.strings == null) ? 0 : this.strings.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof FormatText)) {
+            return false;
+        }
+        final FormatText other = (FormatText) obj;
+        if (this.strings == null) {
+            if (other.strings != null) {
+                return false;
+            }
+        } else if (!this.strings.equals(other.strings)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this).addValue(this.strings).toString();
     }
 }
