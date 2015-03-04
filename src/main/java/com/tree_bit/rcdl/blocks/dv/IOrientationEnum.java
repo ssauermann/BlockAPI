@@ -48,7 +48,7 @@ public interface IOrientationEnum extends IDataValueEnum {
      *         the allowed step
      */
     default IOrientationEnum rotateDegree(final Axis axis, final int degree) {
-        return rotate(axis, IOrientationEnum.toCount(degree, getStep()));
+        return this.rotate(axis, IOrientationEnum.toCount(degree, this.getStep()));
     }
 
     /**

@@ -3,7 +3,6 @@ package com.tree_bit.rcdl.blocks;
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableSet;
 
-import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.Collection;
@@ -107,7 +106,8 @@ final class SingleInstanceSet<T> implements Iterable<T> {
         }
     }
 
-    private @Nullable Class<? extends T> checkConstraints(final T obj) {
+    @Nullable
+    private Class<? extends T> checkConstraints(final T obj) {
         for (final Class<? extends T> constraint : this.constraints) {
             if (constraint.isInstance(obj)) {
                 return constraint;
@@ -143,7 +143,7 @@ final class SingleInstanceSet<T> implements Iterable<T> {
     public <X extends T> X get(final Class<X> clazz) {
         final T ret = this.map.get(clazz);
         if (ret.getClass() == clazz) {
-            return (@NonNull X) ret;
+            return (X) ret;
         }
         throw new AssertionError("Can't cast " + ret + " to " + clazz.getName());
     }
@@ -184,7 +184,7 @@ final class SingleInstanceSet<T> implements Iterable<T> {
      * @param collection Collection
      * @return Set
      */
-    public static <@NonNull E> SingleInstanceSet<E> copyOf(final Collection<E> collection) {
+    public static <E> SingleInstanceSet<E> copyOf(final Collection<E> collection) {
         return copyOf(collection, new HashSet<>());
     }
 
@@ -196,7 +196,7 @@ final class SingleInstanceSet<T> implements Iterable<T> {
      * @param constraints Set of constraints
      * @return Set
      */
-    public static <@NonNull E> SingleInstanceSet<E> copyOf(final Collection<E> collection, final Set<Class<? extends E>> constraints) {
+    public static <E> SingleInstanceSet<E> copyOf(final Collection<E> collection, final Set<Class<? extends E>> constraints) {
         final SingleInstanceSet<E> set = new SingleInstanceSet<>(constraints);
         for (final E element : collection) {
             set.add(element);
@@ -213,7 +213,7 @@ final class SingleInstanceSet<T> implements Iterable<T> {
      * @return Set
      */
     @SuppressWarnings("null")
-    public static <@NonNull E> SingleInstanceSet<E> copyOf(final Collection<E> collection, final Class<? extends E> constraint) {
+    public static <E> SingleInstanceSet<E> copyOf(final Collection<E> collection, final Class<? extends E> constraint) {
         return copyOf(collection, ImmutableSet.of(constraint));
     }
 
@@ -232,7 +232,7 @@ final class SingleInstanceSet<T> implements Iterable<T> {
     }
 
     @Override
-    public boolean equals(final @Nullable Object obj) {
+    public boolean equals(@Nullable final Object obj) {
         if (this == obj) {
             return true;
         }

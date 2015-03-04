@@ -2,8 +2,6 @@ package com.tree_bit.rcdl.blocks.dv;
 
 import com.tree_bit.rcdl.blocks.Axis;
 
-import org.eclipse.jdt.annotation.NonNull;
-
 import java.util.Arrays;
 import java.util.Set;
 
@@ -35,7 +33,7 @@ public enum DummyOrientation implements IOrientationEnum {
     }
 
     @Override
-    public @NonNull IOrientationEnum rotate(final Axis axis, final int n) {
+    public IOrientationEnum rotate(final Axis axis, final int n) {
         if (axis == Axis.Y) {
             return this.next(n);
         }
@@ -43,7 +41,7 @@ public enum DummyOrientation implements IOrientationEnum {
     }
 
     @Override
-    public @NonNull IOrientationEnum mirror(@NonNull final Set<@NonNull Axis> plain) {
+    public IOrientationEnum mirror(final Set<Axis> plain) {
         Axis.checkPlain(plain);
         if (plain.contains(Axis.Y) && (plain.contains(Axis.X) || plain.contains(Axis.Z))) {
             return this;
@@ -52,7 +50,7 @@ public enum DummyOrientation implements IOrientationEnum {
     }
 
     @Override
-    public @NonNull IOrientationEnum next(final int n) {
+    public IOrientationEnum next(final int n) {
         return this;
     }
 

@@ -53,7 +53,8 @@ public abstract class BlockData {
     private final SingleInstanceSet<IDataValueEnum> data;
 
 
-    private final @Nullable TileEntity entity;
+    @Nullable
+    private final TileEntity entity;
 
     /**
      * Creates a BlockData instance and sets the data value and the tile entity
@@ -68,7 +69,7 @@ public abstract class BlockData {
      * a default Data object. Additional a constructor which accepts an
      * {@link IDataValueEnum} array has to exist. The validity of the array
      * should be checked by
-     * {@link BlockData#validateDV(IDataValueEnum[], Class...)}. A default
+     * {@link #validateDV(IDataValueEnum[], Class, Class...)}. A default
      * instance of each class should be registered at the
      * {@link BlockDataFactory}
      *
@@ -93,7 +94,7 @@ public abstract class BlockData {
      * a default Data object. Additional a constructor which accepts an
      * {@link IDataValueEnum} array has to exist. The validity of the array
      * should be checked by
-     * {@link BlockData#validateDV(IDataValueEnum[], Class...)}. A default
+     * {@link #validateDV(IDataValueEnum[], Class, Class...)}. A default
      * instance of each class should be registered at the
      * {@link BlockDataFactory}
      *
@@ -115,7 +116,7 @@ public abstract class BlockData {
      * a default Data object. Additional a constructor which accepts an
      * {@link IDataValueEnum} array has to exist. The validity of the array
      * should be checked by
-     * {@link BlockData#validateDV(IDataValueEnum[], Class...)}. A default
+     * {@link #validateDV(IDataValueEnum[], Class, Class...)}. A default
      * instance of each class should be registered at the
      * {@link BlockDataFactory}
      *
@@ -138,7 +139,7 @@ public abstract class BlockData {
      * a default Data object. Additional a constructor which accepts an
      * {@link IDataValueEnum} array has to exist. The validity of the array
      * should be checked by
-     * {@link BlockData#validateDV(IDataValueEnum[], Class...)}. A default
+     * {@link #validateDV(IDataValueEnum[], Class, Class...)}. A default
      * instance of each class should be registered at the
      * {@link BlockDataFactory}
      *
@@ -316,7 +317,7 @@ public abstract class BlockData {
     }
 
     @Override
-    public boolean equals(final @Nullable Object obj) {
+    public boolean equals(@Nullable final Object obj) {
         if (this == obj) {
             return true;
         }

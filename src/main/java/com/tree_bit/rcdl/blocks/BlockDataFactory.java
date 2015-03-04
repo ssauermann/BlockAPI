@@ -8,7 +8,6 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.collect.ImmutableSet;
 
-import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.lang.reflect.Constructor;
@@ -87,7 +86,7 @@ class BlockDataFactory {
         final SingleInstanceSet<IDataValueEnum> dv = SingleInstanceSet.copyOf(dataValues);
         final BlockData current = cache.getIfPresent(DataKey.of(clazz, dv.asSet()));
         if (instance.equals(current)) {
-            return (@NonNull T) current;
+            return (T) current;
         }
         return instance;
     }
@@ -100,7 +99,7 @@ class BlockDataFactory {
      * @param instance Instance
      * @param dataValues Collection of data values
      */
-    static <T extends BlockData> void register(final Class<T> clazz, final T instance, final @Nullable TileEntity entity,
+    static <T extends BlockData> void register(final Class<T> clazz, final T instance, @Nullable final TileEntity entity,
             final Collection<IDataValueEnum> dataValues) {
         // Defensive copy
         final SingleInstanceSet<IDataValueEnum> dv = SingleInstanceSet.copyOf(dataValues);
@@ -119,7 +118,7 @@ class BlockDataFactory {
      */
     @SuppressWarnings("null")
     // @NonNull IDataValueEnum[] == IDataValueEnum @NonNull[]
-    static <T extends BlockData> void register(final Class<T> clazz, final T instance, final @Nullable TileEntity entity,
+    static <T extends BlockData> void register(final Class<T> clazz, final T instance, @Nullable final TileEntity entity,
             final IDataValueEnum... dataValues) {
         Collection<IDataValueEnum> dv;
         if (dataValues.length == 0) {
@@ -148,7 +147,7 @@ class BlockDataFactory {
      *         the given class
      */
     // Return value of map can be null
-    static <T extends BlockData> T getInstance(final Class<T> clazz, final @Nullable TileEntity entity, final Collection<IDataValueEnum> dataValues) {
+    static <T extends BlockData> T getInstance(final Class<T> clazz, @Nullable final TileEntity entity, final Collection<IDataValueEnum> dataValues) {
 
         // Defensive copy
         final ImmutableSet<IDataValueEnum> dv = SingleInstanceSet.copyOf(dataValues).asSet();
@@ -187,7 +186,7 @@ class BlockDataFactory {
      *         the given class
      */
     @SuppressWarnings("null")
-    static <T extends BlockData> T getInstance(final Class<T> clazz, final @Nullable TileEntity entity, final IDataValueEnum dataValue,
+    static <T extends BlockData> T getInstance(final Class<T> clazz, @Nullable final TileEntity entity, final IDataValueEnum dataValue,
             final IDataValueEnum... dataValues) {
 
         final Set<IDataValueEnum> dvs = new HashSet<>();
@@ -212,7 +211,7 @@ class BlockDataFactory {
      * @param dataValues Data values
      */
     @SuppressWarnings("null")
-    static <T extends BlockData> void registerDefault(final Class<T> clazz, final T instance, final @Nullable TileEntity entity,
+    static <T extends BlockData> void registerDefault(final Class<T> clazz, final T instance, @Nullable final TileEntity entity,
             final IDataValueEnum... dataValues) {
         Collection<IDataValueEnum> dv;
         if (dataValues.length == 0) {
@@ -239,7 +238,7 @@ class BlockDataFactory {
      * @param instance Instance
      * @param dataValues Collection of data values
      */
-    static <T extends BlockData> void registerDefault(final Class<T> clazz, final T instance, final @Nullable TileEntity entity,
+    static <T extends BlockData> void registerDefault(final Class<T> clazz, final T instance, @Nullable final TileEntity entity,
             final Collection<IDataValueEnum> dataValues) {
         final T instanceReg = BlockDataFactory.equalOrThis(clazz, instance, dataValues);
         register(clazz, instanceReg, entity, dataValues);

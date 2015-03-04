@@ -13,7 +13,8 @@ class DataKey<R, C, L> {
 
     private final R row;
     private final C column;
-    private @Nullable final L layer;
+    @Nullable
+    private final L layer;
 
     /**
      * Creates a new DataKey.
@@ -62,7 +63,7 @@ class DataKey<R, C, L> {
      *
      * @return New DataKey
      */
-    static <R, C, L> DataKey<R, C, L> of(final R r, final C c, final @Nullable L l) {
+    static <R, C, L> DataKey<R, C, L> of(final R r, final C c, @Nullable final L l) {
         return new DataKey<R, C, L>(r, c, l);
     }
 
@@ -106,7 +107,7 @@ class DataKey<R, C, L> {
 
     @SuppressWarnings({"unused", "null"})
     @Override
-    public boolean equals(final @Nullable Object obj) {
+    public boolean equals(@Nullable final Object obj) {
         if (this == obj) {
             return true;
         }
