@@ -1,12 +1,10 @@
 package com.tree_bit.rcdl.blocks;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 
 /**
  * Mapping of block names to id.
  */
-// Data class for each enum has to be defined -> not null
-@SuppressWarnings("null")
 public enum BlockID {
     /** Air */
     AIR(0),
@@ -437,7 +435,7 @@ public enum BlockID {
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(this).addValue(super.toString()).add("id", this.id).toString();
+        return MoreObjects.toStringHelper(this).addValue(super.toString()).add("id", this.id).toString();
     }
 
 }

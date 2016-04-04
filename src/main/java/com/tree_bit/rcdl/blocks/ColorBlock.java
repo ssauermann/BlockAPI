@@ -3,7 +3,8 @@ package com.tree_bit.rcdl.blocks;
 import com.tree_bit.rcdl.blocks.dv.Color;
 import com.tree_bit.rcdl.blocks.dv.IDataValueEnum;
 
-import javax.annotation.concurrent.Immutable;
+import jdk.nashorn.internal.ir.annotations.Immutable;
+
 
 /**
  * Data values of a colored block.
@@ -48,7 +49,6 @@ public final class ColorBlock extends BlockData {
      *
      * @return Instance of a ColorBlock
      */
-    @SuppressWarnings("null")
     public static ColorBlock getInstance() {
         return BlockDataFactory.getDefaultInstance(ColorBlock.class);
     }
@@ -59,7 +59,6 @@ public final class ColorBlock extends BlockData {
      * @param color Color
      * @return Instance of a ColorBlock
      */
-    @SuppressWarnings("null")
     public static ColorBlock getInstance(final Color color) {
         return BlockDataFactory.getInstance(ColorBlock.class, color);
     }

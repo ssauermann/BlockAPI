@@ -8,7 +8,7 @@ import org.junit.Test;
 import java.util.EnumSet;
 
 
-@SuppressWarnings({"javadoc", "null"})
+@SuppressWarnings("javadoc")
 public class TestGenericBlockData {
 
     private final GenericBlockData instance = GenericBlockData.getInstance();

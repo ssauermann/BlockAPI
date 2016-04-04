@@ -2,6 +2,8 @@ package com.tree_bit.rcdl.blocks;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 import java.util.EnumSet;
 import java.util.Set;
 
@@ -25,15 +27,14 @@ public enum Axis {
 
 
     /**
-     * Creates a EnumSet with the two given axes representing a plain in the
+     * Creates an EnumSet with the two given axes representing a plain in the
      * coordinate system.
      *
      * @param a First axis
      * @param b Second axis (mustn't be identical with the first one)
      * @return Plain spanned by the two given axes.
      */
-    // Checked by Guava
-    @SuppressWarnings("null")
+    @NonNull
     public static EnumSet<Axis> plain(final Axis a, final Axis b) {
         if (a == b) {
             throw new IllegalArgumentException("The two axes mustn't be identical: " + a);
@@ -47,6 +48,7 @@ public enum Axis {
      * @param plain Plain to check
      * @return Given plain
      */
+    @NonNull
     public static Set<Axis> checkPlain(final Set<Axis> plain) {
         if (plain.size() != 2) {
             throw new IllegalArgumentException("A plain has to have exactly two distinct axes. Not: " + plain.size());

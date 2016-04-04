@@ -1,12 +1,11 @@
 package com.tree_bit.rcdl.blocks;
 
-import com.tree_bit.rcdl.blocks.dv.IDataValueEnum;
-import com.tree_bit.rcdl.blocks.entities.TileEntity;
-
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.collect.ImmutableSet;
+import com.tree_bit.rcdl.blocks.dv.IDataValueEnum;
+import com.tree_bit.rcdl.blocks.entities.TileEntity;
 
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -43,7 +42,8 @@ class BlockDataFactory {
             return create(clazz, dv, entity);
         }
 
-        private static <T extends BlockData> T create(final Class<T> clazz, final ImmutableSet<IDataValueEnum> dv, @Nullable final TileEntity entity) {
+        private static <T extends BlockData> T create(final Class<T> clazz, final ImmutableSet<IDataValueEnum> dv,
+                @Nullable final TileEntity entity) {
 
             try {
                 if (entity == null) {
@@ -116,7 +116,6 @@ class BlockDataFactory {
      * @param instance Instance
      * @param dataValues Data values
      */
-    @SuppressWarnings("null")
     // @NonNull IDataValueEnum[] == IDataValueEnum @NonNull[]
     static <T extends BlockData> void register(final Class<T> clazz, final T instance, @Nullable final TileEntity entity,
             final IDataValueEnum... dataValues) {
@@ -147,7 +146,8 @@ class BlockDataFactory {
      *         the given class
      */
     // Return value of map can be null
-    static <T extends BlockData> T getInstance(final Class<T> clazz, @Nullable final TileEntity entity, final Collection<IDataValueEnum> dataValues) {
+    static <T extends BlockData> T getInstance(final Class<T> clazz, @Nullable final TileEntity entity,
+            final Collection<IDataValueEnum> dataValues) {
 
         // Defensive copy
         final ImmutableSet<IDataValueEnum> dv = SingleInstanceSet.copyOf(dataValues).asSet();
@@ -185,7 +185,6 @@ class BlockDataFactory {
      * @throws IllegalArgumentException if the given data values are invalid for
      *         the given class
      */
-    @SuppressWarnings("null")
     static <T extends BlockData> T getInstance(final Class<T> clazz, @Nullable final TileEntity entity, final IDataValueEnum dataValue,
             final IDataValueEnum... dataValues) {
 
@@ -210,7 +209,6 @@ class BlockDataFactory {
      * @param instance Instance
      * @param dataValues Data values
      */
-    @SuppressWarnings("null")
     static <T extends BlockData> void registerDefault(final Class<T> clazz, final T instance, @Nullable final TileEntity entity,
             final IDataValueEnum... dataValues) {
         Collection<IDataValueEnum> dv;
@@ -251,7 +249,6 @@ class BlockDataFactory {
      * @param clazz Class of a subtype of BlockData
      * @return BlockData of the given class with the default data values
      */
-    @SuppressWarnings({"unused", "null"})
     // Cast is safe
     static <T extends BlockData> T getDefaultInstance(final Class<T> clazz) {
 

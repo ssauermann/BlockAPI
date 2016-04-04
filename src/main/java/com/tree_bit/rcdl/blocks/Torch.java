@@ -1,22 +1,19 @@
 package com.tree_bit.rcdl.blocks;
 
+import com.google.common.math.IntMath;
 import com.tree_bit.rcdl.blocks.dv.IDataValueEnum;
 import com.tree_bit.rcdl.blocks.dv.IOrientationEnum;
-
-import com.google.common.math.IntMath;
 
 import java.util.Arrays;
 import java.util.Set;
 
-import javafx.geometry.Orientation;
-
-import javax.annotation.concurrent.Immutable;
+import jdk.nashorn.internal.ir.annotations.Immutable;
 
 /**
  * Data values of a 'Torch' block.
  *
  * <p>
- * Data enum: {@link Orientation}
+ * Data enum: {@link TorchOrientation}
  *
  * <p>
  * Allowed axes for rotation (multiple of 90 degree) are:
@@ -98,10 +95,9 @@ public final class Torch extends BlockData {
         @Override
         public TorchOrientation next(final int i) {
             final TorchOrientation temp = values()[IntMath.mod((this.ordinal() + i), 5)];
-            if (temp != null) {
+            {
                 return temp;
             }
-            throw new NullPointerException();
         }
 
         @Override
@@ -129,7 +125,6 @@ public final class Torch extends BlockData {
      * @param orientation Torch orientation
      * @return Instance of Torch data
      */
-    @SuppressWarnings("null")
     public static Torch getInstance(final TorchOrientation orientation) {
         return BlockDataFactory.getInstance(Torch.class, orientation);
     }
@@ -139,7 +134,6 @@ public final class Torch extends BlockData {
      *
      * @return Instance of Torch data
      */
-    @SuppressWarnings("null")
     public static Torch getInstance() {
         return BlockDataFactory.getDefaultInstance(Torch.class);
     }

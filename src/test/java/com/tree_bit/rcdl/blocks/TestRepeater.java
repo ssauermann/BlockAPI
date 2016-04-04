@@ -18,7 +18,6 @@ public class TestRepeater {
     Repeater someInstance = Repeater.getInstance();
     Repeater fixedInstance = Repeater.getInstance(OrientationNESW.East, Delay.D3);
 
-    @SuppressWarnings("null")
     @Test
     public void testGetData() {
         assertEquals(Repeater.Delay.D3, this.fixedInstance.getData().get(Repeater.Delay.class));
@@ -39,7 +38,6 @@ public class TestRepeater {
         assertEquals(Repeater.getInstance(OrientationNESW.North, Delay.D1), Repeater.getInstance());
     }
 
-    @SuppressWarnings("null")
     @Test(expected = IllegalArgumentException.class)
     public void testMirrorSetOfAxisXX() {
         this.someInstance.mirror(EnumSet.of(Axis.X, Axis.X));

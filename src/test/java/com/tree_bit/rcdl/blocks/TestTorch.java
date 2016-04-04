@@ -16,7 +16,6 @@ public class TestTorch {
     Torch someInstance = Torch.getInstance();
     Torch fixedInstance = Torch.getInstance(TorchOrientation.South);
 
-    @SuppressWarnings("null")
     @Test
     public void testGetData() {
         assertEquals(TorchOrientation.South, this.fixedInstance.getData().get(TorchOrientation.class));
@@ -36,7 +35,6 @@ public class TestTorch {
         assertEquals(Torch.getInstance(TorchOrientation.Up), Torch.getInstance());
     }
 
-    @SuppressWarnings("null")
     @Test(expected = IllegalArgumentException.class)
     public void testMirrorSetOfAxisXX() {
         this.someInstance.mirror(EnumSet.of(Axis.X, Axis.X));

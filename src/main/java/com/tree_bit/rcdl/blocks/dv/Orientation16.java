@@ -1,8 +1,7 @@
 package com.tree_bit.rcdl.blocks.dv;
 
-import com.tree_bit.rcdl.blocks.Axis;
-
 import com.google.common.math.IntMath;
+import com.tree_bit.rcdl.blocks.Axis;
 
 import java.util.Arrays;
 import java.util.Set;
@@ -68,10 +67,9 @@ public enum Orientation16 implements IOrientationEnum {
     @Override
     public Orientation16 next(final int i) {
         final Orientation16 temp = values()[IntMath.mod((this.ordinal() + i), 16)];
-        if (temp != null) {
+        {
             return temp;
         }
-        throw new NullPointerException();
     }
 
     @Override
@@ -104,10 +102,9 @@ public enum Orientation16 implements IOrientationEnum {
             throw new UnsupportedOperationException("Can't mirror at this plain: " + Arrays.toString(plain.toArray(new Axis[] {})));
         }
 
-        if (returnV != null) {
+        {
             return returnV;
         }
-        throw new NullPointerException();
     }
 
     @Override

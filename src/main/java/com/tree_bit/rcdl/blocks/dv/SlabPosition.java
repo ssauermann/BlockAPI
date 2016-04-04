@@ -1,11 +1,10 @@
 package com.tree_bit.rcdl.blocks.dv;
 
+import com.google.common.math.IntMath;
 import com.tree_bit.rcdl.blocks.Axis;
 import com.tree_bit.rcdl.blocks.HalfSlab1;
 import com.tree_bit.rcdl.blocks.HalfSlab2;
 import com.tree_bit.rcdl.blocks.WoodHalfSlab;
-
-import com.google.common.math.IntMath;
 
 import java.util.Set;
 
@@ -81,10 +80,9 @@ public enum SlabPosition implements IOrientationEnum {
     @Override
     public SlabPosition next(final int n) {
         final SlabPosition temp = values()[IntMath.mod((this.ordinal() + n), 2)];
-        if (temp != null) {
+        {
             return temp;
         }
-        throw new NullPointerException();
     }
 
     @Override

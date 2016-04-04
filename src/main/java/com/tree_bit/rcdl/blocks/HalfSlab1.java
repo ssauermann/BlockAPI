@@ -4,7 +4,8 @@ import com.tree_bit.rcdl.blocks.dv.IDataValueEnum;
 import com.tree_bit.rcdl.blocks.dv.SlabPosition;
 import com.tree_bit.rcdl.blocks.dv.SlabType1;
 
-import javax.annotation.concurrent.Immutable;
+import jdk.nashorn.internal.ir.annotations.Immutable;
+
 
 /**
  * Data class for Stone Half Slabs. (Type 1)
@@ -48,7 +49,6 @@ public final class HalfSlab1 extends BlockData {
      * @param position Position
      * @return Instance of a HalfSlab (Type 1)
      */
-    @SuppressWarnings("null")
     public static HalfSlab1 getInstance(final SlabType1 type, final SlabPosition position) {
         return BlockDataFactory.getInstance(HalfSlab1.class, type, position);
     }
@@ -59,7 +59,6 @@ public final class HalfSlab1 extends BlockData {
      *
      * @return Instance of a HalfSlab (Type 1)
      */
-    @SuppressWarnings("null")
     public static HalfSlab1 getInstance() {
         return BlockDataFactory.getDefaultInstance(HalfSlab1.class);
     }

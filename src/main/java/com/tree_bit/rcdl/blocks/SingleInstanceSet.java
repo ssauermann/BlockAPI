@@ -1,6 +1,6 @@
 package com.tree_bit.rcdl.blocks;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableSet;
 
 import org.eclipse.jdt.annotation.Nullable;
@@ -87,7 +87,7 @@ final class SingleInstanceSet<T> implements Iterable<T> {
      *
      * @param value Value
      */
-    @SuppressWarnings({"unchecked", "null"})
+    @SuppressWarnings("unchecked")
     public void add(final T value) {
         final Class<? extends T> clazz = (Class<? extends T>) value.getClass();
         final Class<? extends T> theConstraint = this.checkConstraints(value);
@@ -121,12 +121,10 @@ final class SingleInstanceSet<T> implements Iterable<T> {
      *
      * @return Set
      */
-    @SuppressWarnings("null")
     public ImmutableSet<T> asSet() {
         return ImmutableSet.copyOf(this.map.values());
     }
 
-    @SuppressWarnings("null")
     @Override
     public Iterator<T> iterator() {
         return this.map.values().iterator();
@@ -154,9 +152,8 @@ final class SingleInstanceSet<T> implements Iterable<T> {
      * @param clazz Class
      * @return Set containing the values
      */
-    @SuppressWarnings({"null", "unchecked"})
+    @SuppressWarnings("unchecked")
     // Cast is safe
-    // set is never null
     public <X extends T> ImmutableSet<X> getInstancesOf(final Class<X> clazz) {
         final Set<X> set = new HashSet<>();
         for (final T v : this.map.values()) {
@@ -172,7 +169,6 @@ final class SingleInstanceSet<T> implements Iterable<T> {
      *
      * @return Collection of constraints
      */
-    @SuppressWarnings("null")
     // Set is not null
     public Collection<Class<? extends T>> getConstraints() {
         return ImmutableSet.copyOf(this.constraints);
@@ -212,14 +208,13 @@ final class SingleInstanceSet<T> implements Iterable<T> {
      * @param constraint Constraint class
      * @return Set
      */
-    @SuppressWarnings("null")
     public static <E> SingleInstanceSet<E> copyOf(final Collection<E> collection, final Class<? extends E> constraint) {
         return copyOf(collection, ImmutableSet.of(constraint));
     }
 
     @Override
     public String toString() {
-        return "" + Objects.toStringHelper(this).add("Constraints", this.constraints).add("Map", this.map).toString();
+        return "" + MoreObjects.toStringHelper(this).add("Constraints", this.constraints).add("Map", this.map).toString();
     }
 
     @Override

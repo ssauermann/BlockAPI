@@ -3,7 +3,8 @@ package com.tree_bit.rcdl.blocks;
 import com.tree_bit.rcdl.blocks.dv.IDataValueEnum;
 import com.tree_bit.rcdl.blocks.dv.OrientationNESW;
 
-import javax.annotation.concurrent.Immutable;
+import jdk.nashorn.internal.ir.annotations.Immutable;
+
 
 /**
  * Data values of a 'Repeater' block.
@@ -72,7 +73,6 @@ public final class Repeater extends BlockData {
      * @param delay Delay
      * @return Instance of a repeater
      */
-    @SuppressWarnings("null")
     public static Repeater getInstance(final OrientationNESW orientation, final Delay delay) {
         return BlockDataFactory.getInstance(Repeater.class, orientation, delay);
     }
@@ -83,7 +83,6 @@ public final class Repeater extends BlockData {
      *
      * @return Instance of a repeater
      */
-    @SuppressWarnings("null")
     public static Repeater getInstance() {
         return BlockDataFactory.getDefaultInstance(Repeater.class);
     }

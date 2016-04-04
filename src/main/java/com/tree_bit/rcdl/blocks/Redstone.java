@@ -3,7 +3,8 @@ package com.tree_bit.rcdl.blocks;
 import com.tree_bit.rcdl.blocks.dv.DummyOrientation;
 import com.tree_bit.rcdl.blocks.dv.IDataValueEnum;
 
-import javax.annotation.concurrent.Immutable;
+import jdk.nashorn.internal.ir.annotations.Immutable;
+
 
 /**
  * Data values of a 'Redstone Wire' block.
@@ -95,7 +96,6 @@ public final class Redstone extends BlockData {
      * @return Instance of 'Redstone Wire' data
      */
     public static Redstone getInstance() {
-        @SuppressWarnings("null")
         final Class<Redstone> clazz = Redstone.class;
         return BlockDataFactory.getDefaultInstance(clazz);
     }
@@ -108,7 +108,6 @@ public final class Redstone extends BlockData {
      * @return Instance of 'Redstone Wire' data
      */
     public static Redstone getInstance(final PowerLevel level) {
-        @SuppressWarnings("null")
         final Class<Redstone> clazz = Redstone.class;
         return BlockDataFactory.getInstance(clazz, level, DummyOrientation.NONE);
     }

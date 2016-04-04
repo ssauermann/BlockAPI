@@ -2,7 +2,7 @@ package com.tree_bit.rcdl.blocks;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -10,8 +10,7 @@ import com.google.common.cache.LoadingCache;
 import java.security.InvalidParameterException;
 import java.util.Set;
 
-import javax.annotation.concurrent.Immutable;
-
+import jdk.nashorn.internal.ir.annotations.Immutable;
 
 /**
  * Minecraft Block
@@ -64,8 +63,8 @@ public final class Block implements Comparable<Block> {
      */
     public static Block getInstance(final BlockID block, final BlockData data) {
         if (!block.getDataClass().isInstance(data)) {
-            throw new InvalidParameterException("BlockData [" + data + "] has to match the given BlockID [" + block + "]. \n(Use "
-                    + block.getDataClass() + ")");
+            throw new InvalidParameterException(
+                    "BlockData [" + data + "] has to match the given BlockID [" + block + "]. \n(Use " + block.getDataClass() + ")");
         }
         return cache.getUnchecked(DataKey.of(block, data));
     }
@@ -159,8 +158,7 @@ public final class Block implements Comparable<Block> {
     }
 
     @Override
-    @SuppressWarnings("null")
     public String toString() {
-        return Objects.toStringHelper(this).addValue(this.block).addValue(this.data).toString();
+        return MoreObjects.toStringHelper(this).addValue(this.block).addValue(this.data).toString();
     }
 }

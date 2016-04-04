@@ -58,7 +58,6 @@ public final class GenericBlockData extends BlockData {
      *
      * @return Instance of generic data
      */
-    @SuppressWarnings("null")
     public static GenericBlockData getInstance() {
         return BlockDataFactory.getDefaultInstance(GenericBlockData.class);
     }

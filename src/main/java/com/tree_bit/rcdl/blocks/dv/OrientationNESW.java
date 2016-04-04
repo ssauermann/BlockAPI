@@ -1,10 +1,9 @@
 package com.tree_bit.rcdl.blocks.dv;
 
+import com.google.common.math.IntMath;
 import com.tree_bit.rcdl.blocks.Axis;
 import com.tree_bit.rcdl.blocks.Comparator;
 import com.tree_bit.rcdl.blocks.Repeater;
-
-import com.google.common.math.IntMath;
 
 import java.util.Arrays;
 import java.util.Set;
@@ -87,10 +86,7 @@ public enum OrientationNESW implements IOrientationEnum {
     @Override
     public OrientationNESW next(final int i) {
         final OrientationNESW temp = values()[IntMath.mod((this.ordinal() + i), 4)];
-        if (temp != null) {
-            return temp;
-        }
-        throw new NullPointerException();
+        return temp;
     }
 
     @Override

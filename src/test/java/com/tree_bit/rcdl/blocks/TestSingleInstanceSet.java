@@ -62,9 +62,7 @@ public class TestSingleInstanceSet {
     private static A dAsA = d;
 
     private SingleInstanceSet<A> setA = new SingleInstanceSet<>();
-    @SuppressWarnings("null")
     private SingleInstanceSet<A> setA_B = new SingleInstanceSet<>(B.class);
-    @SuppressWarnings("null")
     private SingleInstanceSet<A> setA_A = new SingleInstanceSet<>(A.class);
 
     @BeforeClass
@@ -76,7 +74,6 @@ public class TestSingleInstanceSet {
         d.toString();
     }
 
-    @SuppressWarnings("null")
     @Before
     public void setUp() throws Exception {
         this.setA = new SingleInstanceSet<>();
@@ -84,7 +81,7 @@ public class TestSingleInstanceSet {
         this.setA_A = new SingleInstanceSet<>(A.class);
     }
 
-    @SuppressWarnings({"null", "static-method"})
+    @SuppressWarnings("static-method")
     @Test
     public void testSingleInstanceConstructorEqualityConstraint() {
         final SingleInstanceSet<C> theSet = new SingleInstanceSet<>(C.class);
@@ -93,7 +90,7 @@ public class TestSingleInstanceSet {
         assertEquals(theSet, new SingleInstanceSet<>(hs));
     }
 
-    @SuppressWarnings({"static-method"})
+    @SuppressWarnings("static-method")
     @Test
     public void testSingleInstanceConstructorEquality() {
         final SingleInstanceSet<C> theSet = new SingleInstanceSet<>();
@@ -173,7 +170,6 @@ public class TestSingleInstanceSet {
         assertEquals(content, this.setA.asSet());
     }
 
-    @SuppressWarnings("null")
     @Test
     public void testGet() {
         this.setA.add(a1);
@@ -189,14 +185,13 @@ public class TestSingleInstanceSet {
         this.setA.add(b);
         this.setA.add(c);
 
-        @SuppressWarnings("null")
         final Set<B> foo = this.setA.getInstancesOf(B.class);
 
         assertTrue(foo.containsAll(ImmutableSet.of(b, c)));
         assertFalse(foo.contains(a1));
     }
 
-    @SuppressWarnings({"null", "static-method"})
+    @SuppressWarnings("static-method")
     @Test
     public void testCopyOf() {
         final SingleInstanceSet<B> foo = SingleInstanceSet.copyOf(ImmutableSet.of(b, c));

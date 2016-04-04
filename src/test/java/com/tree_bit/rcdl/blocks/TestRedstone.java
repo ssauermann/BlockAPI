@@ -17,7 +17,6 @@ public class TestRedstone {
     Redstone someInstance = Redstone.getInstance();
     Redstone fixedInstance = Redstone.getInstance(PowerLevel.L10);
 
-    @SuppressWarnings("null")
     @Test
     public void testGetData() {
         assertEquals(PowerLevel.L10, this.fixedInstance.getData().get(PowerLevel.class));
@@ -37,7 +36,6 @@ public class TestRedstone {
         assertEquals(this.fixedInstance, Redstone.getInstance(PowerLevel.L10));
     }
 
-    @SuppressWarnings("null")
     @Test(expected = IllegalArgumentException.class)
     public void testMirrorSetOfAxisXX() {
         this.someInstance.mirror(EnumSet.of(Axis.X, Axis.X));

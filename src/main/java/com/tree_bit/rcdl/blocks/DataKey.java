@@ -1,5 +1,6 @@
 package com.tree_bit.rcdl.blocks;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
@@ -11,7 +12,9 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 class DataKey<R, C, L> {
 
+    @NonNull
     private final R row;
+    @NonNull
     private final C column;
     @Nullable
     private final L layer;
@@ -22,7 +25,7 @@ class DataKey<R, C, L> {
      * @param row Row value
      * @param column Column value
      */
-    DataKey(final R row, final C column) {
+    DataKey(final @NonNull R row, final @NonNull C column) {
         this.row = row;
         this.column = column;
         this.layer = null;
@@ -35,7 +38,7 @@ class DataKey<R, C, L> {
      * @param column Column value
      * @param layer Layer value
      */
-    DataKey(final R row, final C column, @Nullable final L layer) {
+    DataKey(final @NonNull R row, final @NonNull C column, @Nullable final L layer) {
         this.row = row;
         this.column = column;
         this.layer = layer;
@@ -50,8 +53,9 @@ class DataKey<R, C, L> {
      *
      * @return New DataKey
      */
-    static <R, C> DataKey<R, C, ?> of(final R r, final C c) {
-        return new DataKey<R, C, Object>(r, c);
+    @NonNull
+    static <R, C> DataKey<R, C, ?> of(final @NonNull R r, final @NonNull C c) {
+        return new DataKey<>(r, c);
     }
 
     /**
@@ -63,8 +67,9 @@ class DataKey<R, C, L> {
      *
      * @return New DataKey
      */
-    static <R, C, L> DataKey<R, C, L> of(final R r, final C c, @Nullable final L l) {
-        return new DataKey<R, C, L>(r, c, l);
+    @NonNull
+    static <R, C, L> DataKey<R, C, L> of(final @NonNull R r, final @NonNull C c, @Nullable final L l) {
+        return new DataKey<>(r, c, l);
     }
 
     /**
@@ -72,6 +77,7 @@ class DataKey<R, C, L> {
      *
      * @return Row value
      */
+    @NonNull
     R getRow() {
         return this.row;
     }
@@ -81,6 +87,7 @@ class DataKey<R, C, L> {
      *
      * @return Column value
      */
+    @NonNull
     C getColumn() {
         return this.column;
     }
@@ -95,7 +102,6 @@ class DataKey<R, C, L> {
         return this.layer;
     }
 
-    @SuppressWarnings("null")
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -105,7 +111,6 @@ class DataKey<R, C, L> {
         return result;
     }
 
-    @SuppressWarnings({"unused", "null"})
     @Override
     public boolean equals(@Nullable final Object obj) {
         if (this == obj) {

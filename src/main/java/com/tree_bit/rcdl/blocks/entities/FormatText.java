@@ -1,12 +1,13 @@
 package com.tree_bit.rcdl.blocks.entities;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableList;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.annotation.concurrent.Immutable;
+import jdk.nashorn.internal.ir.annotations.Immutable;
+
 
 /**
  * Text containing multiple Strings with formatting.
@@ -21,8 +22,6 @@ public final class FormatText {
      *
      * @param strings FormatString list
      */
-    @SuppressWarnings("null")
-    // Guava
     public FormatText(final List<FormatString> strings) {
         this.strings = ImmutableList.copyOf(strings);
     }
@@ -138,7 +137,7 @@ public final class FormatText {
 
         @Override
         public String toString() {
-            return Objects.toStringHelper(this).addValue(this.strings).toString();
+            return MoreObjects.toStringHelper(this).addValue(this.strings).toString();
         }
 
     }
@@ -226,7 +225,7 @@ public final class FormatText {
 
         @Override
         public String toString() {
-            return Objects.toStringHelper(this).add("String", this.string).add("Format", this.format).toString();
+            return MoreObjects.toStringHelper(this).add("String", this.string).add("Format", this.format).toString();
         }
     }
 
@@ -335,6 +334,6 @@ public final class FormatText {
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(this).addValue(this.strings).toString();
+        return MoreObjects.toStringHelper(this).addValue(this.strings).toString();
     }
 }

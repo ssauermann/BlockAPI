@@ -1,12 +1,11 @@
 package com.tree_bit.rcdl.blocks;
 
+import com.google.common.base.Joiner;
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.ImmutableSet;
 import com.tree_bit.rcdl.blocks.dv.IDataValueEnum;
 import com.tree_bit.rcdl.blocks.dv.IOrientationEnum;
 import com.tree_bit.rcdl.blocks.entities.TileEntity;
-
-import com.google.common.base.Joiner;
-import com.google.common.base.Objects;
-import com.google.common.collect.ImmutableSet;
 
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -76,7 +75,6 @@ public abstract class BlockData {
      * @param entity Tile entity
      * @param data Data values
      */
-    @SuppressWarnings("null")
     protected BlockData(@Nullable final TileEntity entity, final Set<IDataValueEnum> data) {
         this.data = SingleInstanceSet.copyOf(data, IOrientationEnum.class);
         this.entity = entity;
@@ -146,7 +144,6 @@ public abstract class BlockData {
      * @param entity Tile entity
      * @param data Data values
      */
-    @SuppressWarnings("null")
     protected BlockData(@Nullable final TileEntity entity, final IDataValueEnum... data) {
         this.data = SingleInstanceSet.copyOf(Arrays.asList(data), IOrientationEnum.class);
         this.entity = entity;
@@ -210,7 +207,6 @@ public abstract class BlockData {
      *
      * @return TileEntity
      */
-    @SuppressWarnings("null")
     public Optional<TileEntity> getTileEntity() {
         if (this.entity != null) {
             return Optional.of(this.entity);
@@ -218,8 +214,6 @@ public abstract class BlockData {
         return Optional.empty();
     }
 
-    @SuppressWarnings("null")
-    // Classes are not null
     private IOrientationEnum getOrientation() {
         final ImmutableSet<IOrientationEnum> instances = this.data.getInstancesOf(IOrientationEnum.class);
         if (instances.isEmpty()) {
@@ -234,7 +228,6 @@ public abstract class BlockData {
      * @param data New data value
      * @return BlockData instance with the changed data values.
      */
-    @SuppressWarnings("null")
     final BlockData setData(final IDataValueEnum data) {
         final SingleInstanceSet<IDataValueEnum> newData = this.getData();
         // Exclude Orientation.NONE
@@ -262,13 +255,12 @@ public abstract class BlockData {
     }
 
     @Override
-    @SuppressWarnings("null")
     public String toString() {
         String tileInfo = null;
         if (this.getTileEntity().isPresent()) {
             tileInfo = this.getTileEntity().get().toString();
         }
-        return Objects.toStringHelper(this).add("Combined", this.getDataValue())
+        return MoreObjects.toStringHelper(this).add("Combined", this.getDataValue())
                 .add("Data", Joiner.on(',').skipNulls().join(this.getData().asSet().toArray())).addValue(tileInfo).omitNullValues().toString();
     }
 
@@ -284,7 +276,6 @@ public abstract class BlockData {
      * @throws IllegalArgumentException if the given data values are invalid for
      *         the given class
      */
-    @SuppressWarnings("null")
     @SafeVarargs
     protected static IDataValueEnum[] validateDV(final IDataValueEnum[] data, final Class<? extends IDataValueEnum> clas,
             final Class<? extends IDataValueEnum>... classes) {

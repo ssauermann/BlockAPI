@@ -3,7 +3,7 @@ package com.tree_bit.rcdl.blocks.entities;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.common.base.Joiner;
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableSet;
 
 import org.eclipse.jdt.annotation.Nullable;
@@ -15,7 +15,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import javax.annotation.concurrent.Immutable;
+import jdk.nashorn.internal.ir.annotations.Immutable;
+
 
 /**
  * Representing a tile entity containing some tags. The positioning tags (x, y,
@@ -81,8 +82,6 @@ public class TileEntity {
          * @throws NullPointerException if the given tag has a null value as its
          *         name
          */
-        @SuppressWarnings("null")
-        // Checked by Guava
         public Builder add(final Tag tag) {
             this.tags.put(checkNotNull(tag.getName()), tag);
             return this;
@@ -119,8 +118,6 @@ public class TileEntity {
          *
          * @return Tag set
          */
-        @SuppressWarnings("null")
-        // Guava
         ImmutableSet<Tag> getTags() {
             return ImmutableSet.copyOf(this.tags.values());
         }
@@ -157,7 +154,7 @@ public class TileEntity {
 
         @Override
         public String toString() {
-            return Objects.toStringHelper(this).addValue(this.tags).toString();
+            return MoreObjects.toStringHelper(this).addValue(this.tags).toString();
         }
     }
 
@@ -188,9 +185,8 @@ public class TileEntity {
     }
 
     @Override
-    @SuppressWarnings("null")
     public String toString() {
-        return Objects.toStringHelper(this).add("Tags", Joiner.on(',').skipNulls().join(this.getTags().toArray())).toString();
+        return MoreObjects.toStringHelper(this).add("Tags", Joiner.on(',').skipNulls().join(this.getTags().toArray())).toString();
     }
 
 }
