@@ -1,3 +1,24 @@
+/**
+ * Copyright (c) 2016 The BlockAPI authors
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package com.tree_bit.rcdl.blocks.entities;
 
 import com.tree_bit.rcdl.blocks.HangingSign;
@@ -6,6 +27,8 @@ import com.tree_bit.rcdl.blocks.StandingSign;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.jnbt.StringTag;
+
+import jdk.nashorn.internal.ir.annotations.Immutable;
 
 /**
  * Tile entity of a sign block.
@@ -16,7 +39,10 @@ import org.jnbt.StringTag;
  * <li>{@link HangingSign}</li>
  * <li>{@link StandingSign}</li>
  * </ul>
+ *
+ * @author Sascha Sauermann
  */
+@Immutable
 public class SignEntity extends TileEntity {
 
     /**
@@ -70,7 +96,7 @@ public class SignEntity extends TileEntity {
         if (text.length > 4) {
             throw new IllegalArgumentException("Sign can't have more than 4 lines of text! Given: " + text.length);
         }
-        final TileEntity.Builder b = new TileEntity.Builder("Sign");
+        final TileEntity.Builder b = TileEntity.builder("Sign");
         for (int i = 0; i < 4; i++) {
             String s = "";
             if (i < text.length) {
