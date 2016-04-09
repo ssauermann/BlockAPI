@@ -1,0 +1,4 @@
+class java/util/EnumSet
+of
+ <E:Ljava/lang/Enum<TE;>;>(TE;TE;)Ljava/util/EnumSet<TE;>;
+ <E:Ljava/lang/Enum<TE;>;>(TE;TE;)L1java/util/EnumSet<TE;>;

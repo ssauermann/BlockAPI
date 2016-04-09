@@ -1,0 +1,4 @@
+class java/util/HashMap
+get
+ (Ljava/lang/Object;)TV;
+ (Ljava/lang/Object;)T0V;
