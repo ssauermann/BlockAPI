@@ -1,7 +1,11 @@
 package com.tree_bit.rcdl.blocks.entities;
 
 import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
+
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -15,14 +19,14 @@ import jdk.nashorn.internal.ir.annotations.Immutable;
 @Immutable
 public final class FormatText {
 
-    private final ImmutableList<FormatString> strings;
+    private final ImmutableList<@NonNull FormatString> strings;
 
     /**
      * Creates a new FormatText with the given FormatStrings as content.
      *
      * @param strings FormatString list
      */
-    public FormatText(final List<FormatString> strings) {
+    public FormatText(final List<@NonNull FormatString> strings) {
         this.strings = ImmutableList.copyOf(strings);
     }
 
@@ -84,10 +88,10 @@ public final class FormatText {
      */
     public static class Builder {
 
-        private final List<FormatString> strings;
+        private final List<@NonNull FormatString> strings;
 
         /**
-         * Creates a new FormatText builde.
+         * Creates a new FormatText Builder.
          */
         public Builder() {
             this.strings = new LinkedList<>();
@@ -99,7 +103,7 @@ public final class FormatText {
          *
          * @param strings FormatString list
          */
-        public Builder(final List<FormatString> strings) {
+        public Builder(final List<@NonNull FormatString> strings) {
             // No defensive copy, cause there are no invariants.
             this.strings = strings;
         }
@@ -139,6 +143,27 @@ public final class FormatText {
         public String toString() {
             return MoreObjects.toStringHelper(this).addValue(this.strings).toString();
         }
+
+        @Override
+        public int hashCode() {
+            return Objects.hashCode(this.strings);
+        }
+
+        @Override
+        public boolean equals(@Nullable final Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (obj == null) {
+                return false;
+            }
+            if (!(obj instanceof Builder)) {
+                return false;
+            }
+            final Builder other = (Builder) obj;
+            return Objects.equal(this.strings, other.strings);
+        }
+
 
     }
 
@@ -191,15 +216,11 @@ public final class FormatText {
 
         @Override
         public int hashCode() {
-            final int prime = 31;
-            int result = 1;
-            result = (prime * result) + ((this.format == null) ? 0 : this.format.hashCode());
-            result = (prime * result) + ((this.string == null) ? 0 : this.string.hashCode());
-            return result;
+            return Objects.hashCode(this.string, this.format);
         }
 
         @Override
-        public boolean equals(final Object obj) {
+        public boolean equals(@Nullable final Object obj) {
             if (this == obj) {
                 return true;
             }
@@ -210,18 +231,9 @@ public final class FormatText {
                 return false;
             }
             final FormatString other = (FormatString) obj;
-            if (this.format != other.format) {
-                return false;
-            }
-            if (this.string == null) {
-                if (other.string != null) {
-                    return false;
-                }
-            } else if (!this.string.equals(other.string)) {
-                return false;
-            }
-            return true;
+            return Objects.equal(this.string, other.string) && Objects.equal(this.format, other.format);
         }
+
 
         @Override
         public String toString() {
@@ -304,14 +316,11 @@ public final class FormatText {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = (prime * result) + ((this.strings == null) ? 0 : this.strings.hashCode());
-        return result;
+        return Objects.hashCode(this.strings);
     }
 
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(@Nullable final Object obj) {
         if (this == obj) {
             return true;
         }
@@ -322,15 +331,10 @@ public final class FormatText {
             return false;
         }
         final FormatText other = (FormatText) obj;
-        if (this.strings == null) {
-            if (other.strings != null) {
-                return false;
-            }
-        } else if (!this.strings.equals(other.strings)) {
-            return false;
-        }
-        return true;
+        return Objects.equal(this.strings, other.strings);
     }
+
+
 
     @Override
     public String toString() {

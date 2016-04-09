@@ -4,8 +4,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableSet;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.jnbt.StringTag;
 import org.jnbt.Tag;
@@ -25,7 +27,7 @@ import jdk.nashorn.internal.ir.annotations.Immutable;
 @Immutable
 public class TileEntity {
 
-    private final ImmutableSet<Tag> tags;
+    private final ImmutableSet<@NonNull Tag> tags;
 
     /**
      * Creates a new TileEntity with the given builder.
@@ -51,7 +53,7 @@ public class TileEntity {
      *
      * @return Tag set
      */
-    public Set<Tag> getTags() {
+    public Set<@NonNull Tag> getTags() {
         return this.tags;
     }
 
@@ -60,7 +62,7 @@ public class TileEntity {
      */
     static class Builder {
 
-        private final Map<String, Tag> tags = new HashMap<>();
+        private final Map<@NonNull String, @NonNull Tag> tags = new HashMap<>();
 
         /**
          * Creates a new TileEntity builder with the necessary tags. This does
@@ -97,7 +99,7 @@ public class TileEntity {
          * @throws NullPointerException if one of the given tags has a null
          *         value as its name
          */
-        public Builder addAll(final Collection<Tag> tags) {
+        public Builder addAll(final Collection<@NonNull Tag> tags) {
             for (final Tag tag : tags) {
                 this.add(tag);
             }
@@ -124,14 +126,11 @@ public class TileEntity {
 
         @Override
         public int hashCode() {
-            final int prime = 31;
-            int result = 1;
-            result = (prime * result) + ((this.tags == null) ? 0 : this.tags.hashCode());
-            return result;
+            return Objects.hashCode(this.tags);
         }
 
         @Override
-        public boolean equals(final Object obj) {
+        public boolean equals(@Nullable final Object obj) {
             if (this == obj) {
                 return true;
             }
@@ -142,14 +141,7 @@ public class TileEntity {
                 return false;
             }
             final Builder other = (Builder) obj;
-            if (this.tags == null) {
-                if (other.tags != null) {
-                    return false;
-                }
-            } else if (!this.tags.equals(other.tags)) {
-                return false;
-            }
-            return true;
+            return Objects.equal(this.tags, other.tags);
         }
 
         @Override
@@ -160,10 +152,7 @@ public class TileEntity {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = (prime * result) + this.tags.hashCode();
-        return result;
+        return Objects.hashCode(this.tags);
     }
 
     @Override
@@ -178,11 +167,9 @@ public class TileEntity {
             return false;
         }
         final TileEntity other = (TileEntity) obj;
-        if (!this.tags.equals(other.tags)) {
-            return false;
-        }
-        return true;
+        return Objects.equal(this.tags, other.tags);
     }
+
 
     @Override
     public String toString() {

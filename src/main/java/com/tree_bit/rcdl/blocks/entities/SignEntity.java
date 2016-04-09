@@ -3,6 +3,8 @@ package com.tree_bit.rcdl.blocks.entities;
 import com.tree_bit.rcdl.blocks.HangingSign;
 import com.tree_bit.rcdl.blocks.StandingSign;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.jnbt.StringTag;
 
 /**
@@ -19,11 +21,18 @@ public class SignEntity extends TileEntity {
 
     /**
      * Creates a Sign TileEntity with no text.
+     */
+    public SignEntity() {
+        this(new @Nullable FormatText[0]);
+    }
+
+    /**
+     * Creates a Sign TileEntity with no text.
      *
-     * @return TileEntity
+     * @return Empty sign entity
      */
     public static SignEntity empty() {
-        return new SignEntity(new FormatText[0]);
+        return new SignEntity();
     }
 
     /**
@@ -33,7 +42,7 @@ public class SignEntity extends TileEntity {
      *
      * @throws IllegalArgumentException if text[] has {@literal length>4}
      */
-    public SignEntity(final FormatText[] text) {
+    public SignEntity(final @Nullable FormatText[] text) {
         super(createBuilder(text));
     }
 
@@ -44,14 +53,15 @@ public class SignEntity extends TileEntity {
      *
      * @throws IllegalArgumentException if text[] has {@literal length>4}
      */
-    public SignEntity(final String[] text) {
+    public SignEntity(final @Nullable String[] text) {
         super(createBuilder(toFText(text)));
     }
 
-    private static FormatText[] toFText(final String[] text) {
-        final FormatText[] fText = new FormatText[text.length];
+    private static @NonNull FormatText[] toFText(final @Nullable String[] text) {
+        final @NonNull FormatText[] fText = new @NonNull FormatText[text.length];
         for (int i = 0; i < text.length; i++) {
-            fText[i] = new FormatText(text[i]);
+            final String tmp = text[i];
+            fText[i] = new FormatText((tmp != null) ? tmp : "");
         }
         return fText;
     }
@@ -62,7 +72,13 @@ public class SignEntity extends TileEntity {
         }
         final TileEntity.Builder b = new TileEntity.Builder("Sign");
         for (int i = 0; i < 4; i++) {
-            final String s = (i < text.length) ? text[i].getStringWithCodes() : "";
+            String s = "";
+            if (i < text.length) {
+                final FormatText tmp = text[i];
+                if (tmp != null) {
+                    s = tmp.getStringWithCodes();
+                }
+            }
             b.add(new StringTag("Text" + (i + 1), s));
         }
         return b;
