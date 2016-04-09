@@ -1,3 +1,24 @@
+/**
+ * Copyright (c) 2016 The BlockAPI authors
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package com.tree_bit.rcdl.schematic;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -20,9 +41,9 @@ import java.util.Map;
 /**
  * Wrapper for Minecraft NBT files. Used for MCEdit schematics.
  *
- * @see<a 
- *        href="http://minecraft.gamepedia.com/Schematic">http://minecraft.gamepedia
- *        .com/Schematic</a>
+ * @author Sascha Sauermann
+ * @see<a href="http://minecraft.gamepedia.com/Schematic">http://minecraft.
+ *        gamepedia.com/Schematic</a>
  */
 public class SchematicWrapper {
 
@@ -35,11 +56,11 @@ public class SchematicWrapper {
      * Creates a new wrapper for a schematic file.
      *
      * @param path <b>String</b> path to file
-     * @throws FileNotFoundException
-     * @throws IOException
+     * @throws FileNotFoundException if the file does not exist, is a directory
+     *         rather than a regular file, or for some other reason cannot be
+     *         opened for reading.
+     * @throws IOException if other exceptions occur while reading the file
      */
-    // Can't be null (checked by Guava)
-    @SuppressWarnings("null")
     public SchematicWrapper(final String path) throws FileNotFoundException, IOException {
         if (path.equals("")) {
             throw new IllegalArgumentException("Path is empty");
@@ -93,8 +114,6 @@ public class SchematicWrapper {
      *
      * @return <b>byte[]</b> blocks
      */
-    // Can't be null (checked by Guava)
-    @SuppressWarnings("null")
     public byte[] readBlocks() {
         return checkNotNull(((ByteArrayTag) this.read(ESchematicFields.BLOCKS)).getValue());
     }
@@ -108,8 +127,6 @@ public class SchematicWrapper {
      *
      * @return <b>byte[]</b> blocks
      */
-    // Can't be null (checked by Guava)
-    @SuppressWarnings("null")
     public byte[] readData() {
         return checkNotNull(((ByteArrayTag) this.read(ESchematicFields.DATA)).getValue());
     }
@@ -131,8 +148,6 @@ public class SchematicWrapper {
      * @param parentTag <b>CompoundTag</b> parent compound tag
      * @return <b>Tag</b> child tag
      */
-    // Can't be null (checked by Guava)
-    @SuppressWarnings("null")
     private static Tag getTag(final String key, final CompoundTag parentTag) {
         return checkNotNull(parentTag.getValue().get(key));
     }
@@ -146,8 +161,6 @@ public class SchematicWrapper {
      * @return <b>Map&lt;String, Tag&gt;</b> map with the old values and the new
      *         one
      */
-    // Can't be null (checked by Guava)
-    @SuppressWarnings("null")
     private static Map<String, Tag> addTag(final Tag t, final CompoundTag parentTag) {
         final Map<String, Tag> map = new HashMap<>();
 
@@ -231,8 +244,11 @@ public class SchematicWrapper {
      * </p>
      *
      * @param path <b>String</b> path to file
-     * @throws FileNotFoundException
-     * @throws IOException
+     * @throws FileNotFoundException if the file does not exist, is a directory
+     *         rather than a regular file, or for some other reason cannot be
+     *         opened for reading/writing.
+     * @throws IOException if other exceptions occur while reading/writing the
+     *         file
      */
     public void saveChangesToFile(final String path) throws FileNotFoundException, IOException {
         if (path.equals("")) {
@@ -255,8 +271,6 @@ public class SchematicWrapper {
     }
 
     @Override
-    // Can't be null (checked by Guava)
-    @SuppressWarnings("null")
     public String toString() {
         return checkNotNull(this.root.toString());
     }
