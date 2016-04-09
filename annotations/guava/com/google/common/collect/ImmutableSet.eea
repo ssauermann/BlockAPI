@@ -5,3 +5,6 @@ copyOf
 of
  <E:Ljava/lang/Object;>(TE;)Lcom/google/common/collect/ImmutableSet<TE;>;
  <E:Ljava/lang/Object;>(TE;)L1com/google/common/collect/ImmutableSet<TE;>;
+of
+ <E:Ljava/lang/Object;>(TE;TE;)Lcom/google/common/collect/ImmutableSet<TE;>;
+ <E:Ljava/lang/Object;>(TE;TE;)L1com/google/common/collect/ImmutableSet<TE;>;
