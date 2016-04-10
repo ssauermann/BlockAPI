@@ -28,31 +28,35 @@ import com.google.common.base.MoreObjects;
  *
  * @author Sascha Sauermann
  */
-public enum EntityID implements IItemID {
+public enum EntityID implements IEntityID {
     /** Dropped item */
-    ITEM(1),
+    ITEM(1, "Item"),
     /** Experience Orb */
-    XP_ORB(2);
+    XP_ORB(2, "XPOrb");
     // TODO: Add entities
 
-    private EntityID(final int id) {
+    private int id;
+    private String savegameId;
+
+    private EntityID(final int id, final String savegameId) {
         this.id = id;
+        this.savegameId = savegameId;
     }
 
-    private int id;
 
-    /**
-     * Returns the entity id.
-     *
-     * @return Entity id
-     */
     @Override
     public int getID() {
         return this.id;
     }
 
     @Override
+    public String getSavegameID() {
+        return this.savegameId;
+    }
+
+
+    @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this).addValue(super.toString()).add("id", this.id).toString();
+        return MoreObjects.toStringHelper(this).addValue(super.toString()).add("id", this.id).add("savegameID", this.savegameId).toString();
     }
 }

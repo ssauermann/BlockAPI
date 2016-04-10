@@ -30,27 +30,30 @@ import com.google.common.base.MoreObjects;
  */
 public enum ItemID implements IItemID {
     /** Iron Shovel */
-    IRON_SHOVEL(256);
+    IRON_SHOVEL(256, "minecraft:iron_shovel");
     // TODO: Add items
 
-    private ItemID(final int id) {
+    private ItemID(final int id, final String name) {
         this.id = id;
+        this.name = name;
     }
 
     private int id;
+    private String name;
 
-    /**
-     * Returns the item id.
-     *
-     * @return Item id
-     */
+
     @Override
     public int getID() {
         return this.id;
     }
 
     @Override
+    public String getAlphabeticalID() {
+        return this.name;
+    }
+
+    @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this).addValue(super.toString()).add("id", this.id).toString();
+        return MoreObjects.toStringHelper(this).addValue(super.toString()).add("id", this.id).add("alphabeticalID", this.name).toString();
     }
 }

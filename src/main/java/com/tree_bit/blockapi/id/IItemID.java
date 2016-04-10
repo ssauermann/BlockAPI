@@ -28,5 +28,19 @@ package com.tree_bit.blockapi.id;
  * @author Sascha Sauermann
  */
 public interface IItemID extends ID {
-    // currently this is a pseudo interface
+
+    /**
+     * Returns the item id.
+     *
+     * @return Item id
+     */
+    @Override
+    int getID();
+
+    /**
+     * Returns the alphabetical item id. (i.e. minecraft:iron_shovel)
+     *
+     * @return Alphabetical item id
+     */
+    String getAlphabeticalID();
 }

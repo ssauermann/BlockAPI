@@ -28,5 +28,19 @@ package com.tree_bit.blockapi.id;
  * @author Sascha Sauermann
  */
 public interface IEntityID extends ID {
-    // currently this is a pseudo interface
+
+    /**
+     * Gets the savegame id string.
+     *
+     * @return Savegame id
+     */
+    String getSavegameID();
+
+    /**
+     * Returns the entity id.
+     *
+     * @return Entity id
+     */
+    @Override
+    int getID();
 }

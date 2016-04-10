@@ -450,11 +450,7 @@ public enum BlockID implements IBlockID {
         this.dataClass = dataClass;
     }
 
-    /**
-     * Returns the block id.
-     *
-     * @return Block id
-     */
+
     @Override
     public int getID() {
         return this.id;

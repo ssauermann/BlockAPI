@@ -28,5 +28,19 @@ package com.tree_bit.blockapi.id;
  * @author Sascha Sauermann
  */
 public interface IEnchantmentID extends ID {
-    // currently this is a pseudo interface
+
+    /**
+     * Gets the enchantment id.
+     *
+     * @return Enchantment id
+     */
+    @Override
+    int getID();
+
+    /**
+     * Gets the enchantment name.
+     *
+     * @return Enchantment name
+     */
+    String getName();
 }

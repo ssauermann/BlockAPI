@@ -31,6 +31,11 @@ import com.tree_bit.rcdl.blocks.BlockData;
  */
 public interface IBlockID extends ID {
 
+    /**
+     * Returns the block id.
+     *
+     * @return Block id
+     */
     @Override
     int getID();
 
@@ -40,4 +45,11 @@ public interface IBlockID extends ID {
      * @return Data class
      */
     Class<? extends BlockData> getDataClass();
+
+    /**
+     * Returns the alphabetical block id. (i.e. minecraft:stone)
+     *
+     * @return Alphabetical block id
+     */
+    String getAlphabeticalID();
 }
