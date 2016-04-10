@@ -103,5 +103,10 @@ public class CompoundBuilder extends NBTBuilder<Tag> {
         return ImmutableSet.copyOf(this.tags.values());
     }
 
+    @Override
+    protected CompoundBuilder addTag(final Tag tag) {
+        this.tags.put(checkNotNull(tag.getName()), tag);
+        return this;
+    }
 
 }

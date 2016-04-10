@@ -21,6 +21,8 @@
  */
 package com.tree_bit.blockapi.nbt;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.google.common.collect.ImmutableList;
 
 import org.jnbt.ListTag;
@@ -103,4 +105,22 @@ public class ListBuilder<T extends Tag> extends NBTBuilder<T> {
     public ImmutableList<T> getTags() {
         return ImmutableList.copyOf(this.tags);
     }
+
+    /**
+     * Add a tag to the collection and return self.
+     *
+     * @param tag Tag to add
+     * @return this
+     */
+    @Override
+    protected ListBuilder<T> addTag(final Tag tag) {
+        checkNotNull(tag.getName());
+        if (this.type.isInstance(tag)) {
+            this.tags.add(this.type.cast(tag));
+        } else {
+            throw new IllegalArgumentException(tag + "has not the type: " + this.type);
+        }
+        return this;
+    }
+
 }
