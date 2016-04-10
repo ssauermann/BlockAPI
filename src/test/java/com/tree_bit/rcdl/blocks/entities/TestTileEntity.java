@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 
-@SuppressWarnings("javadoc")
+@SuppressWarnings({"javadoc"})
 public class TestTileEntity {
 
 
@@ -21,8 +21,8 @@ public class TestTileEntity {
     private static Tag stringInteger = new IntTag("Text", 42);
     private static Tag integer = new IntTag("Number", 42);
 
-    private TileEntity t;
-    private TileEntity t2;
+    private TileEntity t = TileEntity.builder("empty").build();
+    private TileEntity t2 = TileEntity.builder("empty").build();
 
     @Before
     public void setUp() throws Exception {

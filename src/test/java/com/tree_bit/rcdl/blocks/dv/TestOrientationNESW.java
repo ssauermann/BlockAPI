@@ -35,21 +35,21 @@ public class TestOrientationNESW {
         OrientationNESW.North.rotate(Axis.X, 4);
     }
 
-    @SuppressWarnings({"static-method", "null"})
+    @SuppressWarnings({"static-method"})
     @Test
     public void testMirrorXY() {
         assertEquals(OrientationNESW.South, OrientationNESW.North.mirror(EnumSet.of(Axis.X, Axis.Y)));
         assertEquals(OrientationNESW.East, OrientationNESW.East.mirror(EnumSet.of(Axis.X, Axis.Y)));
     }
 
-    @SuppressWarnings({"static-method", "null"})
+    @SuppressWarnings({"static-method"})
     @Test
     public void testMirrorZY() {
         assertEquals(OrientationNESW.East, OrientationNESW.West.mirror(EnumSet.of(Axis.Z, Axis.Y)));
         assertEquals(OrientationNESW.North, OrientationNESW.North.mirror(EnumSet.of(Axis.Z, Axis.Y)));
     }
 
-    @SuppressWarnings({"static-method", "null"})
+    @SuppressWarnings({"static-method"})
     @Test(expected = UnsupportedOperationException.class)
     public void testMirrorZX() {
         OrientationNESW.North.mirror(EnumSet.of(Axis.Z, Axis.X));

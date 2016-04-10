@@ -41,7 +41,7 @@ public class TestOrientation16 {
         Orientation16.N.rotate(Axis.Z, 4);
     }
 
-    @SuppressWarnings({"static-method", "null"})
+    @SuppressWarnings({"static-method"})
     @Test
     public void testMirrorXY() {
         assertEquals(Orientation16.SE, Orientation16.NE.mirror(EnumSet.of(Axis.X, Axis.Y)));
@@ -49,14 +49,14 @@ public class TestOrientation16 {
         assertEquals(Orientation16.E, Orientation16.E.mirror(EnumSet.of(Axis.X, Axis.Y)));
     }
 
-    @SuppressWarnings({"static-method", "null"})
+    @SuppressWarnings({"static-method"})
     @Test
     public void testMirrorZY() {
         assertEquals(Orientation16.NW, Orientation16.NE.mirror(EnumSet.of(Axis.Z, Axis.Y)));
         assertEquals(Orientation16.N, Orientation16.N.mirror(EnumSet.of(Axis.Z, Axis.Y)));
     }
 
-    @SuppressWarnings({"static-method", "null"})
+    @SuppressWarnings({"static-method"})
     @Test(expected = UnsupportedOperationException.class)
     public void testMirrorZX() {
         Orientation16.NE.mirror(EnumSet.of(Axis.Z, Axis.X));
