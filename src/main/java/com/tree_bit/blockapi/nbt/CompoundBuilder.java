@@ -26,6 +26,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import com.google.common.collect.ImmutableSet;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.jnbt.CompoundTag;
 import org.jnbt.Tag;
 
@@ -48,6 +49,7 @@ public class CompoundBuilder extends NBTBuilder<Tag> {
     CompoundBuilder(final String name) {
         super(name);
     }
+
 
     /**
      * Adds a new tag to this compound tag. An existing tag with the same name
@@ -76,7 +78,7 @@ public class CompoundBuilder extends NBTBuilder<Tag> {
      *         its name
      */
     @Override
-    public CompoundBuilder addAll(final Collection<@NonNull Tag> tags) {
+    public CompoundBuilder addAll(final Collection<? extends @NonNull Tag> tags) {
         for (final Tag tag : tags) {
             this.add(tag);
         }
@@ -170,7 +172,7 @@ public class CompoundBuilder extends NBTBuilder<Tag> {
     }
 
     @Override
-    public CompoundBuilder String(final String name, final String value) {
+    public CompoundBuilder String(final String name, final @Nullable String value) {
         return (CompoundBuilder) super.String(name, value);
     }
 }

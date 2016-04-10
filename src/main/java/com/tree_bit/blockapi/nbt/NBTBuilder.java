@@ -49,6 +49,7 @@ public abstract class NBTBuilder<T extends Tag> {
         this.name = name;
     }
 
+
     /**
      * Adds a new tag to this list tag. An existing tag with the same name is
      * replaced.
@@ -71,7 +72,7 @@ public abstract class NBTBuilder<T extends Tag> {
      * @throws NullPointerException if one of the given tags has a null value as
      *         its name
      */
-    public abstract NBTBuilder<T> addAll(final Collection<T> tags);
+    public abstract NBTBuilder<T> addAll(final Collection<? extends T> tags);
 
     /**
      * Gets the name of this nbt tag.
@@ -120,31 +121,6 @@ public abstract class NBTBuilder<T extends Tag> {
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this).addValue(this.getTags()).toString();
-    }
-
-
-    /////////////////// BUILDER/////////////////////////////////////////
-    /**
-     * Creates a compound tag builder.
-     *
-     * @param name The name
-     *
-     * @return New tag builder
-     */
-    public static CompoundBuilder Compound(final String name) {
-        return new CompoundBuilder(name);
-    }
-
-    /**
-     * Creates a list tag builder.
-     *
-     * @param name The name
-     * @param type Type of the list
-     *
-     * @return New tag builder
-     */
-    public static <T extends Tag> ListBuilder<T> List(final String name, final Class<T> type) {
-        return new ListBuilder<>(name, type);
     }
 
 
@@ -279,15 +255,18 @@ public abstract class NBTBuilder<T extends Tag> {
     }
 
     /**
-     * Creates a string tag.
+     * Creates a string tag. If the string is null, no tag will be added.
      *
      * @param name The name
      * @param value The value
      *
      * @return Builder
      */
-    public NBTBuilder<T> String(final String name, final String value) {
-        return this.addTag(NBT.String(name, value));
+    public NBTBuilder<T> String(final String name, @Nullable final String value) {
+        if (value != null) {
+            return this.addTag(NBT.String(name, value));
+        }
+        return this;
     }
 
     /**

@@ -25,6 +25,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.common.collect.ImmutableList;
 
+import org.eclipse.jdt.annotation.Nullable;
 import org.jnbt.ListTag;
 import org.jnbt.Tag;
 
@@ -53,6 +54,7 @@ public class ListBuilder<T extends Tag> extends NBTBuilder<T> {
         this.type = type;
     }
 
+
     /**
      * Adds a new tag to this list tag. An existing tag with the same name is
      * replaced.
@@ -80,7 +82,7 @@ public class ListBuilder<T extends Tag> extends NBTBuilder<T> {
      *         its name
      */
     @Override
-    public ListBuilder<T> addAll(final Collection<T> tags) {
+    public ListBuilder<T> addAll(final Collection<? extends T> tags) {
         for (final T tag : tags) {
             this.add(tag);
         }
@@ -185,7 +187,7 @@ public class ListBuilder<T extends Tag> extends NBTBuilder<T> {
     }
 
     @Override
-    public ListBuilder<T> String(final String name, final String value) {
+    public ListBuilder<T> String(final String name, final @Nullable String value) {
         return (ListBuilder<T>) super.String(name, value);
     }
 
