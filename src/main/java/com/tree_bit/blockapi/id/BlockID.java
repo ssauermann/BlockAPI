@@ -436,6 +436,7 @@ public enum BlockID implements IBlockID {
     ACACIA_DOOR(196),
     /** Dark oak door */
     DARK_OAK_DOOR(197);
+    // TODO: Minecraft 1.9
 
     private final int id;
     private final Class<? extends BlockData> dataClass;
