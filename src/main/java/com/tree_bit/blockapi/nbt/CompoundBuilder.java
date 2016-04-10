@@ -109,4 +109,68 @@ public class CompoundBuilder extends NBTBuilder<Tag> {
         return this;
     }
 
+    /////////////////////////////////////////////////////
+
+    @Override
+    public CompoundBuilder ByteArray(final String name, final byte[] value) {
+        return (CompoundBuilder) super.ByteArray(name, value);
+    }
+
+    @Override
+    public CompoundBuilder Byte(final String name, final byte value) {
+        return (CompoundBuilder) super.Byte(name, value);
+    }
+
+    @Override
+    public CompoundBuilder Compound(final String name, final Map<String, Tag> value) {
+        return (CompoundBuilder) super.Compound(name, value);
+    }
+
+    @Override
+    public CompoundBuilder Double(final String name, final double value) {
+        return (CompoundBuilder) super.Double(name, value);
+    }
+
+    @Override
+    public CompoundBuilder End() {
+        return (CompoundBuilder) super.End();
+    }
+
+
+    @Override
+    public CompoundBuilder Float(final String name, final float value) {
+        return (CompoundBuilder) super.Float(name, value);
+    }
+
+    @Override
+    public CompoundBuilder IntArray(final String name, final int[] value) {
+        return (CompoundBuilder) super.IntArray(name, value);
+    }
+
+    @Override
+    public CompoundBuilder Int(final String name, final int value) {
+        return (CompoundBuilder) super.Int(name, value);
+    }
+
+    @Override
+    public CompoundBuilder List(final String name, final Class<? extends Tag> type, final java.util.List<Tag> value) {
+        return (CompoundBuilder) super.List(name, type, value);
+    }
+
+
+    @Override
+    public CompoundBuilder Long(final String name, final long value) {
+        return (CompoundBuilder) super.Long(name, value);
+    }
+
+
+    @Override
+    public CompoundBuilder Short(final String name, final short value) {
+        return (CompoundBuilder) super.Short(name, value);
+    }
+
+    @Override
+    public CompoundBuilder String(final String name, final String value) {
+        return (CompoundBuilder) super.String(name, value);
+    }
 }
