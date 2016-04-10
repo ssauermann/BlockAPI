@@ -439,21 +439,35 @@ public enum BlockID implements IBlockID {
     // TODO: Minecraft 1.9
 
     private final int id;
+    private final String alphID;
     private final Class<? extends BlockData> dataClass;
 
-    private BlockID(final int id) {
-        this(id, GenericBlockData.class);
+    // TODO REMOVE!!!!!!!! Add names to constructor calls
+    @SuppressWarnings({"null", "unchecked"})
+    @Deprecated
+    private BlockID(final int id, final Object... o) {
+        this(id, "", (o.length > 0) ? (Class<? extends BlockData>) o[0] : GenericBlockData.class);
     }
 
-    private BlockID(final int id, final Class<? extends BlockData> dataClass) {
+    private BlockID(final int id, final String alphID) {
+        this(id, alphID, GenericBlockData.class);
+    }
+
+    private BlockID(final int id, final String alphID, final Class<? extends BlockData> dataClass) {
         this.id = id;
         this.dataClass = dataClass;
+        this.alphID = alphID;
     }
 
 
     @Override
     public int getID() {
         return this.id;
+    }
+
+    @Override
+    public String getAlphabeticalID() {
+        return this.alphID;
     }
 
     @Override
