@@ -1,10 +1,11 @@
-package com.tree_bit.rcdl.blocks.entities;
+package com.tree_bit.blockapi.entities;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import com.tree_bit.rcdl.blocks.entities.TileEntity.Builder;
+import com.tree_bit.blockapi.entities.TileEntity;
+import com.tree_bit.blockapi.entities.TileEntity.Builder;
 
 import org.jnbt.IntTag;
 import org.jnbt.StringTag;

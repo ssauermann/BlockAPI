@@ -1,4 +1,4 @@
-package com.tree_bit.rcdl.blocks.entities;
+package com.tree_bit.blockapi.entities;
 
 /**
  * Tile entity of a end portal block

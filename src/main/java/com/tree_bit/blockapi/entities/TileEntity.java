@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.tree_bit.rcdl.blocks.entities;
+package com.tree_bit.blockapi.entities;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

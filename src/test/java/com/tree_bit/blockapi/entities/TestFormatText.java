@@ -1,10 +1,11 @@
-package com.tree_bit.rcdl.blocks.entities;
+package com.tree_bit.blockapi.entities;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-import com.tree_bit.rcdl.blocks.entities.FormatText.Format;
-import com.tree_bit.rcdl.blocks.entities.FormatText.FormatString;
+import com.tree_bit.blockapi.entities.FormatText;
+import com.tree_bit.blockapi.entities.FormatText.Format;
+import com.tree_bit.blockapi.entities.FormatText.FormatString;
 
 import org.junit.Test;
 

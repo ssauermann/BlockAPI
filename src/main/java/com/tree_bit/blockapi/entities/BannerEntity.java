@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.tree_bit.rcdl.blocks.entities;
+package com.tree_bit.blockapi.entities;
 
 import com.google.common.collect.ImmutableList;
 import com.tree_bit.rcdl.blocks.dv.Color;
@@ -37,7 +37,7 @@ import java.util.List;
 import jdk.nashorn.internal.ir.annotations.Immutable;
 
 /**
- * Tile entity of a end portal block
+ * Tile entity of a banner
  *
  * <p>
  * Used by:
@@ -83,7 +83,7 @@ public class BannerEntity extends TileEntity {
         for (final Pattern p : pattern) {
             final HashMap<String, Tag> hm = new HashMap<>();
             hm.put("Color", new IntTag("Color", p.getColor().getDataValue()));
-            hm.put("Pattern", new StringTag("Pattern", p.getType().getCode()));
+            hm.put("Pattern", new StringTag("Pattern", p.getTypeCode()));
             patternList.add(new CompoundTag("", hm));
         }
 
@@ -94,7 +94,7 @@ public class BannerEntity extends TileEntity {
 
     /**
      * Builder for a BannerEntity.
-     * 
+     *
      * @author Sascha Sauermann
      */
     public static class Builder {
@@ -134,6 +134,18 @@ public class BannerEntity extends TileEntity {
         }
 
         /**
+         * Add a pattern to this banner.
+         *
+         * @param color Color of the new pattern
+         * @param type Type-Code of the new pattern
+         * @return Builder itself for chaining
+         */
+        public Builder add(final Color color, final String type) {
+            this.pattern.add(color, type);
+            return this;
+        }
+
+        /**
          * Finishes building and creates the BannerEntity.
          *
          * @return New BannerEntity with the created design
@@ -142,6 +154,16 @@ public class BannerEntity extends TileEntity {
             return new BannerEntity(this.base, this.pattern.build());
         }
 
+    }
+
+    /**
+     * Starts building of a new BannerEntity.
+     *
+     * @param base Base color of this banner
+     * @return New BannerEntity Builder
+     */
+    public static Builder builder(final Color base) {
+        return new Builder(base);
     }
 
 }

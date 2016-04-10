@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.tree_bit.rcdl.blocks.entities;
+package com.tree_bit.blockapi.entities;
 
 import com.google.common.base.Objects;
 import com.tree_bit.rcdl.blocks.dv.Color;
@@ -29,6 +29,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * One pattern of a {@link BannerEntity} with a {@link Color} and a pattern
@@ -39,7 +40,7 @@ import java.util.List;
 public final class Pattern {
 
     private final Color color;
-    private final Type pattern;
+    private final String pattern;
 
     /**
      * Pattern Types
@@ -149,12 +150,23 @@ public final class Pattern {
      */
     public Pattern(final Color color, final Type type) {
         this.color = color;
+        this.pattern = type.getCode();
+    }
+
+    /**
+     * Create a new Pattern
+     *
+     * @param color Color of the new pattern
+     * @param type Type-Code of the new pattern
+     */
+    public Pattern(final Color color, final String type) {
+        this.color = color;
         this.pattern = type;
     }
 
     /**
      * Builder for Pattern lists
-     * 
+     *
      * @author Sascha Sauermann
      */
     public static class Builder {
@@ -176,6 +188,18 @@ public final class Pattern {
          * @return Builder itself for chaining
          */
         public Builder add(final Color color, final Type type) {
+            this.patternList.add(new Pattern(color, type));
+            return this;
+        }
+
+        /**
+         * Add a pattern to the list.
+         *
+         * @param color Color of the new pattern
+         * @param type Type-Code of the new pattern
+         * @return Builder itself for chaining
+         */
+        public Builder add(final Color color, final String type) {
             this.patternList.add(new Pattern(color, type));
             return this;
         }
@@ -224,7 +248,20 @@ public final class Pattern {
      *
      * @return Pattern type
      */
-    public Type getType() {
+    public Optional<Type> getType() {
+        try {
+            return Optional.of(Type.valueOf(this.pattern));
+        } catch (final IllegalArgumentException ex) {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * Gets the type-code of this pattern.
+     *
+     * @return Pattern type-code
+     */
+    public String getTypeCode() {
         return this.pattern;
     }
 
