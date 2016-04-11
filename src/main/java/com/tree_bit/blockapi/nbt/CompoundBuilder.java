@@ -23,6 +23,7 @@ package com.tree_bit.blockapi.nbt;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -103,6 +104,15 @@ public class CompoundBuilder extends NBTBuilder<Tag> {
     @Override
     public ImmutableSet<Tag> getTags() {
         return ImmutableSet.copyOf(this.tags.values());
+    }
+
+    /**
+     * Returns the current tags as an immutable map.
+     *
+     * @return Tag set
+     */
+    public ImmutableMap<String, Tag> getTagMap() {
+        return ImmutableMap.copyOf(this.tags);
     }
 
     @Override
