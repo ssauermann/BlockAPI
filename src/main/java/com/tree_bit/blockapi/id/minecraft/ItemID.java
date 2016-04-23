@@ -19,29 +19,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.tree_bit.blockapi.id;
+package com.tree_bit.blockapi.id.minecraft;
 
 import com.google.common.base.MoreObjects;
+import com.tree_bit.blockapi.id.IItemID;
 
 /**
- * Mapping of entity names to id's.
+ * Mapping of item names to id's.
  *
  * @author Sascha Sauermann
  */
-public enum EntityID implements IEntityID {
-    /** Dropped item */
-    ITEM(1, "Item"),
-    /** Experience Orb */
-    XP_ORB(2, "XPOrb");
-    // TODO: Add entities
+public enum ItemID implements IItemID {
+    /** Iron Shovel */
+    IRON_SHOVEL(256, "minecraft:iron_shovel");
+    // TODO: Add items
+
+    private ItemID(final int id, final String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     private int id;
-    private String savegameId;
-
-    private EntityID(final int id, final String savegameId) {
-        this.id = id;
-        this.savegameId = savegameId;
-    }
+    private String name;
 
 
     @Override
@@ -50,13 +49,12 @@ public enum EntityID implements IEntityID {
     }
 
     @Override
-    public String getSavegameID() {
-        return this.savegameId;
+    public String getAlphabeticalID() {
+        return this.name;
     }
-
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this).addValue(super.toString()).add("id", this.id).add("savegameID", this.savegameId).toString();
+        return MoreObjects.toStringHelper(this).addValue(super.toString()).add("id", this.id).add("alphabeticalID", this.name).toString();
     }
 }

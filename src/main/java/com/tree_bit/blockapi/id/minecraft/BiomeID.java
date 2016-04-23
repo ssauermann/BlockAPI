@@ -19,9 +19,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.tree_bit.blockapi.id;
+package com.tree_bit.blockapi.id.minecraft;
 
 import com.google.common.base.MoreObjects;
+import com.tree_bit.blockapi.id.IBiomeID;
 
 /**
  * Mapping of biome names to id's.

@@ -20,9 +20,10 @@
  * SOFTWARE.
  */
 
-package com.tree_bit.blockapi.id;
+package com.tree_bit.blockapi.id.minecraft;
 
 import com.google.common.base.MoreObjects;
+import com.tree_bit.blockapi.id.IStatusEffect;
 
 /**
  * Enum of all Minecraft status effects used by beacons, potions, etc.

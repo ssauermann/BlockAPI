@@ -20,9 +20,10 @@
  * SOFTWARE.
  */
 
-package com.tree_bit.blockapi.id;
+package com.tree_bit.blockapi.id.minecraft;
 
 import com.google.common.base.MoreObjects;
+import com.tree_bit.blockapi.id.IBlockID;
 import com.tree_bit.rcdl.blocks.BlockData;
 import com.tree_bit.rcdl.blocks.ColorBlock;
 import com.tree_bit.rcdl.blocks.GenericBlockData;

@@ -19,9 +19,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.tree_bit.blockapi.id;
+package com.tree_bit.blockapi.id.minecraft;
 
 import com.google.common.base.MoreObjects;
+import com.tree_bit.blockapi.id.IEnchantmentID;
 
 /**
  * Enum of all Minecraft enchantment effects
@@ -86,11 +87,11 @@ public enum EnchantmentID implements IEnchantmentID {
 
 
     private final int id;
-    private String name;
+    private String ename;
 
     EnchantmentID(final int id, final String name) {
         this.id = id;
-        this.name = name;
+        this.ename = name;
     }
 
     @Override
@@ -100,7 +101,7 @@ public enum EnchantmentID implements IEnchantmentID {
 
     @Override
     public String getName() {
-        return this.name;
+        return this.ename;
     }
 
     @Override

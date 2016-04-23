@@ -19,16 +19,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
 /**
- * Classes mapping minecraft id's to a name / class. This package does only
- * include interfaces which should be used in any class that want's to use a id
- * mapping class. See the subpackages for implementations of those.
- *
- * @see com.tree_bit.blockapi.id.minecraft
- * @see com.tree_bit.blockapi.id.generic
+ * Implementation of the id interfaces of superpackage for minecraft. Never use
+ * these implementation classes as data types, always use the interfaces.
  */
 @NonNullByDefault
-package com.tree_bit.blockapi.id;
+package com.tree_bit.blockapi.id.minecraft;
 
 import org.eclipse.jdt.annotation.NonNullByDefault;
