@@ -21,6 +21,7 @@
  */
 package com.tree_bit.blockapi.entities;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.tree_bit.rcdl.blocks.dv.Color;
 
@@ -140,6 +141,21 @@ public final class Pattern {
         public String getCode() {
             return this.code;
         }
+
+        /**
+         * Gets this type by code.
+         *
+         * @param id Type code
+         * @return matching type of this
+         */
+        public Type byID(final int id) {
+            for (final Type e : values()) {
+                if (e.getCode().equals(id)) {
+                    return e;
+                }
+            }
+            return this;
+        }
     }
 
     /**
@@ -232,6 +248,11 @@ public final class Pattern {
             final Builder other = (Builder) obj;
             return Objects.equal(this.patternList, other.patternList);
         }
+
+        @Override
+        public String toString() {
+            return MoreObjects.toStringHelper(this).addValue(this.patternList).toString();
+        }
     }
 
     /**
@@ -283,6 +304,11 @@ public final class Pattern {
         }
         final Pattern other = (Pattern) obj;
         return Objects.equal(this.color, other.color) && Objects.equal(this.pattern, other.pattern);
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this).add("Color", this.color).add("Pattern", this.pattern).toString();
     }
 }
 

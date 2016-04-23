@@ -1,6 +1,5 @@
 package com.tree_bit.rcdl.blocks.dv;
 
-
 /**
  * Representing the Minecraft colors.
  */
@@ -47,5 +46,20 @@ public enum Color implements IDataValueEnum {
     @Override
     public int getDataValue() {
         return this.value;
+    }
+
+    /**
+     * Gets this color by id.
+     *
+     * @param id Color id
+     * @return matching color or this
+     */
+    public Color byID(final int id) {
+        for (final Color e : values()) {
+            if (e.getDataValue() == id) {
+                return e;
+            }
+        }
+        return this;
     }
 }
