@@ -2,6 +2,8 @@ package com.tree_bit.rcdl.blocks;
 
 import static org.junit.Assert.assertEquals;
 
+import com.tree_bit.blockapi.id.minecraft.BlockID;
+
 import org.junit.Test;
 
 
@@ -10,7 +12,7 @@ public class TestBlockID {
 
     @Test
     public void testGetId() {
-        assertEquals(1, BlockID.STONE.getId());
+        assertEquals(1, BlockID.STONE.getID());
     }
 
     @Test

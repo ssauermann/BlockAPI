@@ -1,10 +1,11 @@
 package com.tree_bit.rcdl.blocks;
 
+import com.tree_bit.blockapi.entities.FormatText;
+import com.tree_bit.blockapi.entities.SignEntity;
+import com.tree_bit.blockapi.entities.FormatText.FormatString;
+import com.tree_bit.blockapi.id.minecraft.BlockID;
 import com.tree_bit.rcdl.blocks.dv.OrientationNESW;
 import com.tree_bit.rcdl.blocks.dv.SignOrientation;
-import com.tree_bit.rcdl.blocks.entities.FormatText;
-import com.tree_bit.rcdl.blocks.entities.FormatText.FormatString;
-import com.tree_bit.rcdl.blocks.entities.SignEntity;
 
 
 @SuppressWarnings("javadoc")

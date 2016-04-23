@@ -21,6 +21,7 @@
  */
 package com.tree_bit.blockapi.entities;
 
+import com.tree_bit.blockapi.nbt.CompoundBuilder;
 import com.tree_bit.rcdl.blocks.HangingSign;
 import com.tree_bit.rcdl.blocks.StandingSign;
 
@@ -69,7 +70,7 @@ public class SignEntity extends TileEntity {
      * @throws IllegalArgumentException if text[] has {@literal length>4}
      */
     public SignEntity(final @Nullable FormatText[] text) {
-        super(createBuilder(text));
+        super(createCompoundBuilder(text));
     }
 
     /**
@@ -80,7 +81,7 @@ public class SignEntity extends TileEntity {
      * @throws IllegalArgumentException if text[] has {@literal length>4}
      */
     public SignEntity(final @Nullable String[] text) {
-        super(createBuilder(toFText(text)));
+        super(createCompoundBuilder(toFText(text)));
     }
 
     private static @NonNull FormatText[] toFText(final @Nullable String[] text) {
@@ -92,11 +93,11 @@ public class SignEntity extends TileEntity {
         return fText;
     }
 
-    private static Builder createBuilder(final FormatText[] text) {
+    private static CompoundBuilder createCompoundBuilder(final FormatText[] text) {
         if (text.length > 4) {
             throw new IllegalArgumentException("Sign can't have more than 4 lines of text! Given: " + text.length);
         }
-        final TileEntity.Builder b = TileEntity.builder("Sign");
+        final CompoundBuilder b = TileEntity.builder("Sign");
         for (int i = 0; i < 4; i++) {
             String s = "";
             if (i < text.length) {

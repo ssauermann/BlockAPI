@@ -19,7 +19,7 @@ public class TestRedstone {
 
     @Test
     public void testGetData() {
-        assertEquals(PowerLevel.L10, this.fixedInstance.getData().get(PowerLevel.class));
+        assertEquals(PowerLevel.L10, this.fixedInstance.getData().get(PowerLevel.class).get());
     }
 
     @Test

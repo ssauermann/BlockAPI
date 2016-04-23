@@ -1,9 +1,9 @@
 package com.tree_bit.rcdl.blocks;
 
+import com.tree_bit.blockapi.entities.SignEntity;
+import com.tree_bit.blockapi.entities.TileEntity;
 import com.tree_bit.rcdl.blocks.dv.IDataValueEnum;
 import com.tree_bit.rcdl.blocks.dv.SignOrientation;
-import com.tree_bit.rcdl.blocks.entities.SignEntity;
-import com.tree_bit.rcdl.blocks.entities.TileEntity;
 
 
 /**

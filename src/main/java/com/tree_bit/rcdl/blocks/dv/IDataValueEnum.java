@@ -2,6 +2,8 @@ package com.tree_bit.rcdl.blocks.dv;
 
 /**
  * Defining methods a enum containing Minecraft data values has to implement.
+ *
+ * @author Sascha Sauermann
  */
 public interface IDataValueEnum {
 

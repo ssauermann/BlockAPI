@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
+import com.tree_bit.blockapi.id.minecraft.BlockID;
 import com.tree_bit.rcdl.blocks.Repeater.Delay;
 import com.tree_bit.rcdl.blocks.dv.OrientationNESW;
 

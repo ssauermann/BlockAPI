@@ -2,9 +2,10 @@ package com.tree_bit.rcdl.blocks;
 
 import static org.junit.Assert.assertTrue;
 
+import com.tree_bit.blockapi.entities.SignEntity;
 import com.tree_bit.rcdl.blocks.dv.SignOrientation;
-import com.tree_bit.rcdl.blocks.entities.SignEntity;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.junit.Test;
 
 
@@ -15,7 +16,7 @@ public class TestHangingSign {
     HangingSign someInstance = HangingSign.getInstance();
     HangingSign fixedInstance = HangingSign.getInstance(SignOrientation.North);
     HangingSign entityInstance = HangingSign.getInstance(SignOrientation.North, SignEntity.empty());
-    HangingSign entityInstanceT = HangingSign.getInstance(SignOrientation.North, new SignEntity(new String[] {"Test"}));
+    HangingSign entityInstanceT = HangingSign.getInstance(SignOrientation.North, new SignEntity(new String @NonNull [] {"Test"}));
 
     @Test
     public void testGetInstance() {

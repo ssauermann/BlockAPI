@@ -1,16 +1,21 @@
 package com.tree_bit.rcdl.blocks;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.google.common.base.Joiner;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableSet;
+import com.tree_bit.blockapi.entities.TileEntity;
 import com.tree_bit.rcdl.blocks.dv.IDataValueEnum;
 import com.tree_bit.rcdl.blocks.dv.IOrientationEnum;
-import com.tree_bit.rcdl.blocks.entities.TileEntity;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -23,17 +28,20 @@ public abstract class BlockData {
         NONE;
 
         @Override
+        @NonNull
         public IOrientationEnum rotate(final Axis axis, final int n) {
             return NONE;
         }
 
         @Override
+        @NonNull
         public IOrientationEnum mirror(final Set<Axis> plain) {
             Axis.checkPlain(plain);
             return NONE;
         }
 
         @Override
+        @NonNull
         public IOrientationEnum next(final int n) {
             return NONE;
         }
@@ -50,7 +58,6 @@ public abstract class BlockData {
     }
 
     private final SingleInstanceSet<IDataValueEnum> data;
-
 
     @Nullable
     private final TileEntity entity;
@@ -120,7 +127,7 @@ public abstract class BlockData {
      *
      * @param data Data values
      */
-    protected BlockData(final IDataValueEnum... data) {
+    protected BlockData(final @NonNull IDataValueEnum... data) {
         this(null, data);
     }
 
@@ -144,7 +151,7 @@ public abstract class BlockData {
      * @param entity Tile entity
      * @param data Data values
      */
-    protected BlockData(@Nullable final TileEntity entity, final IDataValueEnum... data) {
+    protected BlockData(@Nullable final TileEntity entity, final @NonNull IDataValueEnum... data) {
         this.data = SingleInstanceSet.copyOf(Arrays.asList(data), IOrientationEnum.class);
         this.entity = entity;
     }
@@ -203,15 +210,12 @@ public abstract class BlockData {
     }
 
     /**
-     * Returns the TileEntity of this block.
+     * Returns the TileEntity of this block. This value may not be present.
      *
      * @return TileEntity
      */
     public Optional<TileEntity> getTileEntity() {
-        if (this.entity != null) {
-            return Optional.of(this.entity);
-        }
-        return Optional.empty();
+        return Optional.ofNullable(this.entity);
     }
 
     private IOrientationEnum getOrientation() {
@@ -219,7 +223,8 @@ public abstract class BlockData {
         if (instances.isEmpty()) {
             return Orientation.NONE;
         }
-        return instances.asList().get(0);
+        final List<IOrientationEnum> l = instances.asList();
+        return checkNotNull(l.get(0));
     }
 
     /**
@@ -255,6 +260,7 @@ public abstract class BlockData {
     }
 
     @Override
+    @NonNull
     public String toString() {
         String tileInfo = null;
         if (this.getTileEntity().isPresent()) {
@@ -277,8 +283,10 @@ public abstract class BlockData {
      *         the given class
      */
     @SafeVarargs
-    protected static IDataValueEnum[] validateDV(final IDataValueEnum[] data, final Class<? extends IDataValueEnum> clas,
-            final Class<? extends IDataValueEnum>... classes) {
+    @NonNull
+    protected static IDataValueEnum[] validateDV(final @NonNull IDataValueEnum[] data, final Class<? extends @NonNull IDataValueEnum> clas,
+            final @NonNull Class<? extends IDataValueEnum>... classes) {
+
         final Set<Class<? extends IDataValueEnum>> clazzes = new HashSet<>();
         clazzes.add(clas);
         clazzes.addAll(Arrays.asList(classes));
@@ -300,11 +308,7 @@ public abstract class BlockData {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = (prime * result) + (this.data.hashCode());
-        result = (prime * result) + ((this.entity != null) ? this.entity.hashCode() : 0);
-        return result;
+        return Objects.hash(this.data, this.entity);
     }
 
     @Override
@@ -312,20 +316,14 @@ public abstract class BlockData {
         if (this == obj) {
             return true;
         }
+        if (obj == null) {
+            return false;
+        }
         if (!(obj instanceof BlockData)) {
             return false;
         }
         final BlockData other = (BlockData) obj;
-        if (!this.data.equals(other.data)) {
-            return false;
-        }
-        if (this.entity != null) {
-            if (!this.entity.equals(other.entity)) {
-                return false;
-            }
-        } else if (other.entity != null) {
-            return false;
-        }
-        return true;
+
+        return Objects.equals(this.data, other.data) && Objects.equals(this.entity, other.entity);
     }
 }

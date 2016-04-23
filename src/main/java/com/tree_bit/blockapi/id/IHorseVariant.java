@@ -28,5 +28,12 @@ package com.tree_bit.blockapi.id;
  * @author Sascha Sauermann
  */
 public interface IHorseVariant extends ID {
-    // currently this is a pseudo interface
+
+    /**
+     * Returns the id of this horse variant.
+     *
+     * @return id
+     */
+    @Override
+    int getID();
 }

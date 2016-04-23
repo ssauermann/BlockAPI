@@ -1,8 +1,11 @@
 package com.tree_bit.rcdl.blocks;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableSet;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.Collection;
@@ -10,6 +13,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -88,7 +93,7 @@ final class SingleInstanceSet<T> implements Iterable<T> {
      * @param value Value
      */
     @SuppressWarnings("unchecked")
-    public void add(final T value) {
+    public void add(final @NonNull T value) {
         final Class<? extends T> clazz = (Class<? extends T>) value.getClass();
         final Class<? extends T> theConstraint = this.checkConstraints(value);
         if (theConstraint != null) {
@@ -107,7 +112,7 @@ final class SingleInstanceSet<T> implements Iterable<T> {
     }
 
     @Nullable
-    private Class<? extends T> checkConstraints(final T obj) {
+    private Class<? extends T> checkConstraints(final @NonNull T obj) {
         for (final Class<? extends T> constraint : this.constraints) {
             if (constraint.isInstance(obj)) {
                 return constraint;
@@ -126,8 +131,9 @@ final class SingleInstanceSet<T> implements Iterable<T> {
     }
 
     @Override
+    @NonNull
     public Iterator<T> iterator() {
-        return this.map.values().iterator();
+        return checkNotNull(this.map.values().iterator());
     }
 
     /**
@@ -138,10 +144,13 @@ final class SingleInstanceSet<T> implements Iterable<T> {
      */
     @SuppressWarnings("unchecked")
     // Cast is safe
-    public <X extends T> X get(final Class<X> clazz) {
+    public <X extends T> Optional<X> get(final Class<X> clazz) {
         final T ret = this.map.get(clazz);
+        if (ret == null) {
+            return Optional.empty();
+        }
         if (ret.getClass() == clazz) {
-            return (X) ret;
+            return Optional.of((X) ret);
         }
         throw new AssertionError("Can't cast " + ret + " to " + clazz.getName());
     }
@@ -153,7 +162,6 @@ final class SingleInstanceSet<T> implements Iterable<T> {
      * @return Set containing the values
      */
     @SuppressWarnings("unchecked")
-    // Cast is safe
     public <X extends T> ImmutableSet<X> getInstancesOf(final Class<X> clazz) {
         final Set<X> set = new HashSet<>();
         for (final T v : this.map.values()) {
@@ -169,7 +177,6 @@ final class SingleInstanceSet<T> implements Iterable<T> {
      *
      * @return Collection of constraints
      */
-    // Set is not null
     public Collection<Class<? extends T>> getConstraints() {
         return ImmutableSet.copyOf(this.constraints);
     }
@@ -180,7 +187,7 @@ final class SingleInstanceSet<T> implements Iterable<T> {
      * @param collection Collection
      * @return Set
      */
-    public static <E> SingleInstanceSet<E> copyOf(final Collection<E> collection) {
+    public static <E> SingleInstanceSet<E> copyOf(final Collection<@NonNull E> collection) {
         return copyOf(collection, new HashSet<>());
     }
 
@@ -192,7 +199,7 @@ final class SingleInstanceSet<T> implements Iterable<T> {
      * @param constraints Set of constraints
      * @return Set
      */
-    public static <E> SingleInstanceSet<E> copyOf(final Collection<E> collection, final Set<Class<? extends E>> constraints) {
+    public static <E> SingleInstanceSet<E> copyOf(final Collection<@NonNull E> collection, final Set<Class<? extends E>> constraints) {
         final SingleInstanceSet<E> set = new SingleInstanceSet<>(constraints);
         for (final E element : collection) {
             set.add(element);
@@ -208,22 +215,19 @@ final class SingleInstanceSet<T> implements Iterable<T> {
      * @param constraint Constraint class
      * @return Set
      */
-    public static <E> SingleInstanceSet<E> copyOf(final Collection<E> collection, final Class<? extends E> constraint) {
+    public static <E> SingleInstanceSet<E> copyOf(final Collection<@NonNull E> collection, final Class<? extends E> constraint) {
         return copyOf(collection, ImmutableSet.of(constraint));
     }
 
     @Override
+    @NonNull
     public String toString() {
         return "" + MoreObjects.toStringHelper(this).add("Constraints", this.constraints).add("Map", this.map).toString();
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = (prime * result) + this.constraints.hashCode();
-        result = (prime * result) + this.map.hashCode();
-        return result;
+        return Objects.hash(this.constraints, this.map);
     }
 
     @Override
@@ -231,17 +235,15 @@ final class SingleInstanceSet<T> implements Iterable<T> {
         if (this == obj) {
             return true;
         }
+        if (obj == null) {
+            return false;
+        }
         if (!(obj instanceof SingleInstanceSet)) {
             return false;
         }
         final SingleInstanceSet<?> other = (SingleInstanceSet<?>) obj;
-        if (!this.constraints.equals(other.constraints)) {
-            return false;
-        }
-        if (!this.map.equals(other.map)) {
-            return false;
-        }
-        return true;
+
+        return Objects.equals(this.constraints, other.constraints) && Objects.equals(this.map, other.map);
     }
 
 }

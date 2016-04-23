@@ -20,8 +20,8 @@ public class TestRepeater {
 
     @Test
     public void testGetData() {
-        assertEquals(Repeater.Delay.D3, this.fixedInstance.getData().get(Repeater.Delay.class));
-        assertEquals(OrientationNESW.East, this.fixedInstance.getData().get(OrientationNESW.class));
+        assertEquals(Repeater.Delay.D3, this.fixedInstance.getData().get(Repeater.Delay.class).get());
+        assertEquals(OrientationNESW.East, this.fixedInstance.getData().get(OrientationNESW.class).get());
     }
 
     @Test

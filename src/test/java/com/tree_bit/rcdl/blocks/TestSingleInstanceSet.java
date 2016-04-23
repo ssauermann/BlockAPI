@@ -175,8 +175,8 @@ public class TestSingleInstanceSet {
         this.setA.add(a1);
         this.setA.add(b);
 
-        assertEquals(this.setA.get(A.class), a1);
-        assertEquals(this.setA.get(B.class), b);
+        assertEquals(a1, this.setA.get(A.class).get());
+        assertEquals(b, this.setA.get(B.class).get());
     }
 
     @Test

@@ -15,7 +15,7 @@ public class TestGenericBlockData {
 
     @Test
     public void testGetData() {
-        assertEquals(GenericBlockData.Data.NONE, this.instance.getData().get(GenericBlockData.Data.class));
+        assertEquals(GenericBlockData.Data.NONE, this.instance.getData().get(GenericBlockData.Data.class).get());
     }
 
     @Test

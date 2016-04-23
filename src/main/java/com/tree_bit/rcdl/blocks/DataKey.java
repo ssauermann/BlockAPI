@@ -1,10 +1,15 @@
 package com.tree_bit.rcdl.blocks;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
+import java.util.Optional;
+
 /**
- * Wrapper class for two values to use them in a map or cache.
+ * Wrapper class for two or three values to use them in a map or cache.
  *
  * @param <R> Row
  * @param <C> Column
@@ -53,7 +58,6 @@ class DataKey<R, C, L> {
      *
      * @return New DataKey
      */
-    @NonNull
     static <R, C> DataKey<R, C, ?> of(final @NonNull R r, final @NonNull C c) {
         return new DataKey<>(r, c);
     }
@@ -67,7 +71,6 @@ class DataKey<R, C, L> {
      *
      * @return New DataKey
      */
-    @NonNull
     static <R, C, L> DataKey<R, C, L> of(final @NonNull R r, final @NonNull C c, @Nullable final L l) {
         return new DataKey<>(r, c, l);
     }
@@ -93,22 +96,17 @@ class DataKey<R, C, L> {
     }
 
     /**
-     * Returns the layer value.
+     * Returns the layer value. This value may not be present.
      *
      * @return Layer value
      */
-    @Nullable
-    L getLayer() {
-        return this.layer;
+    Optional<L> getLayer() {
+        return Optional.ofNullable(this.layer);
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = (prime * result) + ((this.column == null) ? 0 : this.column.hashCode());
-        result = (prime * result) + ((this.row == null) ? 0 : this.row.hashCode());
-        return result;
+        return Objects.hashCode(this.row, this.column, this.layer);
     }
 
     @Override
@@ -123,27 +121,13 @@ class DataKey<R, C, L> {
             return false;
         }
         final DataKey<?, ?, ?> other = (DataKey<?, ?, ?>) obj;
-        if (this.column == null) {
-            if (other.column != null) {
-                return false;
-            }
-        } else if (!this.column.equals(other.column)) {
-            return false;
-        }
-        if (this.row == null) {
-            if (other.row != null) {
-                return false;
-            }
-        } else if (!this.row.equals(other.row)) {
-            return false;
-        }
-        if (this.layer != null) {
-            if (!this.layer.equals(other.layer)) {
-                return false;
-            }
-        } else if (other.layer != null) {
-            return false;
-        }
-        return true;
+        return Objects.equal(this.row, other.row) && Objects.equal(this.column, other.column) && Objects.equal(this.layer, other.layer);
     }
+
+    @Override
+    @NonNull
+    public String toString() {
+        return MoreObjects.toStringHelper(this).add("Row", this.row).add("Column", this.column).add("Layer", this.layer).toString();
+    }
+
 }

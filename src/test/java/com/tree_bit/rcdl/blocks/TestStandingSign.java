@@ -2,8 +2,8 @@ package com.tree_bit.rcdl.blocks;
 
 import static org.junit.Assert.assertTrue;
 
+import com.tree_bit.blockapi.entities.SignEntity;
 import com.tree_bit.rcdl.blocks.dv.Orientation16;
-import com.tree_bit.rcdl.blocks.entities.SignEntity;
 
 import org.junit.Test;
 

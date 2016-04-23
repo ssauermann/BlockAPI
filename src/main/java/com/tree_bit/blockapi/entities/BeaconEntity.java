@@ -22,7 +22,8 @@
 package com.tree_bit.blockapi.entities;
 
 import com.tree_bit.blockapi.id.IStatusEffect;
-import com.tree_bit.blockapi.id.StatusEffect;
+import com.tree_bit.blockapi.id.minecraft.StatusEffect;
+import com.tree_bit.blockapi.nbt.CompoundBuilder;
 
 import org.eclipse.jdt.annotation.Nullable;
 import org.jnbt.IntTag;
@@ -61,7 +62,7 @@ public class BeaconEntity extends TileEntity {
     /**
      * Create a new beacon TileEntity.
      *
-     * @param lock Optional. When present, prevents the container from being
+     * @param lock Optional. When not blank, prevents the container from being
      *        opened unless the opener is holding an item whose name matches
      *        this string
      * @param levels The number of levels available from the pyramid
@@ -74,8 +75,8 @@ public class BeaconEntity extends TileEntity {
         super(createBuilder(lock, levels, primary, secondary));
     }
 
-    private static TileEntity.Builder createBuilder(final @Nullable String lock, final int levels, final int primary, final int secondary) {
-        final TileEntity.Builder b = TileEntity.builder("Beacon");
+    private static CompoundBuilder createBuilder(final @Nullable String lock, final int levels, final int primary, final int secondary) {
+        final CompoundBuilder b = TileEntity.builder("Beacon");
         if (lock != null) {
             b.add(new StringTag("Lock", lock));
         }
@@ -113,7 +114,7 @@ public class BeaconEntity extends TileEntity {
         /**
          * Sets a lock for this beacon.
          *
-         * @param lock If present, prevents the container from being opened
+         * @param lock When not blank, prevents the container from being opened
          *        unless the opener is holding an item whose name matches this
          *        string
          * @return Builder for chaining

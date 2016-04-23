@@ -1,10 +1,10 @@
 package com.tree_bit.rcdl.blocks;
 
+import com.tree_bit.blockapi.entities.FormatText;
+import com.tree_bit.blockapi.entities.SignEntity;
+import com.tree_bit.blockapi.entities.TileEntity;
 import com.tree_bit.rcdl.blocks.dv.IDataValueEnum;
 import com.tree_bit.rcdl.blocks.dv.Orientation16;
-import com.tree_bit.rcdl.blocks.entities.FormatText;
-import com.tree_bit.rcdl.blocks.entities.SignEntity;
-import com.tree_bit.rcdl.blocks.entities.TileEntity;
 
 /**
  * Data values of a 'Hanging Sign' block.

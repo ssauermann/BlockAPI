@@ -18,7 +18,7 @@ public class TestTorch {
 
     @Test
     public void testGetData() {
-        assertEquals(TorchOrientation.South, this.fixedInstance.getData().get(TorchOrientation.class));
+        assertEquals(TorchOrientation.South, this.fixedInstance.getData().get(TorchOrientation.class).get());
     }
 
     @Test

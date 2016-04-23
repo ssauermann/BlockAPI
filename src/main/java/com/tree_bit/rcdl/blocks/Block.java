@@ -6,6 +6,10 @@ import com.google.common.base.MoreObjects;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+import com.tree_bit.blockapi.id.minecraft.BlockID;
+
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.security.InvalidParameterException;
 import java.util.Set;
@@ -152,12 +156,16 @@ public final class Block implements Comparable<Block> {
     }
 
     @Override
-    public int compareTo(final Block o) {
+    public int compareTo(final @Nullable Block o) {
         final Block b = checkNotNull(o);
-        return this.block.getId() - b.block.getId();
+        return this.block.getID() - b.block.getID();
+        // TODO: Hashcode, equals ? Compare to via Guava return
+        // ComparisonChain.start().compare(a,b).compare(c,d).result()
+        // Compare Data?
     }
 
     @Override
+    @NonNull
     public String toString() {
         return MoreObjects.toStringHelper(this).addValue(this.block).addValue(this.data).toString();
     }
