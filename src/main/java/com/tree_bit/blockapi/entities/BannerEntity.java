@@ -22,6 +22,8 @@
 package com.tree_bit.blockapi.entities;
 
 import com.google.common.collect.ImmutableList;
+import com.tree_bit.blockapi.nbt.CompoundBuilder;
+import com.tree_bit.blockapi.nbt.NBT;
 import com.tree_bit.rcdl.blocks.dv.Color;
 
 import org.jnbt.CompoundTag;
@@ -33,6 +35,7 @@ import org.jnbt.Tag;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import jdk.nashorn.internal.ir.annotations.Immutable;
 
@@ -49,6 +52,9 @@ import jdk.nashorn.internal.ir.annotations.Immutable;
  */
 @Immutable
 public class BannerEntity extends TileEntity {
+
+    private final Color base;
+    private final List<Pattern> pattern;
 
     /**
      * Creates a white banner entity without patterns.
@@ -73,10 +79,15 @@ public class BannerEntity extends TileEntity {
      * @param patterns List of applied patterns
      */
     BannerEntity(final Color color, final List<Pattern> patterns) {
-        super(createBuilder(color, patterns));
+        super(NBT.Compound("").Int("Base", color.getDataValue()).add(NBT.List("Patterns", CompoundTag.class, (patterns.stream().map(p -> {
+            return NBT.Compound("").Int("Color", p.getColor().getDataValue()).String("Pattern", p.getTypeCode()).build();
+        }).collect(Collectors.toList())))));
+        // super(createBuilder(color, patterns));
+        this.base = color;
+        this.pattern = patterns;
     }
 
-    private static TileEntity.Builder createBuilder(final Color color, final List<Pattern> pattern) {
+    private static CompoundBuilder createBuilder(final Color color, final List<Pattern> pattern) {
 
         final List<CompoundTag> patternList = new LinkedList<>();
 
@@ -164,6 +175,24 @@ public class BannerEntity extends TileEntity {
      */
     public static Builder builder(final Color base) {
         return new Builder(base);
+    }
+
+    /**
+     * Gets the base color of this banner.
+     *
+     * @return base color
+     */
+    public Color getBase() {
+        return this.base;
+    }
+
+    /**
+     * Gets the pattern of this banner.
+     *
+     * @return list of pattern
+     */
+    public List<Pattern> getPattern() {
+        return this.pattern;
     }
 
 }
