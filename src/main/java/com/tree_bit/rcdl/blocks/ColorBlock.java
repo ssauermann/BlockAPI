@@ -3,6 +3,8 @@ package com.tree_bit.rcdl.blocks;
 import com.tree_bit.rcdl.blocks.dv.Color;
 import com.tree_bit.rcdl.blocks.dv.IDataValueEnum;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 import jdk.nashorn.internal.ir.annotations.Immutable;
 
 
@@ -39,7 +41,7 @@ public final class ColorBlock extends BlockData {
         super(Color.White);
     }
 
-    private ColorBlock(final IDataValueEnum[] values) {
+    private ColorBlock(final @NonNull IDataValueEnum[] values) {
         super(validateDV(values, Color.class));
     }
 

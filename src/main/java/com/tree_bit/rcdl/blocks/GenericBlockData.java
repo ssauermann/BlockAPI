@@ -2,6 +2,8 @@ package com.tree_bit.rcdl.blocks;
 
 import com.tree_bit.rcdl.blocks.dv.IDataValueEnum;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 
 
 /**
@@ -48,7 +50,7 @@ public final class GenericBlockData extends BlockData {
         super(Data.NONE);
     }
 
-    private GenericBlockData(final IDataValueEnum[] values) {
+    private GenericBlockData(final @NonNull IDataValueEnum[] values) {
         super(validateDV(values, Data.class));
     }
 

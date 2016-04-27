@@ -250,7 +250,7 @@ public final class Pattern {
         }
 
         @Override
-        public String toString() {
+        public @NonNull String toString() {
             return MoreObjects.toStringHelper(this).addValue(this.patternList).toString();
         }
     }

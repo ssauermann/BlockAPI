@@ -25,6 +25,7 @@ import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.tree_bit.blockapi.id.IHorseVariant;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
@@ -95,7 +96,7 @@ public class HorseVariant implements IHorseVariant {
         }
 
         @Override
-        public String toString() {
+        public @NonNull String toString() {
             return MoreObjects.toStringHelper(this).addValue(super.toString()).add("id", this.id).toString();
         }
 

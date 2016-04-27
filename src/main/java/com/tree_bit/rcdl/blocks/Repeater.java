@@ -3,6 +3,8 @@ package com.tree_bit.rcdl.blocks;
 import com.tree_bit.rcdl.blocks.dv.IDataValueEnum;
 import com.tree_bit.rcdl.blocks.dv.OrientationNESW;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 import jdk.nashorn.internal.ir.annotations.Immutable;
 
 
@@ -61,7 +63,7 @@ public final class Repeater extends BlockData {
         super(OrientationNESW.North, Delay.D1);
     }
 
-    private Repeater(final IDataValueEnum[] values) {
+    private Repeater(final @NonNull IDataValueEnum[] values) {
         super(validateDV(values, OrientationNESW.class, Delay.class));
     }
 

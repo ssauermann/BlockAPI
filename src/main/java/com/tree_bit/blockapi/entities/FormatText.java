@@ -108,7 +108,7 @@ public final class FormatText {
 
     /**
      * Builder for FormatText.
-     * 
+     *
      * @author Sascha Sauermann
      */
     public static class Builder {
@@ -263,7 +263,7 @@ public final class FormatText {
 
 
         @Override
-        public String toString() {
+        public @NonNull String toString() {
             return MoreObjects.toStringHelper(this).add("String", this.string).add("Format", this.format).toString();
         }
     }

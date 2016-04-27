@@ -3,6 +3,8 @@ package com.tree_bit.rcdl.blocks;
 import com.tree_bit.rcdl.blocks.dv.DummyOrientation;
 import com.tree_bit.rcdl.blocks.dv.IDataValueEnum;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 import jdk.nashorn.internal.ir.annotations.Immutable;
 
 
@@ -85,7 +87,7 @@ public final class Redstone extends BlockData {
         super(level, DummyOrientation.NONE);
     }
 
-    private Redstone(final IDataValueEnum[] values) {
+    private Redstone(final @NonNull IDataValueEnum[] values) {
         super(validateDV(values, PowerLevel.class, DummyOrientation.class));
     }
 

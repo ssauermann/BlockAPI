@@ -125,8 +125,7 @@ class DataKey<R, C, L> {
     }
 
     @Override
-    @NonNull
-    public String toString() {
+    public @NonNull String toString() {
         return MoreObjects.toStringHelper(this).add("Row", this.row).add("Column", this.column).add("Layer", this.layer).toString();
     }
 

@@ -25,6 +25,7 @@ import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableCollection;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.jnbt.Tag;
 
@@ -119,7 +120,7 @@ public abstract class NBTBuilder<T extends Tag> {
     }
 
     @Override
-    public String toString() {
+    public @NonNull String toString() {
         return MoreObjects.toStringHelper(this).addValue(this.getTags()).toString();
     }
 

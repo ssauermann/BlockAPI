@@ -105,7 +105,7 @@ public class TileEntity {
 
     /**
      * Gets a tag by name.
-     * 
+     *
      * @param name Tag name
      * @return Tag
      */

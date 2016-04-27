@@ -24,6 +24,8 @@ package com.tree_bit.blockapi.id.minecraft;
 import com.google.common.base.MoreObjects;
 import com.tree_bit.blockapi.id.IEntityID;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 /**
  * Mapping of entity names to id's.
  *
@@ -57,7 +59,7 @@ public enum EntityID implements IEntityID {
 
 
     @Override
-    public String toString() {
+    public @NonNull String toString() {
         return MoreObjects.toStringHelper(this).addValue(super.toString()).add("id", this.id).add("savegameID", this.savegameId).toString();
     }
 }

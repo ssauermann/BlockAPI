@@ -24,6 +24,8 @@ package com.tree_bit.blockapi.id.minecraft;
 import com.google.common.base.MoreObjects;
 import com.tree_bit.blockapi.id.IItemID;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 /**
  * Mapping of item names to id's.
  *
@@ -54,7 +56,7 @@ public enum ItemID implements IItemID {
     }
 
     @Override
-    public String toString() {
+    public @NonNull String toString() {
         return MoreObjects.toStringHelper(this).addValue(super.toString()).add("id", this.id).add("alphabeticalID", this.name).toString();
     }
 }

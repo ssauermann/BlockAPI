@@ -4,6 +4,8 @@ import com.tree_bit.rcdl.blocks.dv.IDataValueEnum;
 import com.tree_bit.rcdl.blocks.dv.SlabPosition;
 import com.tree_bit.rcdl.blocks.dv.SlabType1;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 import jdk.nashorn.internal.ir.annotations.Immutable;
 
 
@@ -37,7 +39,7 @@ public final class HalfSlab1 extends BlockData {
         super(SlabType1.STONE, SlabPosition.DOWN);
     }
 
-    private HalfSlab1(final IDataValueEnum[] values) {
+    private HalfSlab1(final @NonNull IDataValueEnum[] values) {
         super(validateDV(values, SlabType1.class, SlabPosition.class));
     }
 
