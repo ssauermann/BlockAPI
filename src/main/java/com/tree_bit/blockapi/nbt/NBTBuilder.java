@@ -31,6 +31,7 @@ import org.jnbt.Tag;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Superclass of NBT tag builders.
@@ -52,8 +53,8 @@ public abstract class NBTBuilder<T extends Tag> {
 
 
     /**
-     * Adds a new tag to this list tag. An existing tag with the same name is
-     * replaced.
+     * Adds a new tag to this collection tag. An existing tag with the same name
+     * is replaced.
      *
      * @param tag Tag
      * @return Builder for chaining
@@ -64,8 +65,25 @@ public abstract class NBTBuilder<T extends Tag> {
     public abstract NBTBuilder<T> add(final T tag);
 
     /**
-     * Adds new tags to this list tag. An existing tag with the same name as one
-     * in the collection is replaced.
+     * Adds a new tag to this collection tag if it is present . An existing tag
+     * with the same name is replaced.
+     *
+     * @param tag Tag
+     * @return Builder for chaining
+     *
+     * @throws NullPointerException if the given tag has a null value as its
+     *         name
+     */
+    public NBTBuilder<T> add(final Optional<? extends T> tag) {
+        if (tag.isPresent()) {
+            return this.add(tag.get());
+        }
+        return this;
+    }
+
+    /**
+     * Adds new tags to this collection tag. An existing tag with the same name
+     * as one in the collection is replaced.
      *
      * @param tags Collection of tags
      * @return Builder for chaining

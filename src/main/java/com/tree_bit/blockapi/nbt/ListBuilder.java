@@ -32,6 +32,7 @@ import org.jnbt.Tag;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Builder for NBT list Tags
@@ -68,6 +69,24 @@ public class ListBuilder<T extends Tag> extends NBTBuilder<T> {
     @Override
     public ListBuilder<T> add(final T tag) {
         this.tags.add(tag);
+        return this;
+    }
+
+    /**
+     * Adds a new tag to this list tag if it is present. An existing tag with
+     * the same name is replaced.
+     *
+     * @param tag Tag
+     * @return Builder for chaining
+     *
+     * @throws NullPointerException if the given tag has a null value as its
+     *         name
+     */
+    @Override
+    public ListBuilder<T> add(final Optional<? extends T> tag) {
+        if (tag.isPresent()) {
+            return this.add(tag.get());
+        }
         return this;
     }
 

@@ -34,6 +34,7 @@ import org.jnbt.Tag;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Builder for NBT Compound Tags
@@ -69,6 +70,24 @@ public class CompoundBuilder extends NBTBuilder<Tag> {
     }
 
     /**
+     * Adds a new tag to this compound tag if it is present. An existing tag
+     * with the same name is replaced.
+     *
+     * @param tag Tag
+     * @return Builder for chaining
+     *
+     * @throws NullPointerException if the given tag has a null value as its
+     *         name
+     */
+    @Override
+    public CompoundBuilder add(final Optional<? extends Tag> tag) {
+        if (tag.isPresent()) {
+            return this.add(tag.get());
+        }
+        return this;
+    }
+
+    /**
      * Adds new tags to this compound tag. An existing tag with the same name as
      * one in the collection is replaced.
      *
@@ -92,7 +111,7 @@ public class CompoundBuilder extends NBTBuilder<Tag> {
      * @return New CompoundTag
      */
     @Override
-    public CompoundTag build() {
+    public @NonNull CompoundTag build() {
         return NBT.Compound(this.getName(), this.tags);
     }
 
