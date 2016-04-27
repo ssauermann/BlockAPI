@@ -19,14 +19,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.tree_bit.blockapi.internal;
+
+import org.immutables.value.Value;
+import org.immutables.value.Value.Style.ImplementationVisibility;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 /**
- * Classes giving access to Minecraft entities.
+ * My immutable style
  */
-@NonNullByDefault
-@BlockApiStyle
-package com.tree_bit.blockapi.entities;
+@Target({ElementType.PACKAGE, ElementType.TYPE})
+// Make it class retention for incremental compilation
+@Retention(RetentionPolicy.CLASS)
+@Value.Style(get = {"is*", "get*"},
+        // 'Abstract' prefix will be detected and trimmed
+        typeAbstract = {"_*",},
+        // No prefix or suffix for generated immutable type
+        typeImmutable = "*",
+        // Generated class will be always public
+        visibility = ImplementationVisibility.PUBLIC, init = "*",
 
-import com.tree_bit.blockapi.internal.BlockApiStyle;
-
-import org.eclipse.jdt.annotation.NonNullByDefault;
-
+        defaults = @Value.Immutable(copy = true))
+public @interface BlockApiStyle {
+    // Nothing to do here
+}

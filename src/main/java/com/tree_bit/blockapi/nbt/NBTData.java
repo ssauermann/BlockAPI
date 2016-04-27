@@ -19,14 +19,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.tree_bit.blockapi.nbt;
+
+import org.jnbt.CompoundTag;
+
 /**
- * Classes giving access to Minecraft entities.
+ * A class which represents an NBT compound tag and can be represented as one.
  */
-@NonNullByDefault
-@BlockApiStyle
-package com.tree_bit.blockapi.entities;
+public interface NBTData {
 
-import com.tree_bit.blockapi.internal.BlockApiStyle;
-
-import org.eclipse.jdt.annotation.NonNullByDefault;
-
+    /**
+     * Get's the compound tag representing this object.
+     *
+     * @return Compound tag
+     */
+    public CompoundTag compound();
+}

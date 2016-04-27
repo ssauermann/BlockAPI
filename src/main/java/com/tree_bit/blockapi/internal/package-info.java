@@ -20,13 +20,10 @@
  * SOFTWARE.
  */
 /**
- * Classes giving access to Minecraft entities.
+ * This package contains internal classes, which may change unexpectedly. Do not
+ * use!
  */
 @NonNullByDefault
-@BlockApiStyle
-package com.tree_bit.blockapi.entities;
-
-import com.tree_bit.blockapi.internal.BlockApiStyle;
+package com.tree_bit.blockapi.internal;
 
 import org.eclipse.jdt.annotation.NonNullByDefault;
-

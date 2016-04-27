@@ -21,26 +21,55 @@
  */
 package com.tree_bit.blockapi.entities;
 
+import com.tree_bit.blockapi.id.minecraft.BlockID;
 import com.tree_bit.blockapi.nbt.NBT;
+import com.tree_bit.blockapi.nbt.NBTData;
 
+import org.immutables.value.Value;
 import org.jnbt.CompoundTag;
+
+import java.util.Optional;
 
 /**
  * Represents an item in an inventory slot.
  */
-public class Item {
+@Value.Immutable
+@SuppressWarnings("static-method")
+abstract class _Item implements NBTData {
 
-    CompoundTag item;
 
-    public Item(final byte count, final byte slotnr, final short damage, final String id, final CompoundTag tag) {
-        this.item = NBT.begin().Byte("Count", count).Byte("Slot", slotnr).Short("Damage", damage).String("id", id).add(tag).build();
+    @Override
+    @Value.Lazy
+    public CompoundTag compound() {
+        return NBT.begin().Byte("Count", this.count()).Byte("Slot", this.slotNr()).Short("Damage", this.damage()).String("id", this.id())
+                .add(this.tag()).build();
     }
 
-    Item(final CompoundTag c) {
-        this.item = c;
+    @Value.Parameter(order = 2)
+    @Value.Default
+    public byte count() {
+        return 1;
     }
 
-    public CompoundTag getItem() {
-        return this.item;
+    @Value.Parameter(order = 4)
+    @Value.Default
+    public byte slotNr() {
+        return 0;
     }
+
+    @Value.Parameter(order = 3)
+    @Value.Default
+    public short damage() {
+        return 0;
+    }
+
+    @Value.Parameter(order = 1)
+    @Value.Default
+    public String id() {
+        return BlockID.STONE.getAlphabeticalID();
+    }
+
+    @Value.Parameter(order = 5)
+    public abstract Optional<CompoundTag> tag();
+
 }
