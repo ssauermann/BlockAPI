@@ -21,15 +21,16 @@
  */
 package com.tree_bit.blockapi.nbt.tags;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.tree_bit.blockapi.internal.BlockApiStyle;
 import com.tree_bit.blockapi.internal.Null;
+import com.tree_bit.blockapi.nbt.NBT;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.immutables.value.Value;
-import org.jnbt.IntArrayTag;
-import org.jnbt.IntTag;
 
 import java.util.List;
 import java.util.Map;
@@ -82,14 +83,12 @@ public interface Tag<@NonNull T> {
      * @throws ClassCastException if given class is incompatible with the given
      *         tag
      */
-    // cast is checked at runtime via the return value of the getValue method
-    @SuppressWarnings("unchecked")
-    public static <@NonNull T, X extends org.jnbt.Tag> Tag<T> wrap(final Class<T> clazz, final X tag) {
-        final Tag<Object> tt = wrap(tag);
-        if (clazz.isInstance(tt.getValue())) {
-            return (@NonNull Tag<T>) tt;
+    public static <@NonNull T, X extends Tag<T>> X wrap(final Class<X> clazz, final org.jnbt.Tag tag) {
+        final Tag<?> tt = wrap(tag);
+        if (clazz.isInstance(tt)) {
+            return clazz.cast(tt);
         }
-        throw new ClassCastException("clazz is an incompatible type:" + clazz + " <-> " + tt.getValue().getClass());
+        throw new ClassCastException("class is an incompatible type:" + clazz + " <-> " + tt.getValue().getClass());
     }
 
     /**
@@ -98,30 +97,68 @@ public interface Tag<@NonNull T> {
      * <b>Do not use this method outside of the BlockAPI framework. It may
      * change its signature.</b>
      *
+     * <p>
+     * <code>ListTag&lt;? extends Tag&gt;</code> will be returned if parameter
+     * is a JNBT <code>ListTag</code>
+     *
      * @param tag JNBT tag to wrap
      * @return wrapped tag
      */
-    public static <X extends org.jnbt.Tag> Tag<Object> wrap(final X tag) {
-        // TODO switch to existing classes
-        return new Tag<Object>() {
+    public static Tag<?> wrap(final org.jnbt.Tag tag) {
 
-            @Override
-            public @NonNull String getName() {
-                return tag.getName();
-            }
+        if (org.jnbt.ByteArrayTag.class.isInstance(tag)) {
+            return ByteArrayTag.of(tag.getName(), (byte[]) tag.getValue());
+        }
 
-            @Override
-            public @NonNull Object getValue() {
-                return tag.getValue();
-            }
+        else if (org.jnbt.ByteTag.class.isInstance(tag)) {
+            return ByteTag.of(tag.getName(), (byte) tag.getValue());
+        }
 
-            @Override
-            public org.jnbt.Tag unwrap() {
-                return tag;
-            }
+        else if (org.jnbt.CompoundTag.class.isInstance(tag)) {
+            final org.jnbt.CompoundTag tt = (org.jnbt.CompoundTag) tag;
+            return CompoundTag.of(tag.getName(), checkNotNull(Maps.transformValues(tt.getValue(), x -> Tag.wrap(x))));
+        }
 
+        else if (org.jnbt.DoubleTag.class.isInstance(tag)) {
+            return DoubleTag.of(tag.getName(), (double) tag.getValue());
+        }
 
-        };
+        else if (org.jnbt.EndTag.class.isInstance(tag)) {
+            return EndTag.of();
+        }
+
+        else if (org.jnbt.FloatTag.class.isInstance(tag)) {
+            return FloatTag.of(tag.getName(), (float) tag.getValue());
+        }
+
+        else if (org.jnbt.IntArrayTag.class.isInstance(tag)) {
+            return IntArrayTag.of(tag.getName(), (int[]) tag.getValue());
+        }
+
+        else if (org.jnbt.IntTag.class.isInstance(tag)) {
+            return (ByteTag) (Tag<?>) IntTag.of(tag.getName(), (int) tag.getValue());
+        }
+
+        else if (org.jnbt.ListTag.class.isInstance(tag)) {
+            final org.jnbt.ListTag tt = ((org.jnbt.ListTag) tag);
+            final List<Tag<?>> ll = Lists.transform(tt.getValue(), x -> Tag.wrap(x));
+            return NBT.List(tag.getName(), Tag.class).addAll(checkNotNull(ll)).build();
+        }
+
+        else if (org.jnbt.LongTag.class.isInstance(tag)) {
+            return LongTag.of(tag.getName(), (long) tag.getValue());
+        }
+
+        else if (org.jnbt.ShortTag.class.isInstance(tag)) {
+            return ShortTag.of(tag.getName(), (short) tag.getValue());
+        }
+
+        else if (org.jnbt.StringTag.class.isInstance(tag)) {
+            return StringTag.of(tag.getName(), (String) tag.getValue());
+        }
+
+        throw new IllegalArgumentException("Invalid tag instance");
+
     }
 
     /**
@@ -222,7 +259,7 @@ public interface Tag<@NonNull T> {
         // Will be generated
 
         @Override
-        public IntArrayTag unwrap() {
+        public org.jnbt.IntArrayTag unwrap() {
             return new org.jnbt.IntArrayTag(this.getName(), this.getValue());
         }
     }
@@ -237,7 +274,7 @@ public interface Tag<@NonNull T> {
         // Will be generated
 
         @Override
-        public IntTag unwrap() {
+        public org.jnbt.IntTag unwrap() {
             return new org.jnbt.IntTag(this.getName(), this.getValue());
         }
     }

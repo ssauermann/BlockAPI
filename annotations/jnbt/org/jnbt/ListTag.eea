@@ -1,0 +1,13 @@
+class org/jnbt/ListTag
+ListTag
+ (Ljava/lang/String;Ljava/lang/Class<+Lorg/jnbt/Tag;>;Ljava/util/List<Lorg/jnbt/Tag;>;)V
+ (Ljava/lang/String;Ljava/lang/Class<+L1org/jnbt/Tag;>;Ljava/util/List<L1org/jnbt/Tag;>;)V
+getValue
+ ()Ljava/util/List<Lorg/jnbt/Tag;>;
+ ()L1java/util/List<L1org/jnbt/Tag;>;
+type
+ Ljava/lang/Class<+Lorg/jnbt/Tag;>;
+ Ljava/lang/Class<+L1org/jnbt/Tag;>;
+value
+ Ljava/util/List<Lorg/jnbt/Tag;>;
+ Ljava/util/List<L1org/jnbt/Tag;>;
