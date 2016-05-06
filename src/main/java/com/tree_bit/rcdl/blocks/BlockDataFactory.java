@@ -30,6 +30,8 @@ import java.util.Set;
  * If the given data values are invalid for the block data type, a
  * IllegalArgumentException should be thrown.
  */
+// TODO REMOVE
+@SuppressWarnings(value = {"all"})
 class BlockDataFactory {
 
     private static class Loader extends CacheLoader<DataKey<Class<? extends BlockData>, ImmutableSet<IDataValueEnum>, TileEntity>, BlockData> {
@@ -225,7 +227,9 @@ class BlockDataFactory {
     }
 
     static <T extends BlockData> void registerDefault(final Class<T> clazz, final T instance, final IDataValueEnum... dataValues) {
-        registerDefault(clazz, instance, instance.getTileEntity().orElse(null), dataValues);
+        // registerDefault(clazz, instance,
+        // instance.getTileEntity().orElse(null), dataValues);
+        // TODO
     }
 
     /**
