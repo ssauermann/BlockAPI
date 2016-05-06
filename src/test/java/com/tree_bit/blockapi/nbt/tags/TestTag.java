@@ -23,12 +23,11 @@ package com.tree_bit.blockapi.nbt.tags;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import com.google.common.collect.ImmutableList;
 import com.tree_bit.blockapi.internal.Null;
 
-import org.junit.Before;
+import org.eclipse.jdt.annotation.NonNull;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -98,22 +97,89 @@ public class TestTag {
 
     }
 
-    /**
-     * @throws java.lang.Exception
-     */
-    @Before
-    public void setUp() throws Exception {}
-
 
     @Test
     public void testUnwrap() {
-        fail("Not yet implemented");
+        assertEquals(new org.jnbt.IntTag("int", 12), IntTag.of("int", 12).unwrap());
+        assertEquals(new org.jnbt.IntArrayTag("intarray", new int[] {1, 2, 3}), IntArrayTag.of("intarray", new int[] {1, 2, 3}).unwrap());
+        assertEquals(new org.jnbt.ListTag("int list", org.jnbt.IntTag.class, new LinkedList<org.jnbt.Tag>() {
+
+            {
+                this.add(new org.jnbt.IntTag("foo", 12));
+                this.add(new org.jnbt.IntTag("bar", -151));
+            }
+        }), ListTag.of("int list", IntTag.class, new LinkedList<IntTag>() {
+
+            {
+                this.add(IntTag.of("foo", 12));
+                this.add(IntTag.of("bar", -151));
+            }
+        }).unwrap());
+
+        assertEquals(new org.jnbt.CompoundTag("compound", new HashMap<String, org.jnbt.Tag>() {
+
+            {
+                this.put("hello", new org.jnbt.IntTag("foo", 12));
+                this.put("world", new org.jnbt.StringTag("bar", "-151"));
+            }
+        }), CompoundTag.of("compound", new HashMap<String, Tag<?>>() {
+
+            {
+                this.put("hello", IntTag.of("foo", 12));
+                this.put("world", StringTag.of("bar", "-151"));
+            }
+        }).unwrap());
     }
 
 
     @Test
     public void testWrapClassOfXTag() {
-        fail("Not yet implemented");
+
+        final ByteTag bt = Tag.wrap(tags.get("byte").get(0), ByteTag.class);
+        assertEquals(bt.getName(), tags.get("byte").get(0).getName());
+        assertEquals(bt.getValue(), tags.get("byte").get(0).getValue());
+
+
+        final CompoundTag ct = Tag.wrap(tags.get("compound").get(0), CompoundTag.class);
+        assertEquals(ct.getName(), tags.get("compound").get(0).getName());
+        final Map<String, org.jnbt.Tag> _tagl = ((org.jnbt.CompoundTag) tags.get("compound").get(0)).getValue();
+        final Map<String, ? extends Tag<?>> _wtagl = ct.getValue();
+
+        assertEquals(_tagl.size(), _wtagl.size());
+        for (int i = 0; i < _tagl.size(); i++) {
+            assertEquals(_tagl.get("" + i).getName(), _wtagl.get("" + i).getName());
+            assertEquals(_tagl.get("" + i).getValue(), _wtagl.get("" + i).getValue());
+        }
+
+        final org.jnbt.Tag tag = tags.get("list").get(0);
+
+        final ListTag<?> wtag = Tag.wrap(tag, ListTag.class);
+        assertEquals(tag.getName(), wtag.getName());
+        @SuppressWarnings("unchecked")
+        final List<org.jnbt.Tag> tagl = (List<org.jnbt.Tag>) tag.getValue();
+        @SuppressWarnings("unchecked")
+        final List<IntTag> wtagl = (List<@NonNull IntTag>) wtag.getValue();
+
+        assertEquals(tagl.size(), wtagl.size());
+
+        Class<?> typeOfList = null;
+        if (wtagl.size() > 0) {
+            typeOfList = wtagl.get(0).getClass();
+        }
+
+        for (int i = 0; i < tagl.size(); i++) {
+            assertEquals(tagl.get(i).getName(), wtagl.get(i).getName());
+            assertEquals(tagl.get(i).getValue(), wtagl.get(i).getValue());
+            assertEquals(typeOfList, wtagl.get(i).getClass());
+        }
+
+
+
+    }
+
+    @Test(expected = ClassCastException.class)
+    public void testWrapClassOfXTag_Exception() {
+        Tag.wrap(tags.get("byte").get(0), IntTag.class);
     }
 
     @Test
@@ -156,7 +222,6 @@ public class TestTag {
         for (int i = 0; i < tagl.size(); i++) {
             assertEquals(tagl.get(i).getName(), wtagl.get(i).getName());
             assertEquals(tagl.get(i).getValue(), wtagl.get(i).getValue());
-            System.out.println(wtagl.get(0).getClass());
             assertEquals(typeOfList, wtagl.get(i).getClass());
         }
 

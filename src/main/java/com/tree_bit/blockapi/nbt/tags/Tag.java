@@ -76,14 +76,14 @@ public interface Tag<@NonNull T> {
      * <b>Do not use this method outside of the BlockAPI framework. It may
      * change its signature.</b>
      *
+     * @param tag JNBT tag to wrap
      * @param clazz Class of the type parameter this tag should be casted to.
      *
-     * @param tag JNBT tag to wrap
      * @return wrapped tag
      * @throws ClassCastException if given class is incompatible with the given
      *         tag
      */
-    public static <@NonNull T, X extends Tag<T>> X wrap(final Class<X> clazz, final org.jnbt.Tag tag) {
+    public static <X extends Tag<?>> X wrap(final org.jnbt.Tag tag, final Class<X> clazz) {
         final Tag<?> tt = wrap(tag);
         if (clazz.isInstance(tt)) {
             return clazz.cast(tt);
