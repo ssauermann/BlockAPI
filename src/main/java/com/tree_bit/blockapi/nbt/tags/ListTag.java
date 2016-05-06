@@ -114,7 +114,7 @@ public final class ListTag<T extends Tag<?>> extends _ListTag<T> {
      * @param value The value for the {@code value} attribute
      * @return An immutable ListTag instance
      */
-    public static <T extends Tag<?>> ListTag<T> of(final String name, final Class<T> clazz, final List<T> value) {
+    public static <T extends Tag<?>> ListTag<T> of(final String name, final Class<? extends T> clazz, final List<T> value) {
         return new ListTag<>(name, value, clazz);
     }
 
