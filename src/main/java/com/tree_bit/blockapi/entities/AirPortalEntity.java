@@ -8,17 +8,16 @@ package com.tree_bit.blockapi.entities;
  * <ul>
  * <li>{@link EndPortal}</li>
  * </ul>
- * 
+ *
  * @author Sascha Sauermann
  */
-public class AirPortalEntity extends TileEntity {
+public class AirPortalEntity extends GenericTileEntity {
 
     /**
      * Creates an air portal entity.
      */
     AirPortalEntity() {
-        super(TileEntity.builder("Airportal"));
+        super(GenericTileEntity.builder("Airportal"));
     }
-
 
 }

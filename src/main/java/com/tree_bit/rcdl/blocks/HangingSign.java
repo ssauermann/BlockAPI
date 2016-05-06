@@ -1,7 +1,7 @@
 package com.tree_bit.rcdl.blocks;
 
 import com.tree_bit.blockapi.entities.SignEntity;
-import com.tree_bit.blockapi.entities.TileEntity;
+import com.tree_bit.blockapi.entities.GenericTileEntity;
 import com.tree_bit.rcdl.blocks.dv.IDataValueEnum;
 import com.tree_bit.rcdl.blocks.dv.SignOrientation;
 
@@ -38,7 +38,7 @@ public class HangingSign extends BlockData {
         super(SignEntity.empty(), validateDV(values, SignOrientation.class));
     }
 
-    private HangingSign(final @NonNull IDataValueEnum[] values, final TileEntity entity) {
+    private HangingSign(final @NonNull IDataValueEnum[] values, final GenericTileEntity entity) {
         super(entity, validateDV(values, SignOrientation.class));
     }
 

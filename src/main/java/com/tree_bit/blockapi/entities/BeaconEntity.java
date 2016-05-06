@@ -43,7 +43,7 @@ import jdk.nashorn.internal.ir.annotations.Immutable;
  * @author Sascha Sauermann
  */
 @Immutable
-public class BeaconEntity extends TileEntity {
+public class BeaconEntity extends GenericTileEntity {
 
     /**
      * Create a new beacon TileEntity.
@@ -76,7 +76,7 @@ public class BeaconEntity extends TileEntity {
     }
 
     private static CompoundBuilder createBuilder(final @Nullable String lock, final int levels, final int primary, final int secondary) {
-        final CompoundBuilder b = TileEntity.builder("Beacon");
+        final CompoundBuilder b = GenericTileEntity.builder("Beacon");
         if (lock != null) {
             b.add(new StringTag("Lock", lock));
         }

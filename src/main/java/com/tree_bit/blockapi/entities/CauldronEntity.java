@@ -41,7 +41,7 @@ import java.util.List;
  *
  * @author Sascha Sauermann
  */
-public class CauldronEntity extends TileEntity {
+public class CauldronEntity extends GenericTileEntity {
 
     /**
      * Slots of a brewing stand.

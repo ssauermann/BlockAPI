@@ -44,7 +44,7 @@ import jdk.nashorn.internal.ir.annotations.Immutable;
  * @author Sascha Sauermann
  */
 @Immutable
-public class SignEntity extends TileEntity {
+public class SignEntity extends GenericTileEntity {
 
     /**
      * Creates a Sign TileEntity with no text.
@@ -97,7 +97,7 @@ public class SignEntity extends TileEntity {
         if (text.length > 4) {
             throw new IllegalArgumentException("Sign can't have more than 4 lines of text! Given: " + text.length);
         }
-        final CompoundBuilder b = TileEntity.builder("Sign");
+        final CompoundBuilder b = GenericTileEntity.builder("Sign");
         for (int i = 0; i < 4; i++) {
             String s = "";
             if (i < text.length) {

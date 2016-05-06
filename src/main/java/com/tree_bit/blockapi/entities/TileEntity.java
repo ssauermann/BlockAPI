@@ -21,102 +21,44 @@
  */
 package com.tree_bit.blockapi.entities;
 
-import com.google.common.base.Joiner;
-import com.google.common.base.MoreObjects;
-import com.google.common.base.Objects;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
-import com.tree_bit.blockapi.nbt.CompoundBuilder;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.tree_bit.blockapi.nbt.NBT;
+import com.tree_bit.blockapi.nbt.NBTData;
 
-import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
-import org.jnbt.Tag;
-
-import java.util.Set;
-
-import jdk.nashorn.internal.ir.annotations.Immutable;
+import org.jnbt.CompoundTag;
 
 
 /**
- * Representing a tile entity containing some tags. The positioning tags (x, y,
- * z) are excluded from this tag list although they have to be saved in files.
  *
- * <b>With 1.8 TileEntities were renamed to BlockEntities.</b>
- *
- * @see <a href=
- *      "http://minecraft.gamepedia.com/Chunk_format#Block_entity_format">http:/
- *      /minecraft.gamepedia.com/Chunk_format#Block_entity_format</a>
- *
- * @author Sascha Sauermann
  */
-@Immutable
-public class TileEntity {
-
-    private final ImmutableMap<@NonNull String, @NonNull Tag> tags;
+public interface TileEntity extends NBTData {
 
     /**
-     * Creates a new TileEntity with the given builder.
-     *
-     * @param builder Compound builder
+     * {@inheritDoc}
+     * <p>
+     * This compound tag for tile entities is missing the coordinate data which
+     * must be added for saving but is not currently stored in it.
+     * <p>
+     * Use {@link #addCoordinates(TileEntity, int, int, int)} for adding those
+     * before saving to file.
      */
-    TileEntity(final CompoundBuilder builder) {
-        this.tags = builder.getTagMap();
-    }
-
-    /**
-     * Creates a new Compound builder.
-     *
-     * @param id Entity id
-     * @return Builder instance
-     */
-    public static CompoundBuilder builder(final String id) {
-        return NBT.Compound(id);
-    }
-
-    /**
-     * Returns the current tags as a set.
-     *
-     * @return Tag set
-     */
-    public Set<@NonNull Tag> getTags() {
-        return ImmutableSet.copyOf(this.tags.values());
-    }
-
     @Override
-    public int hashCode() {
-        return Objects.hashCode(this.tags);
-    }
-
-    @Override
-    public boolean equals(@Nullable final Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (!(obj instanceof TileEntity)) {
-            return false;
-        }
-        final TileEntity other = (TileEntity) obj;
-        return Objects.equal(this.tags, other.tags);
-    }
+    public CompoundTag compound();
 
     /**
-     * Gets a tag by name.
+     * Adds coordinates to a TileEntity and returns the CompoundTag the tile
+     * entity is based on, including the coordinates. This should only be done
+     * before saving the data to a file.
      *
-     * @param name Tag name
-     * @return Tag
+     * @param e TileEntity to add the coordinates to
+     * @param x x coordinate
+     * @param y y coordinate
+     * @param z z coordinate
+     * @return CompoundTag with TileEntity data and coordinates.
      */
-    public Tag get(final String name) {
-        return this.tags.get(name);
+    public static CompoundTag addCoordinates(final TileEntity e, final int x, final int y, final int z) {
+        return NBT.Compound(e.compound().getName()).addAll(checkNotNull(e.compound().getValue().values())).Int("x", x).Int("y", y).Int("z", z)
+                .build();
     }
-
-
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this).add("Tags", Joiner.on(',').skipNulls().join(this.getTags().toArray())).toString();
-    }
-
 }

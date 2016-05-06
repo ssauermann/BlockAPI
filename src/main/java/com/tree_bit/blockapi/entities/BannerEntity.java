@@ -22,18 +22,11 @@
 package com.tree_bit.blockapi.entities;
 
 import com.google.common.collect.ImmutableList;
-import com.tree_bit.blockapi.nbt.CompoundBuilder;
 import com.tree_bit.blockapi.nbt.NBT;
 import com.tree_bit.rcdl.blocks.dv.Color;
 
 import org.jnbt.CompoundTag;
-import org.jnbt.IntTag;
-import org.jnbt.ListTag;
-import org.jnbt.StringTag;
-import org.jnbt.Tag;
 
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,7 +44,7 @@ import jdk.nashorn.internal.ir.annotations.Immutable;
  * @author Sascha Sauermann
  */
 @Immutable
-public class BannerEntity extends TileEntity {
+public class BannerEntity extends GenericTileEntity {
 
     private final Color base;
     private final List<Pattern> pattern;
@@ -78,30 +71,48 @@ public class BannerEntity extends TileEntity {
      * @param color Base color of the banner
      * @param patterns List of applied patterns
      */
+    @SuppressWarnings("null")
+    // Collector returns @NonNull List<CompoundTag> but should be
+    // @NonNull List<@NonNull CompoundTag> in this case.
     BannerEntity(final Color color, final List<Pattern> patterns) {
         super(NBT.Compound("").Int("Base", color.getDataValue()).add(NBT.List("Patterns", CompoundTag.class, (patterns.stream().map(p -> {
             return NBT.Compound("").Int("Color", p.getColor().getDataValue()).String("Pattern", p.getTypeCode()).build();
         }).collect(Collectors.toList())))));
-        // super(createBuilder(color, patterns));
         this.base = color;
         this.pattern = patterns;
     }
 
-    private static CompoundBuilder createBuilder(final Color color, final List<Pattern> pattern) {
 
-        final List<CompoundTag> patternList = new LinkedList<>();
-
-        for (final Pattern p : pattern) {
-            final HashMap<String, Tag> hm = new HashMap<>();
-            hm.put("Color", new IntTag("Color", p.getColor().getDataValue()));
-            hm.put("Pattern", new StringTag("Pattern", p.getTypeCode()));
-            patternList.add(new CompoundTag("", hm));
-        }
-
-        final IntTag base = new IntTag("Base", color.getDataValue());
-        final ListTag patterns = new ListTag("Patterns", CompoundTag.class, ImmutableList.copyOf(patternList));
-        return TileEntity.builder("Banner").add(base).add(patterns);
+    /**
+     * Gets the base color of this banner.
+     *
+     * @return base color
+     */
+    public Color getBase() {
+        return this.base;
     }
+
+
+    /**
+     * Gets the pattern of this banner.
+     *
+     * @return list of pattern
+     */
+    public List<Pattern> getPattern() {
+        return this.pattern;
+    }
+
+
+    /**
+     * Starts building of a new BannerEntity.
+     *
+     * @param base Base color of this banner
+     * @return New BannerEntity Builder
+     */
+    public static Builder builder(final Color base) {
+        return new Builder(base);
+    }
+
 
     /**
      * Builder for a BannerEntity.
@@ -120,16 +131,6 @@ public class BannerEntity extends TileEntity {
          */
         public Builder(final Color base) {
             this.base = base;
-        }
-
-        /**
-         * Starts building of a new BannerEntity.
-         *
-         * @param base Base color of this banner
-         * @return new Builder
-         */
-        public static Builder base(final Color base) {
-            return new Builder(base);
         }
 
         /**
@@ -165,34 +166,16 @@ public class BannerEntity extends TileEntity {
             return new BannerEntity(this.base, this.pattern.build());
         }
 
-    }
+        /**
+         * Starts building of a new BannerEntity.
+         *
+         * @param base Base color of this banner
+         * @return new Builder
+         */
+        public static Builder base(final Color base) {
+            return new Builder(base);
+        }
 
-    /**
-     * Starts building of a new BannerEntity.
-     *
-     * @param base Base color of this banner
-     * @return New BannerEntity Builder
-     */
-    public static Builder builder(final Color base) {
-        return new Builder(base);
-    }
-
-    /**
-     * Gets the base color of this banner.
-     *
-     * @return base color
-     */
-    public Color getBase() {
-        return this.base;
-    }
-
-    /**
-     * Gets the pattern of this banner.
-     *
-     * @return list of pattern
-     */
-    public List<Pattern> getPattern() {
-        return this.pattern;
     }
 
 }

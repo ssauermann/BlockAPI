@@ -22,30 +22,30 @@ public class TestTileEntity {
     private static Tag stringInteger = new IntTag("Text", 42);
     private static Tag integer = new IntTag("Number", 42);
 
-    private CompoundTag t = TileEntity.builder("empty").build();
-    private CompoundTag t2 = TileEntity.builder("empty").build();
+    private CompoundTag t = GenericTileEntity.builder("empty").build();
+    private CompoundTag t2 = GenericTileEntity.builder("empty").build();
 
     @Before
     public void setUp() throws Exception {
-        this.t = TileEntity.builder("Test").add(string).add(integer).build();
-        this.t2 = TileEntity.builder("Test").add(stringInteger).add(string).add(integer).build();
+        this.t = GenericTileEntity.builder("Test").add(string).add(integer).build();
+        this.t2 = GenericTileEntity.builder("Test").add(stringInteger).add(string).add(integer).build();
     }
 
     @Test
     public void testTileEntity() {
-        assertEquals(this.t, new TileEntity(NBT.Compound("Test").add(string).add(integer)));
+        assertEquals(this.t, new GenericTileEntity(NBT.Compound("Test").add(string).add(integer)));
     }
 
     @SuppressWarnings("static-method")
     @Test
     public void testBuilder() {
-        assertEquals(NBT.Compound("Test"), TileEntity.builder("Test"));
+        assertEquals(NBT.Compound("Test"), GenericTileEntity.builder("Test"));
     }
 
     @Test
     public void testGetTags() {
-        assertTrue(this.t2.getTags().contains(string));
-        assertTrue(this.t2.getTags().contains(integer));
-        assertFalse(this.t2.getTags().contains(stringInteger));
+        assertTrue(this.t2.getValue().values().contains(string));
+        assertTrue(this.t2.getValue().values().contains(integer));
+        assertFalse(this.t2.getValue().values().contains(stringInteger));
     }
 }
