@@ -33,11 +33,16 @@ public final class Null {
 
     /**
      * Null value
-     * 
+     *
      * @return null value
      */
     public static Null _null() {
         return nulls;
+    }
+
+    @Override
+    public String toString() {
+        return "NULL";
     }
 
 }

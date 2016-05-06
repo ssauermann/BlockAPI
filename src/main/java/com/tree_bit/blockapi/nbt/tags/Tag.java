@@ -136,7 +136,7 @@ public interface Tag<@NonNull T> {
         }
 
         else if (org.jnbt.IntTag.class.isInstance(tag)) {
-            return (ByteTag) (Tag<?>) IntTag.of(tag.getName(), (int) tag.getValue());
+            return (IntTag) (Tag<?>) IntTag.of(tag.getName(), (int) tag.getValue());
         }
 
         else if (org.jnbt.ListTag.class.isInstance(tag)) {
