@@ -28,11 +28,11 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.tree_bit.blockapi.nbt.CompoundBuilder;
 import com.tree_bit.blockapi.nbt.NBT;
+import com.tree_bit.blockapi.nbt.tags.CompoundTag;
+import com.tree_bit.blockapi.nbt.tags.Tag;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.jnbt.CompoundTag;
-import org.jnbt.Tag;
 
 import java.util.Set;
 
@@ -54,7 +54,7 @@ import jdk.nashorn.internal.ir.annotations.Immutable;
 @Immutable
 public class GenericTileEntity implements TileEntity {
 
-    private final ImmutableMap<@NonNull String, @NonNull Tag> tags;
+    private final ImmutableMap<@NonNull String, @NonNull Tag<?>> tags;
 
     /**
      * Creates a new TileEntity with the given builder.
@@ -70,7 +70,7 @@ public class GenericTileEntity implements TileEntity {
      *
      * @return Tag set
      */
-    public Set<@NonNull Tag> getTags() {
+    public Set<@NonNull Tag<?>> getTags() {
         return ImmutableSet.copyOf(this.tags.values());
     }
 
@@ -80,7 +80,7 @@ public class GenericTileEntity implements TileEntity {
      * @param name Tag name
      * @return Tag
      */
-    public Tag get(final String name) {
+    public Tag<?> get(final String name) {
         return this.tags.get(name);
     }
 

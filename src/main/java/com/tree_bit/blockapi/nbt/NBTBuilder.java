@@ -24,10 +24,10 @@ package com.tree_bit.blockapi.nbt;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableCollection;
+import com.tree_bit.blockapi.nbt.tags.Tag;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.jnbt.Tag;
 
 import java.util.Collection;
 import java.util.Map;
@@ -38,7 +38,7 @@ import java.util.Optional;
  *
  * @param <T> Type of subtags
  */
-public abstract class NBTBuilder<T extends Tag> {
+public abstract class NBTBuilder<T extends Tag<?>> {
 
     private final String name;
 
@@ -94,7 +94,7 @@ public abstract class NBTBuilder<T extends Tag> {
     public abstract NBTBuilder<T> addAll(final Collection<? extends T> tags);
 
     /**
-     * Gets the name of this nbt tag.
+     * Gets the name of this NBT tag.
      *
      * @return Name
      */
@@ -111,11 +111,11 @@ public abstract class NBTBuilder<T extends Tag> {
 
 
     /**
-     * Builds the nbt tag and returns it.
+     * Builds the NBT tag and returns it.
      *
-     * @return New nbt tag
+     * @return New NBT tag
      */
-    public abstract Tag build();
+    public abstract Tag<?> build();
 
     @Override
     public int hashCode() {
@@ -175,7 +175,7 @@ public abstract class NBTBuilder<T extends Tag> {
      *
      * @return Builder
      */
-    public NBTBuilder<T> Compound(final String name, final Map<String, Tag> value) {
+    public NBTBuilder<T> Compound(final String name, final Map<String, Tag<?>> value) {
         return this.addTag(NBT.Compound(name, value));
     }
 
@@ -297,7 +297,7 @@ public abstract class NBTBuilder<T extends Tag> {
      * @throws NullPointerException if tag name is null
      * @throws IllegalArgumentException if Tag type doens't match
      */
-    protected abstract NBTBuilder<T> addTag(final Tag tag);
+    protected abstract NBTBuilder<T> addTag(final Tag<?> tag);
 
 
 

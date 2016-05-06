@@ -22,9 +22,9 @@
 package com.tree_bit.blockapi.entities;
 
 import com.tree_bit.blockapi.nbt.NBT;
+import com.tree_bit.blockapi.nbt.tags.CompoundTag;
 
 import org.eclipse.jdt.annotation.Nullable;
-import org.jnbt.CompoundTag;
 
 import java.util.ArrayList;
 import java.util.Collection;

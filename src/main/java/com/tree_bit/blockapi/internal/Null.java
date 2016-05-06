@@ -19,19 +19,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.tree_bit.blockapi.nbt;
+package com.tree_bit.blockapi.internal;
 
-import com.tree_bit.blockapi.nbt.tags.CompoundTag;
 
 /**
- * A class which represents an NBT compound tag and can be represented as one.
+ * Null type
  */
-public interface NBTData {
+public final class Null {
+
+    private static Null nulls = new Null();
+
+    private Null() {}
 
     /**
-     * Get's the compound tag representing this object.
-     *
-     * @return Compound tag
+     * Null value
+     * 
+     * @return null value
      */
-    public CompoundTag compound();
+    public static Null _null() {
+        return nulls;
+    }
+
 }

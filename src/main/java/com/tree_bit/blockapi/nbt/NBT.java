@@ -21,21 +21,19 @@
  */
 package com.tree_bit.blockapi.nbt;
 
-import com.google.common.collect.ImmutableList;
-
-import org.jnbt.ByteArrayTag;
-import org.jnbt.ByteTag;
-import org.jnbt.CompoundTag;
-import org.jnbt.DoubleTag;
-import org.jnbt.EndTag;
-import org.jnbt.FloatTag;
-import org.jnbt.IntArrayTag;
-import org.jnbt.IntTag;
-import org.jnbt.ListTag;
-import org.jnbt.LongTag;
-import org.jnbt.ShortTag;
-import org.jnbt.StringTag;
-import org.jnbt.Tag;
+import com.tree_bit.blockapi.nbt.tags.ByteArrayTag;
+import com.tree_bit.blockapi.nbt.tags.ByteTag;
+import com.tree_bit.blockapi.nbt.tags.CompoundTag;
+import com.tree_bit.blockapi.nbt.tags.DoubleTag;
+import com.tree_bit.blockapi.nbt.tags.EndTag;
+import com.tree_bit.blockapi.nbt.tags.FloatTag;
+import com.tree_bit.blockapi.nbt.tags.IntArrayTag;
+import com.tree_bit.blockapi.nbt.tags.IntTag;
+import com.tree_bit.blockapi.nbt.tags.ListTag;
+import com.tree_bit.blockapi.nbt.tags.LongTag;
+import com.tree_bit.blockapi.nbt.tags.ShortTag;
+import com.tree_bit.blockapi.nbt.tags.StringTag;
+import com.tree_bit.blockapi.nbt.tags.Tag;
 
 import java.util.Map;
 
@@ -47,9 +45,9 @@ public class NBT {
     private NBT() {}
 
     /**
-     * Creates a new nbt tag builder.
+     * Creates a new NBT tag builder.
      *
-     * @return New nbt tag builder
+     * @return New NBT tag builder
      */
     public static CompoundBuilder begin() {
         return Compound("");
@@ -64,7 +62,7 @@ public class NBT {
      * @return New tag
      */
     public static ByteArrayTag ByteArray(final String name, final byte[] value) {
-        return new ByteArrayTag(name, value);
+        return ByteArrayTag.of(name, value);
     }
 
     /**
@@ -76,7 +74,7 @@ public class NBT {
      * @return New tag
      */
     public static ByteTag Byte(final String name, final byte value) {
-        return new ByteTag(name, value);
+        return ByteTag.of(name, value);
     }
 
     /**
@@ -87,8 +85,8 @@ public class NBT {
      *
      * @return New tag
      */
-    public static CompoundTag Compound(final String name, final Map<String, Tag> value) {
-        return new CompoundTag(name, value);
+    public static CompoundTag Compound(final String name, final Map<String, ? extends Tag<?>> value) {
+        return CompoundTag.of(name, value);
     }
 
     /**
@@ -100,7 +98,7 @@ public class NBT {
      * @return New tag
      */
     public static DoubleTag Double(final String name, final double value) {
-        return new DoubleTag(name, value);
+        return DoubleTag.of(name, value);
     }
 
     /**
@@ -109,7 +107,7 @@ public class NBT {
      * @return New tag
      */
     public static EndTag End() {
-        return new EndTag();
+        return EndTag.of();
     }
 
     /**
@@ -121,7 +119,7 @@ public class NBT {
      * @return New tag
      */
     public static FloatTag Float(final String name, final float value) {
-        return new FloatTag(name, value);
+        return FloatTag.of(name, value);
     }
 
     /**
@@ -133,7 +131,7 @@ public class NBT {
      * @return New tag
      */
     public static IntArrayTag IntArray(final String name, final int[] value) {
-        return new IntArrayTag(name, value);
+        return IntArrayTag.of(name, value);
     }
 
     /**
@@ -145,7 +143,7 @@ public class NBT {
      * @return New tag
      */
     public static IntTag Int(final String name, final int value) {
-        return new IntTag(name, value);
+        return IntTag.of(name, value);
     }
 
     /**
@@ -157,8 +155,8 @@ public class NBT {
      *
      * @return New tag
      */
-    public static <T extends Tag> ListTag List(final String name, final Class<? extends T> type, final java.util.List<T> value) {
-        return new ListTag(name, type, ImmutableList.copyOf(value));
+    public static <T extends Tag<?>> ListTag<T> List(final String name, final Class<? extends T> type, final java.util.List<T> value) {
+        return ListTag.of(name, type, value);
     }
 
     /**
@@ -170,7 +168,7 @@ public class NBT {
      * @return New tag
      */
     public static LongTag Long(final String name, final long value) {
-        return new LongTag(name, value);
+        return LongTag.of(name, value);
     }
 
     /**
@@ -182,7 +180,7 @@ public class NBT {
      * @return New tag
      */
     public static ShortTag Short(final String name, final short value) {
-        return new ShortTag(name, value);
+        return ShortTag.of(name, value);
     }
 
     /**
@@ -194,7 +192,7 @@ public class NBT {
      * @return New tag
      */
     public static StringTag String(final String name, final String value) {
-        return new StringTag(name, value);
+        return StringTag.of(name, value);
     }
 
     /////////////////// BUILDER/////////////////////////////////////////
@@ -217,7 +215,7 @@ public class NBT {
      *
      * @return New tag builder
      */
-    public static <T extends Tag> ListBuilder<T> List(final String name, final Class<T> type) {
+    public static <T extends Tag<?>> ListBuilder<T> List(final String name, final Class<T> type) {
         return new ListBuilder<>(name, type);
     }
 }

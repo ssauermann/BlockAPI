@@ -5,11 +5,11 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import com.tree_bit.blockapi.nbt.NBT;
+import com.tree_bit.blockapi.nbt.tags.CompoundTag;
+import com.tree_bit.blockapi.nbt.tags.IntTag;
+import com.tree_bit.blockapi.nbt.tags.StringTag;
+import com.tree_bit.blockapi.nbt.tags.Tag;
 
-import org.jnbt.CompoundTag;
-import org.jnbt.IntTag;
-import org.jnbt.StringTag;
-import org.jnbt.Tag;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,9 +18,9 @@ import org.junit.Test;
 public class TestTileEntity {
 
 
-    private static Tag string = new StringTag("Text", "Hello World");
-    private static Tag stringInteger = new IntTag("Text", 42);
-    private static Tag integer = new IntTag("Number", 42);
+    private static Tag<?> string = StringTag.of("Text", "Hello World");
+    private static Tag<?> stringInteger = IntTag.of("Text", 42);
+    private static Tag<?> integer = IntTag.of("Number", 42);
 
     private CompoundTag t = GenericTileEntity.builder("empty").build();
     private CompoundTag t2 = GenericTileEntity.builder("empty").build();

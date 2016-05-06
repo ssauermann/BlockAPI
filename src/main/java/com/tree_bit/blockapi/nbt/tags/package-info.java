@@ -19,19 +19,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.tree_bit.blockapi.nbt;
-
-import com.tree_bit.blockapi.nbt.tags.CompoundTag;
-
 /**
- * A class which represents an NBT compound tag and can be represented as one.
+ * Wrapper classes for used NBT framework.
  */
-public interface NBTData {
+@NonNullByDefault
+package com.tree_bit.blockapi.nbt.tags;
 
-    /**
-     * Get's the compound tag representing this object.
-     *
-     * @return Compound tag
-     */
-    public CompoundTag compound();
-}
+import org.eclipse.jdt.annotation.NonNullByDefault;

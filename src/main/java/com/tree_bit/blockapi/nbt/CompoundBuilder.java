@@ -25,11 +25,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import com.tree_bit.blockapi.nbt.tags.CompoundTag;
+import com.tree_bit.blockapi.nbt.tags.Tag;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.jnbt.CompoundTag;
-import org.jnbt.Tag;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -39,9 +39,9 @@ import java.util.Optional;
 /**
  * Builder for NBT Compound Tags
  */
-public class CompoundBuilder extends NBTBuilder<Tag> {
+public class CompoundBuilder extends NBTBuilder<Tag<?>> {
 
-    private final Map<@NonNull String, @NonNull Tag> tags = new HashMap<>();
+    private final Map<@NonNull String, @NonNull Tag<?>> tags = new HashMap<>();
 
     /**
      * Creates a new compound tag builder.
@@ -64,7 +64,7 @@ public class CompoundBuilder extends NBTBuilder<Tag> {
      *         name
      */
     @Override
-    public CompoundBuilder add(final Tag tag) {
+    public CompoundBuilder add(final Tag<?> tag) {
         this.tags.put(checkNotNull(tag.getName()), tag);
         return this;
     }
@@ -80,7 +80,7 @@ public class CompoundBuilder extends NBTBuilder<Tag> {
      *         name
      */
     @Override
-    public CompoundBuilder add(final Optional<? extends Tag> tag) {
+    public CompoundBuilder add(final Optional<? extends Tag<?>> tag) {
         if (tag.isPresent()) {
             return this.add(tag.get());
         }
@@ -98,8 +98,8 @@ public class CompoundBuilder extends NBTBuilder<Tag> {
      *         its name
      */
     @Override
-    public CompoundBuilder addAll(final Collection<? extends @NonNull Tag> tags) {
-        for (final Tag tag : tags) {
+    public CompoundBuilder addAll(final Collection<? extends @NonNull Tag<?>> tags) {
+        for (final Tag<?> tag : tags) {
             this.add(tag);
         }
         return this;
@@ -111,7 +111,7 @@ public class CompoundBuilder extends NBTBuilder<Tag> {
      * @return New CompoundTag
      */
     @Override
-    public @NonNull CompoundTag build() {
+    public CompoundTag build() {
         return NBT.Compound(this.getName(), this.tags);
     }
 
@@ -121,7 +121,7 @@ public class CompoundBuilder extends NBTBuilder<Tag> {
      * @return Tag set
      */
     @Override
-    public ImmutableSet<Tag> getTags() {
+    public ImmutableSet<Tag<?>> getTags() {
         return ImmutableSet.copyOf(this.tags.values());
     }
 
@@ -130,12 +130,12 @@ public class CompoundBuilder extends NBTBuilder<Tag> {
      *
      * @return Tag set
      */
-    public ImmutableMap<String, Tag> getTagMap() {
+    public ImmutableMap<String, Tag<?>> getTagMap() {
         return ImmutableMap.copyOf(this.tags);
     }
 
     @Override
-    protected CompoundBuilder addTag(final Tag tag) {
+    protected CompoundBuilder addTag(final Tag<?> tag) {
         this.tags.put(checkNotNull(tag.getName()), tag);
         return this;
     }
@@ -153,7 +153,7 @@ public class CompoundBuilder extends NBTBuilder<Tag> {
     }
 
     @Override
-    public CompoundBuilder Compound(final String name, final Map<String, Tag> value) {
+    public CompoundBuilder Compound(final String name, final Map<String, Tag<?>> value) {
         return (CompoundBuilder) super.Compound(name, value);
     }
 
@@ -184,7 +184,7 @@ public class CompoundBuilder extends NBTBuilder<Tag> {
     }
 
     @Override
-    public CompoundBuilder List(final String name, final Class<? extends Tag> type, final java.util.List<Tag> value) {
+    public CompoundBuilder List(final String name, final Class<? extends Tag<?>> type, final java.util.List<Tag<?>> value) {
         return (CompoundBuilder) super.List(name, type, value);
     }
 

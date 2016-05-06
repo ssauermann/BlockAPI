@@ -25,8 +25,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.tree_bit.blockapi.nbt.NBT;
 import com.tree_bit.blockapi.nbt.NBTData;
-
-import org.jnbt.CompoundTag;
+import com.tree_bit.blockapi.nbt.tags.CompoundTag;
 
 
 /**
