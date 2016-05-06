@@ -38,12 +38,12 @@ import java.util.List;
  *
  * @param <T> Type of list content
  */
-public final class ListTag<T extends Tag<?, ? extends org.jnbt.Tag>> extends _ListTag<T> {
+public final class ListTag<T extends Tag<?>> extends _ListTag<T> {
 
     private final String name;
     private final List<T> value;
 
-    private ListTag(final String name, final List<T> value, final Class<T> clazz) {
+    private ListTag(final String name, final List<T> value, final Class<? extends T> clazz) {
         super(clazz);
         this.name = Preconditions.checkNotNull(name, "name");
         this.value = ImmutableList.copyOf(value);
@@ -114,7 +114,7 @@ public final class ListTag<T extends Tag<?, ? extends org.jnbt.Tag>> extends _Li
      * @param value The value for the {@code value} attribute
      * @return An immutable ListTag instance
      */
-    public static <T extends Tag<Object, org.jnbt.Tag>> ListTag<T> of(final String name, final Class<T> clazz, final List<T> value) {
+    public static <T extends Tag<?>> ListTag<T> of(final String name, final Class<? extends T> clazz, final List<T> value) {
         return new ListTag<>(name, value, clazz);
     }
 

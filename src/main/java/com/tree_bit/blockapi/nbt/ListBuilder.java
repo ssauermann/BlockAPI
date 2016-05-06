@@ -24,10 +24,10 @@ package com.tree_bit.blockapi.nbt;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.common.collect.ImmutableList;
+import com.tree_bit.blockapi.nbt.tags.ListTag;
+import com.tree_bit.blockapi.nbt.tags.Tag;
 
 import org.eclipse.jdt.annotation.Nullable;
-import org.jnbt.ListTag;
-import org.jnbt.Tag;
 
 import java.util.Collection;
 import java.util.LinkedList;
@@ -35,17 +35,17 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * Builder for NBT list Tags
+ * Builder for NBT <code>ListTag</code>
  *
  * @param <T> Type of list elements
  */
-public class ListBuilder<T extends Tag> extends NBTBuilder<T> {
+public class ListBuilder<T extends Tag<?>> extends NBTBuilder<T> {
 
     private final LinkedList<T> tags = new LinkedList<>();
     private final Class<T> type;
 
     /**
-     * Creates a new list tag builder.
+     * Creates a new <code>ListTag</code> builder.
      *
      * @param name Name of this list
      * @param type Type of list elements
@@ -57,8 +57,8 @@ public class ListBuilder<T extends Tag> extends NBTBuilder<T> {
 
 
     /**
-     * Adds a new tag to this list tag. An existing tag with the same name is
-     * replaced.
+     * Adds a new tag to this <code>ListTag</code>. An existing tag with the
+     * same name is replaced.
      *
      * @param tag Tag
      * @return Builder for chaining
@@ -73,8 +73,8 @@ public class ListBuilder<T extends Tag> extends NBTBuilder<T> {
     }
 
     /**
-     * Adds a new tag to this list tag if it is present. An existing tag with
-     * the same name is replaced.
+     * Adds a new tag to this <code>ListTag</code> if it is present. An existing
+     * tag with the same name is replaced.
      *
      * @param tag Tag
      * @return Builder for chaining
@@ -91,8 +91,8 @@ public class ListBuilder<T extends Tag> extends NBTBuilder<T> {
     }
 
     /**
-     * Adds new tags to this list tag. An existing tag with the same name as one
-     * in the collection is replaced.
+     * Adds new tags to this <code>ListTag</code>. An existing tag with the same
+     * name as one in the collection is replaced.
      *
      * @param tags Collection of tags
      * @return Builder for chaining
@@ -109,12 +109,12 @@ public class ListBuilder<T extends Tag> extends NBTBuilder<T> {
     }
 
     /**
-     * Builds the listTag and returns it.
+     * Builds the <code>ListTag</code> and returns it.
      *
-     * @return New listTag
+     * @return New <code>ListTag</code>
      */
     @Override
-    public ListTag build() {
+    public ListTag<T> build() {
         return NBT.List(this.getName(), this.type, this.tags);
     }
 
@@ -135,7 +135,7 @@ public class ListBuilder<T extends Tag> extends NBTBuilder<T> {
      * @return this
      */
     @Override
-    protected ListBuilder<T> addTag(final Tag tag) {
+    protected ListBuilder<T> addTag(final Tag<?> tag) {
         checkNotNull(tag.getName());
         if (this.type.isInstance(tag)) {
             this.tags.add(this.type.cast(tag));
@@ -158,7 +158,7 @@ public class ListBuilder<T extends Tag> extends NBTBuilder<T> {
     }
 
     @Override
-    public ListBuilder<T> Compound(final String name, final Map<String, Tag> value) {
+    public ListBuilder<T> Compound(final String name, final Map<String, Tag<?>> value) {
         return (ListBuilder<T>) super.Compound(name, value);
     }
 

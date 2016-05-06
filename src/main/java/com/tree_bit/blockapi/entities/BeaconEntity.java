@@ -24,10 +24,10 @@ package com.tree_bit.blockapi.entities;
 import com.tree_bit.blockapi.id.IStatusEffect;
 import com.tree_bit.blockapi.id.minecraft.StatusEffect;
 import com.tree_bit.blockapi.nbt.CompoundBuilder;
+import com.tree_bit.blockapi.nbt.tags.IntTag;
+import com.tree_bit.blockapi.nbt.tags.StringTag;
 
 import org.eclipse.jdt.annotation.Nullable;
-import org.jnbt.IntTag;
-import org.jnbt.StringTag;
 
 import jdk.nashorn.internal.ir.annotations.Immutable;
 
@@ -78,9 +78,9 @@ public class BeaconEntity extends GenericTileEntity {
     private static CompoundBuilder createBuilder(final @Nullable String lock, final int levels, final int primary, final int secondary) {
         final CompoundBuilder b = GenericTileEntity.builder("Beacon");
         if (lock != null) {
-            b.add(new StringTag("Lock", lock));
+            b.add(StringTag.of("Lock", lock));
         }
-        return b.add(new IntTag("Levels", levels)).add(new IntTag("Primary", primary)).add(new IntTag("Secondary", secondary));
+        return b.add(IntTag.of("Levels", levels)).add(IntTag.of("Primary", primary)).add(IntTag.of("Secondary", secondary));
     }
 
     /**

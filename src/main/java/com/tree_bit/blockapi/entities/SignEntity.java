@@ -22,12 +22,12 @@
 package com.tree_bit.blockapi.entities;
 
 import com.tree_bit.blockapi.nbt.CompoundBuilder;
+import com.tree_bit.blockapi.nbt.tags.StringTag;
 import com.tree_bit.rcdl.blocks.HangingSign;
 import com.tree_bit.rcdl.blocks.StandingSign;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.jnbt.StringTag;
 
 import jdk.nashorn.internal.ir.annotations.Immutable;
 
@@ -106,7 +106,7 @@ public class SignEntity extends GenericTileEntity {
                     s = tmp.getStringWithCodes();
                 }
             }
-            b.add(new StringTag("Text" + (i + 1), s));
+            b.add(StringTag.of("Text" + (i + 1), s));
         }
         return b;
     }

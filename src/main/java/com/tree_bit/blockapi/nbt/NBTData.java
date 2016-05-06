@@ -21,7 +21,7 @@
  */
 package com.tree_bit.blockapi.nbt;
 
-import org.jnbt.CompoundTag;
+import com.tree_bit.blockapi.nbt.tags.CompoundTag;
 
 /**
  * A class which represents an NBT compound tag and can be represented as one.

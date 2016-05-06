@@ -23,9 +23,8 @@ package com.tree_bit.blockapi.entities;
 
 import com.google.common.collect.ImmutableList;
 import com.tree_bit.blockapi.nbt.NBT;
+import com.tree_bit.blockapi.nbt.tags.CompoundTag;
 import com.tree_bit.rcdl.blocks.dv.Color;
-
-import org.jnbt.CompoundTag;
 
 import java.util.List;
 import java.util.stream.Collectors;

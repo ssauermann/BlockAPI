@@ -39,9 +39,8 @@ import java.util.Map;
  *
  * @author Sascha Sauermann
  * @param <T> Content of this tag
- * @param <X> Unwrapped type
  */
-public interface Tag<@NonNull T, @NonNull X extends org.jnbt.Tag> {
+public interface Tag<@NonNull T> {
 
     /**
      * Gets the name of this tag.
@@ -60,14 +59,15 @@ public interface Tag<@NonNull T, @NonNull X extends org.jnbt.Tag> {
     public @NonNull T getValue();
 
     /**
-     * Unwraps this tag to the JNBT framework version.
+     * Unwraps this tag to the JNBT framework default tag.
      * <p>
      * <b>Do not use this method outside of the BlockAPI framework. It may
      * change its signature.</b>
      *
+     *
      * @return unwrapped tag
      */
-    public @NonNull X unwrap();
+    public org.jnbt.Tag unwrap();
 
     /**
      * Wrap a JNBT tag to use.
@@ -79,17 +79,17 @@ public interface Tag<@NonNull T, @NonNull X extends org.jnbt.Tag> {
      *
      * @param tag JNBT tag to wrap
      * @return wrapped tag
-     * @throws IllegalArgumentException if given class is incompatible with the
-     *         given tag
+     * @throws ClassCastException if given class is incompatible with the given
+     *         tag
      */
     // cast is checked at runtime via the return value of the getValue method
     @SuppressWarnings("unchecked")
-    public static <@NonNull T, X extends org.jnbt.Tag> Tag<T, X> wrap(final Class<T> clazz, final X tag) {
-        final Tag<Object, X> tt = wrap(tag);
+    public static <@NonNull T, X extends org.jnbt.Tag> Tag<T> wrap(final Class<T> clazz, final X tag) {
+        final Tag<Object> tt = wrap(tag);
         if (clazz.isInstance(tt.getValue())) {
-            return (@NonNull Tag<T, X>) tt;
+            return (@NonNull Tag<T>) tt;
         }
-        throw new IllegalArgumentException("clazz is an incompatible type:" + clazz + " <-> " + tt.getValue().getClass());
+        throw new ClassCastException("clazz is an incompatible type:" + clazz + " <-> " + tt.getValue().getClass());
     }
 
     /**
@@ -101,8 +101,9 @@ public interface Tag<@NonNull T, @NonNull X extends org.jnbt.Tag> {
      * @param tag JNBT tag to wrap
      * @return wrapped tag
      */
-    public static <X extends org.jnbt.Tag> Tag<Object, X> wrap(final X tag) {
-        return new Tag<Object, X>() {
+    public static <X extends org.jnbt.Tag> Tag<Object> wrap(final X tag) {
+        // TODO switch to existing classes
+        return new Tag<Object>() {
 
             @Override
             public @NonNull String getName() {
@@ -115,9 +116,11 @@ public interface Tag<@NonNull T, @NonNull X extends org.jnbt.Tag> {
             }
 
             @Override
-            public X unwrap() {
+            public org.jnbt.Tag unwrap() {
                 return tag;
             }
+
+
         };
     }
 
@@ -127,7 +130,7 @@ public interface Tag<@NonNull T, @NonNull X extends org.jnbt.Tag> {
     @Value.Immutable
     @Wrapped
     @BlockApiStyle
-    public static abstract class _ByteArrayTag implements Tag<byte[], org.jnbt.ByteArrayTag> {
+    public static abstract class _ByteArrayTag implements Tag<byte[]> {
         // Will be generated
 
         @Override
@@ -142,7 +145,7 @@ public interface Tag<@NonNull T, @NonNull X extends org.jnbt.Tag> {
     @Value.Immutable
     @Wrapped
     @BlockApiStyle
-    public static abstract class _ByteTag implements Tag<Byte, org.jnbt.ByteTag> {
+    public static abstract class _ByteTag implements Tag<Byte> {
         // Will be generated
 
         @Override
@@ -157,7 +160,7 @@ public interface Tag<@NonNull T, @NonNull X extends org.jnbt.Tag> {
     @Value.Immutable
     @Wrapped
     @BlockApiStyle
-    public static abstract class _CompoundTag implements Tag<Map<String, ? extends Tag<?, ? extends org.jnbt.Tag>>, org.jnbt.CompoundTag> {
+    public static abstract class _CompoundTag implements Tag<Map<String, ? extends Tag<?>>> {
         // Will be generated
 
         @Override
@@ -172,7 +175,7 @@ public interface Tag<@NonNull T, @NonNull X extends org.jnbt.Tag> {
     @Value.Immutable
     @Wrapped
     @BlockApiStyle
-    public static abstract class _DoubleTag implements Tag<Double, org.jnbt.DoubleTag> {
+    public static abstract class _DoubleTag implements Tag<Double> {
         // Will be generated
 
         @Override
@@ -184,7 +187,7 @@ public interface Tag<@NonNull T, @NonNull X extends org.jnbt.Tag> {
     /**
      * End Tag
      */
-    public static abstract class _EndTag implements Tag<Null, org.jnbt.EndTag> {
+    public static abstract class _EndTag implements Tag<Null> {
         // This one can't be automatic generated
 
         @Override
@@ -200,7 +203,7 @@ public interface Tag<@NonNull T, @NonNull X extends org.jnbt.Tag> {
     @Value.Immutable
     @Wrapped
     @BlockApiStyle
-    public static abstract class _FloatTag implements Tag<Float, org.jnbt.FloatTag> {
+    public static abstract class _FloatTag implements Tag<Float> {
         // Will be generated
 
         @Override
@@ -215,7 +218,7 @@ public interface Tag<@NonNull T, @NonNull X extends org.jnbt.Tag> {
     @Value.Immutable
     @Wrapped
     @BlockApiStyle
-    public static abstract class _IntArrayTag implements Tag<int[], org.jnbt.IntArrayTag> {
+    public static abstract class _IntArrayTag implements Tag<int[]> {
         // Will be generated
 
         @Override
@@ -230,7 +233,7 @@ public interface Tag<@NonNull T, @NonNull X extends org.jnbt.Tag> {
     @Value.Immutable
     @Wrapped
     @BlockApiStyle
-    public static abstract class _IntTag implements Tag<Integer, org.jnbt.IntTag> {
+    public static abstract class _IntTag implements Tag<Integer> {
         // Will be generated
 
         @Override
@@ -244,7 +247,7 @@ public interface Tag<@NonNull T, @NonNull X extends org.jnbt.Tag> {
      *
      * @param <T> Content tag type
      */
-    public static abstract class _ListTag<T extends Tag<?, ? extends org.jnbt.Tag>> implements Tag<List<T>, org.jnbt.ListTag> {
+    public static abstract class _ListTag<T extends Tag<?>> implements Tag<List<T>> {
         // This one can't be automatic generated
 
         private final Class<? extends org.jnbt.Tag> clazz;
@@ -254,7 +257,7 @@ public interface Tag<@NonNull T, @NonNull X extends org.jnbt.Tag> {
          *
          * @param clazz Content tag class
          */
-        protected _ListTag(final Class<T> clazz) {
+        protected _ListTag(final Class<? extends T> clazz) {
             Class<? extends org.jnbt.Tag> cl;
             if (_ByteArrayTag.class.isAssignableFrom(clazz)) {
                 cl = org.jnbt.ByteArrayTag.class;
@@ -322,7 +325,7 @@ public interface Tag<@NonNull T, @NonNull X extends org.jnbt.Tag> {
     @Value.Immutable
     @Wrapped
     @BlockApiStyle
-    public static abstract class _LongTag implements Tag<Long, org.jnbt.LongTag> {
+    public static abstract class _LongTag implements Tag<Long> {
         // Will be generated
 
         @Override
@@ -337,7 +340,7 @@ public interface Tag<@NonNull T, @NonNull X extends org.jnbt.Tag> {
     @Value.Immutable
     @Wrapped
     @BlockApiStyle
-    public static abstract class _ShortTag implements Tag<Short, org.jnbt.ShortTag> {
+    public static abstract class _ShortTag implements Tag<Short> {
         // Will be generated
 
         @Override
@@ -352,7 +355,7 @@ public interface Tag<@NonNull T, @NonNull X extends org.jnbt.Tag> {
     @Value.Immutable
     @Wrapped
     @BlockApiStyle
-    public static abstract class _StringTag implements Tag<String, org.jnbt.StringTag> {
+    public static abstract class _StringTag implements Tag<String> {
         // Will be generated
 
         @Override

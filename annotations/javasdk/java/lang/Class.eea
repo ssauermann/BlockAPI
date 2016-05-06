@@ -1,0 +1,4 @@
+class java/lang/Class
+cast
+ (Ljava/lang/Object;)TT;
+ (Ljava/lang/Object;)T1T;
