@@ -1,0 +1,13 @@
+class org/jnbt/Tag
+Tag
+ (Ljava/lang/String;)V
+ (L1java/lang/String;)V
+getName
+ ()Ljava/lang/String;
+ ()L1java/lang/String;
+getValue
+ ()Ljava/lang/Object;
+ ()L1java/lang/Object;
+name
+ Ljava/lang/String;
+ L1java/lang/String;

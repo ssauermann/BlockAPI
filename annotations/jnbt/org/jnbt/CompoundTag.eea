@@ -1,0 +1,10 @@
+class org/jnbt/CompoundTag
+CompoundTag
+ (Ljava/lang/String;Ljava/util/Map<Ljava/lang/String;Lorg/jnbt/Tag;>;)V
+ (Ljava/lang/String;L1java/util/Map<L1java/lang/String;L1org/jnbt/Tag;>;)V
+getValue
+ ()Ljava/util/Map<Ljava/lang/String;Lorg/jnbt/Tag;>;
+ ()L1java/util/Map<L1java/lang/String;L1org/jnbt/Tag;>;
+value
+ Ljava/util/Map<Ljava/lang/String;Lorg/jnbt/Tag;>;
+ L1java/util/Map<L1java/lang/String;L1org/jnbt/Tag;>;
