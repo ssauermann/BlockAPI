@@ -155,7 +155,7 @@ public class NBT {
      *
      * @return New tag
      */
-    public static <T extends Tag<?>> ListTag<T> List(final String name, final Class<? extends T> type, final java.util.List<T> value) {
+    public static <T extends Tag<?>> ListTag<T> List(final String name, final Class<T> type, final java.util.List<? extends T> value) {
         return ListTag.of(name, type, value);
     }
 

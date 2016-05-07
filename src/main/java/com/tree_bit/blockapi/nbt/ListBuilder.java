@@ -189,7 +189,7 @@ public class ListBuilder<T extends Tag<?>> extends NBTBuilder<T> {
     }
 
     @Override
-    public ListBuilder<T> List(final String name, final Class<? extends T> type, final java.util.List<T> value) {
+    public <X extends Tag<?>> ListBuilder<T> List(final String name, final Class<X> type, final java.util.List<? extends X> value) {
         return (ListBuilder<T>) super.List(name, type, value);
     }
 

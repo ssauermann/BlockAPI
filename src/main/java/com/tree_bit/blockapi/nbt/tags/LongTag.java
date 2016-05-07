@@ -21,40 +21,28 @@
  */
 package com.tree_bit.blockapi.nbt.tags;
 
-import com.tree_bit.blockapi.internal.Null;
-
-import org.immutables.value.Value.Derived;
 import org.immutables.value.Value.Immutable;
 
 /**
- * NBT EndTag
+ * NBT LongTag
  */
 @TagStyle
-@Immutable(singleton = true)
-public abstract class EndTag implements Tag<Null> {
+@Immutable
+public abstract class LongTag implements Tag<Long> {
 
     @Override
-    @Derived
-    public String getName() {
-        return "";
+    public org.jnbt.LongTag unwrap() {
+        return new org.jnbt.LongTag(this.getName(), this.getValue());
     }
 
-    @Override
-    @Derived
-    public Null getValue() {
-        return Null._null();
-    }
-
-    @Override
-    public org.jnbt.Tag unwrap() {
-        return new org.jnbt.EndTag();
-    }
     /**
-     * Returns the default immutable singleton value of {@code EndTag}
-     * @return An immutable instance of EndTag
+     * Construct a new immutable {@code LongTag} instance.
+     * 
+     * @param name The value for the {@code name} attribute
+     * @param value The value for the {@code value} attribute
+     * @return An immutable LongTag instance
      */
-    public static EndTag of() {
-        return ImmutableEndTag.of();
+    public static LongTag of(final String name, final Long value) {
+        return ImmutableLongTag.of(name, value);
     }
-
 }

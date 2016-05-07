@@ -21,40 +21,32 @@
  */
 package com.tree_bit.blockapi.nbt.tags;
 
-import com.tree_bit.blockapi.internal.Null;
+import com.google.common.collect.Maps;
 
-import org.immutables.value.Value.Derived;
 import org.immutables.value.Value.Immutable;
 
+import java.util.Map;
+
 /**
- * NBT EndTag
+ * NBT CompoundTag
  */
 @TagStyle
-@Immutable(singleton = true)
-public abstract class EndTag implements Tag<Null> {
-
-    @Override
-    @Derived
-    public String getName() {
-        return "";
-    }
-
-    @Override
-    @Derived
-    public Null getValue() {
-        return Null._null();
-    }
+@Immutable
+public abstract class CompoundTag implements Tag<Map<String, ? extends Tag<?>>> {
 
     @Override
     public org.jnbt.Tag unwrap() {
-        return new org.jnbt.EndTag();
-    }
-    /**
-     * Returns the default immutable singleton value of {@code EndTag}
-     * @return An immutable instance of EndTag
-     */
-    public static EndTag of() {
-        return ImmutableEndTag.of();
+        return new org.jnbt.CompoundTag(this.getName(), Maps.transformValues(this.getValue(), Tag::unwrap));
     }
 
+    /**
+     * Construct a new immutable {@code CompoundTag} instance.
+     *
+     * @param name The value for the {@code name} attribute
+     * @param value The value for the {@code value} attribute
+     * @return An immutable CompoundTag instance
+     */
+    public static CompoundTag of(final String name, final Map<String, ? extends Tag<?>> value) {
+        return ImmutableCompoundTag.of(name, value);
+    }
 }

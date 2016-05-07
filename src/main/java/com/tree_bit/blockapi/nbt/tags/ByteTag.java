@@ -21,40 +21,29 @@
  */
 package com.tree_bit.blockapi.nbt.tags;
 
-import com.tree_bit.blockapi.internal.Null;
-
-import org.immutables.value.Value.Derived;
 import org.immutables.value.Value.Immutable;
 
 /**
- * NBT EndTag
+ * NBT ByteTag
  */
 @TagStyle
-@Immutable(singleton = true)
-public abstract class EndTag implements Tag<Null> {
-
-    @Override
-    @Derived
-    public String getName() {
-        return "";
-    }
-
-    @Override
-    @Derived
-    public Null getValue() {
-        return Null._null();
-    }
+@Immutable
+public abstract class ByteTag implements Tag<Byte> {
 
     @Override
     public org.jnbt.Tag unwrap() {
-        return new org.jnbt.EndTag();
+        return new org.jnbt.ByteTag(this.getName(), this.getValue());
     }
+
     /**
-     * Returns the default immutable singleton value of {@code EndTag}
-     * @return An immutable instance of EndTag
+     * Construct a new immutable {@code ByteTag} instance.
+     *
+     * @param name The value for the {@code name} attribute
+     * @param value The value for the {@code value} attribute
+     * @return An immutable ByteTag instance
      */
-    public static EndTag of() {
-        return ImmutableEndTag.of();
+    public static ByteTag of(final String name, final Byte value) {
+        return ImmutableByteTag.of(name, value);
     }
 
 }

@@ -21,89 +21,85 @@
  */
 package com.tree_bit.blockapi.nbt.tags;
 
-import com.google.common.base.MoreObjects;
-import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
-import com.tree_bit.blockapi.nbt.tags.Tag._ListTag;
-
-import org.eclipse.jdt.annotation.Nullable;
+import com.google.common.collect.Lists;
 
 import java.util.List;
 
 /**
- * Immutable implementation of {@link Tag._ListTag}.
- * <p>
- * Use the static factory method to create immutable instances:
- * {@code ListTag.of()}.
+ * NBT ListTag
  *
- * @param <T> Type of list content
+ * @param <T> Content type
  */
-public final class ListTag<T extends Tag<?>> extends _ListTag<T> {
+public abstract class ListTag<T extends Tag<?>> implements Tag<List<T>> {
 
-    private final String name;
-    private final List<T> value;
-
-    private ListTag(final String name, final List<T> value, final Class<? extends T> clazz) {
-        super(clazz);
-        this.name = Preconditions.checkNotNull(name, "name");
-        this.value = ImmutableList.copyOf(value);
-    }
+    private final Class<? extends org.jnbt.Tag> clazz;
 
     /**
-     * @return The value of the {@code name} attribute
-     */
-    @Override
-    public String getName() {
-        return this.name;
-    }
-
-    /**
-     * @return The value of the {@code value} attribute
-     */
-    @Override
-    public List<T> getValue() {
-        return this.value;
-    }
-
-    /**
-     * This instance is equal to all instances of {@code ListTag} that have
-     * equal attribute values.
+     * Setting the class for unwrapping of this ListTag.
      *
-     * @return {@code true} if {@code this} is equal to {@code another} instance
+     * @param clazz Content type class
      */
-    @Override
-    public boolean equals(@Nullable final Object another) {
-        if (this == another) {
-            return true;
+    protected ListTag(final Class<T> clazz) {
+        Class<? extends org.jnbt.Tag> cl;
+
+        if (ByteArrayTag.class.isAssignableFrom(clazz)) {
+            cl = org.jnbt.ByteArrayTag.class;
         }
-        return (another instanceof ListTag) && this.equalTo((ListTag<?>) another);
+
+        else if (ByteTag.class.isAssignableFrom(clazz)) {
+            cl = org.jnbt.ByteTag.class;
+        }
+
+        else if (CompoundTag.class.isAssignableFrom(clazz)) {
+            cl = org.jnbt.CompoundTag.class;
+        }
+
+        else if (DoubleTag.class.isAssignableFrom(clazz)) {
+            cl = org.jnbt.DoubleTag.class;
+        }
+
+        else if (EndTag.class.isAssignableFrom(clazz)) {
+            cl = org.jnbt.EndTag.class;
+        }
+
+        else if (FloatTag.class.isAssignableFrom(clazz)) {
+            cl = org.jnbt.FloatTag.class;
+        }
+
+        else if (IntArrayTag.class.isAssignableFrom(clazz)) {
+            cl = org.jnbt.IntArrayTag.class;
+        }
+
+        else if (IntTag.class.isAssignableFrom(clazz)) {
+            cl = org.jnbt.IntTag.class;
+        }
+
+        else if (ListTag.class.isAssignableFrom(clazz)) {
+            cl = org.jnbt.ListTag.class;
+        }
+
+        else if (LongTag.class.isAssignableFrom(clazz)) {
+            cl = org.jnbt.LongTag.class;
+        }
+
+        else if (ShortTag.class.isAssignableFrom(clazz)) {
+            cl = org.jnbt.ShortTag.class;
+        }
+
+        else if (StringTag.class.isAssignableFrom(clazz)) {
+            cl = org.jnbt.StringTag.class;
+        }
+
+        else {
+            cl = org.jnbt.Tag.class;
+        }
+
+        this.clazz = cl;
     }
 
-    private boolean equalTo(final ListTag<?> another) {
-        return this.name.equals(another.name) && this.value.equals(another.value);
-    }
-
-    /**
-     * Computes a hash code from attributes: {@code name}, {@code value}.
-     *
-     * @return hashCode value
-     */
     @Override
-    public int hashCode() {
-        int h = 31;
-        h = (h * 17) + this.name.hashCode();
-        h = (h * 17) + this.value.hashCode();
-        return h;
-    }
-
-    /**
-     * Prints the immutable value {@code ListTag} with attribute values.
-     *
-     * @return A string representation of the value
-     */
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper("ListTag").omitNullValues().add("name", this.name).add("value", this.value).toString();
+    public org.jnbt.ListTag unwrap() {
+        return new org.jnbt.ListTag(this.getName(), this.clazz, Lists.transform(this.getValue(), Tag::unwrap));
     }
 
     /**
@@ -114,8 +110,7 @@ public final class ListTag<T extends Tag<?>> extends _ListTag<T> {
      * @param value The value for the {@code value} attribute
      * @return An immutable ListTag instance
      */
-    public static <T extends Tag<?>> ListTag<T> of(final String name, final Class<? extends T> clazz, final List<T> value) {
-        return new ListTag<>(name, value, clazz);
+    public static <T extends Tag<?>> ListTag<T> of(final String name, final Class<T> clazz, final List<? extends T> value) {
+        return ListTag.of(name, clazz, value);
     }
-
 }

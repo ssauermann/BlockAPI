@@ -21,29 +21,28 @@
  */
 package com.tree_bit.blockapi.nbt.tags;
 
-import org.immutables.value.Value;
-import org.immutables.value.Value.Style.ImplementationVisibility;
-
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import org.immutables.value.Value.Immutable;
 
 /**
- * My wrapper style
+ * NBT IntArrayTag
  */
-@Target({ElementType.PACKAGE, ElementType.TYPE})
-// Make it class retention for incremental compilation
-@Retention(RetentionPolicy.CLASS)
-@Value.Style(get = {"is*", "get*"},
-        // 'Abstract' prefix will be detected and trimmed
-        typeAbstract = {"_*",},
-        // No prefix or suffix for generated immutable type
-        typeImmutable = "*",
-        // Generated class will be always public
-        visibility = ImplementationVisibility.PUBLIC, init = "*",
+@TagStyle
+@Immutable
+public abstract class IntArrayTag implements Tag<int[]> {
 
-        defaults = @Value.Immutable(copy = false, builder = false))
-@interface Wrapped {
-    // Nothing to do here
+    @Override
+    public org.jnbt.IntArrayTag unwrap() {
+        return new org.jnbt.IntArrayTag(this.getName(), this.getValue());
+    }
+
+    /**
+     * Construct a new immutable {@code IntArrayTag} instance.
+     * 
+     * @param name The value for the {@code name} attribute
+     * @param value The value for the {@code value} attribute
+     * @return An immutable IntArrayTag instance
+     */
+    public static IntArrayTag of(final String name, final int[] value) {
+        return ImmutableIntArrayTag.of(name, value);
+    }
 }

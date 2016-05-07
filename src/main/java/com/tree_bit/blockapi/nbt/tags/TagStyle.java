@@ -21,40 +21,26 @@
  */
 package com.tree_bit.blockapi.nbt.tags;
 
-import com.tree_bit.blockapi.internal.Null;
+import org.immutables.value.Value;
+import org.immutables.value.Value.Style.ImplementationVisibility;
 
-import org.immutables.value.Value.Derived;
-import org.immutables.value.Value.Immutable;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * NBT EndTag
+ * Style of generated immutable tags.
  */
-@TagStyle
-@Immutable(singleton = true)
-public abstract class EndTag implements Tag<Null> {
-
-    @Override
-    @Derived
-    public String getName() {
-        return "";
-    }
-
-    @Override
-    @Derived
-    public Null getValue() {
-        return Null._null();
-    }
-
-    @Override
-    public org.jnbt.Tag unwrap() {
-        return new org.jnbt.EndTag();
-    }
-    /**
-     * Returns the default immutable singleton value of {@code EndTag}
-     * @return An immutable instance of EndTag
-     */
-    public static EndTag of() {
-        return ImmutableEndTag.of();
-    }
-
+@Target({ElementType.PACKAGE, ElementType.TYPE})
+@Retention(RetentionPolicy.CLASS)
+@Value.Style(typeImmutable = "Immutable*",
+        // Must be wrapped
+        visibility = ImplementationVisibility.PACKAGE,
+        // Depluralize
+        depluralize = true,
+        // No builder, no copy
+        defaults = @Value.Immutable(copy = false, builder = false))
+@interface TagStyle {
+    // Nothing to do here
 }

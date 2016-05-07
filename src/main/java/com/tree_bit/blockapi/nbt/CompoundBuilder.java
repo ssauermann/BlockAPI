@@ -184,7 +184,7 @@ public class CompoundBuilder extends NBTBuilder<Tag<?>> {
     }
 
     @Override
-    public CompoundBuilder List(final String name, final Class<? extends Tag<?>> type, final java.util.List<Tag<?>> value) {
+    public <X extends Tag<?>> CompoundBuilder List(final String name, final Class<X> type, final java.util.List<? extends X> value) {
         return (CompoundBuilder) super.List(name, type, value);
     }
 

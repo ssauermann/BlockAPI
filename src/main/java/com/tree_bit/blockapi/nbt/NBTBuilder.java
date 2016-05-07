@@ -245,7 +245,7 @@ public abstract class NBTBuilder<T extends Tag<?>> {
      *
      * @return Builder
      */
-    public NBTBuilder<T> List(final String name, final Class<? extends T> type, final java.util.List<T> value) {
+    public <X extends Tag<?>> NBTBuilder<T> List(final String name, final Class<X> type, final java.util.List<? extends X> value) {
         return this.addTag(NBT.List(name, type, value));
     }
 
