@@ -29,7 +29,16 @@ import com.tree_bit.blockapi.nbt.tags.CompoundTag;
 
 
 /**
+ * Representing a tile entity containing some tags. The positioning tags (x, y,
+ * z) are excluded from this tag list although they have to be saved in files.
  *
+ * <b>With 1.8 TileEntities were renamed to BlockEntities.</b>
+ *
+ * @see <a href=
+ *      "http://minecraft.gamepedia.com/Chunk_format#Block_entity_format">http:/
+ *      /minecraft.gamepedia.com/Chunk_format#Block_entity_format</a>
+ *
+ * @author Sascha Sauermann
  */
 public interface TileEntity extends NBTData {
 
@@ -46,6 +55,13 @@ public interface TileEntity extends NBTData {
     public CompoundTag compound();
 
     /**
+     * ID defining the type of the tile entity.
+     *
+     * @return TileEntity ID
+     */
+    public String id();
+
+    /**
      * Adds coordinates to a TileEntity and returns the CompoundTag the tile
      * entity is based on, including the coordinates. This should only be done
      * before saving the data to a file.
@@ -60,4 +76,5 @@ public interface TileEntity extends NBTData {
         return NBT.Compound(e.compound().getName()).addAll(checkNotNull(e.compound().getValue().values())).Int("x", x).Int("y", y).Int("z", z)
                 .build();
     }
+
 }

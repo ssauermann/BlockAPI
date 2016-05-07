@@ -19,34 +19,49 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.tree_bit.blockapi.internal;
+package com.tree_bit.blockapi.entities;
 
-import org.immutables.value.Value;
-import org.immutables.value.Value.Style.ImplementationVisibility;
+import com.tree_bit.blockapi.data.IBannerPattern;
+import com.tree_bit.blockapi.data.IColor;
+import com.tree_bit.blockapi.nbt.NBT;
+import com.tree_bit.blockapi.nbt.NBTData;
+import com.tree_bit.blockapi.nbt.tags.CompoundTag;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import org.immutables.value.Value.Derived;
+import org.immutables.value.Value.Immutable;
+import org.immutables.value.Value.Parameter;
 
 /**
- * My immutable style
+ * One pattern of a {@link BannerEntity} with an {@link IColor} and a pattern
+ * {@link IBannerPattern}
+ *
+ * @author Sascha Sauermann
  */
-@Target({ElementType.PACKAGE, ElementType.TYPE})
-// Make it class retention for incremental compilation
-@Retention(RetentionPolicy.CLASS)
+@Immutable
+public abstract class _Pattern implements NBTData {
 
-@Value.Style(get = {"is*", "get*"},
-        // 'Abstract' prefix will be detected and trimmed
-        typeAbstract = {"_*",},
-        // No prefix or suffix for generated immutable type
-        typeImmutable = "*",
-        // Generated class will be always public
-        visibility = ImplementationVisibility.PUBLIC, init = "*",
-        // Remove trailing s characters
-        depluralize = true,
+    /**
+     * Color of the pattern
+     *
+     * @return pattern color
+     */
+    @Parameter(order = 1)
+    public abstract IColor color();
 
-        defaults = @Value.Immutable(copy = true))
-public @interface BlockApiStyle {
-    // Nothing to do here
+    /**
+     * Type of the pattern
+     *
+     * @return pattern type
+     */
+    @Parameter(order = 2)
+    public abstract IBannerPattern pattern();
+
+
+    @Override
+    @Derived
+    public CompoundTag compound() {
+        return NBT.Compound("").Int("Color", this.color().getDV()).String("Pattern", this.pattern().getDC()).build();
+    }
+
 }
+

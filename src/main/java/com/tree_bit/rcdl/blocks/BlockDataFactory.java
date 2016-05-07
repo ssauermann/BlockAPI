@@ -4,8 +4,8 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.collect.ImmutableSet;
+import com.tree_bit.blockapi.data.IDataValue;
 import com.tree_bit.blockapi.entities.TileEntity;
-import com.tree_bit.rcdl.blocks.dv.IDataValueEnum;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -34,31 +34,31 @@ import java.util.Set;
 @SuppressWarnings(value = {"all"})
 class BlockDataFactory {
 
-    private static class Loader extends CacheLoader<DataKey<Class<? extends BlockData>, ImmutableSet<IDataValueEnum>, TileEntity>, BlockData> {
+    private static class Loader extends CacheLoader<DataKey<Class<? extends BlockData>, ImmutableSet<IDataValue>, TileEntity>, BlockData> {
 
         Loader() {}
 
         @Override
-        public BlockData load(final DataKey<Class<? extends BlockData>, ImmutableSet<IDataValueEnum>, TileEntity> key) throws Exception {
+        public BlockData load(final DataKey<Class<? extends BlockData>, ImmutableSet<IDataValue>, TileEntity> key) throws Exception {
             final Class<? extends BlockData> clazz = key.getRow();
-            final ImmutableSet<IDataValueEnum> dv = key.getColumn();
+            final ImmutableSet<IDataValue> dv = key.getColumn();
             final Optional<TileEntity> entity = key.getLayer();
             return create(clazz, dv, entity);
         }
 
-        private static <T extends BlockData> T create(final Class<T> clazz, final ImmutableSet<IDataValueEnum> dv,
+        private static <T extends BlockData> T create(final Class<T> clazz, final ImmutableSet<IDataValue> dv,
                 final Optional<TileEntity> entity) {
 
             try {
                 if (!entity.isPresent()) {
-                    final Constructor<T> construct = clazz.getDeclaredConstructor(IDataValueEnum[].class);
+                    final Constructor<T> construct = clazz.getDeclaredConstructor(IDataValue[].class);
                     construct.setAccessible(true);
-                    return construct.newInstance(new Object[] {dv.toArray(new IDataValueEnum[0])});
+                    return construct.newInstance(new Object[] {dv.toArray(new IDataValue[0])});
                 }
                 // Else with TileEntity
-                final Constructor<T> construct = clazz.getDeclaredConstructor(IDataValueEnum[].class, TileEntity.class);
+                final Constructor<T> construct = clazz.getDeclaredConstructor(IDataValue[].class, TileEntity.class);
                 construct.setAccessible(true);
-                return construct.newInstance(new Object[] {dv.toArray(new IDataValueEnum[0]), entity});
+                return construct.newInstance(new Object[] {dv.toArray(new IDataValue[0]), entity});
 
             } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException
                     | InvocationTargetException e) {
@@ -69,10 +69,10 @@ class BlockDataFactory {
     }
 
 
-    private static final LoadingCache<DataKey<Class<? extends BlockData>, ImmutableSet<IDataValueEnum>, TileEntity>, BlockData> cache;
+    private static final LoadingCache<DataKey<Class<? extends BlockData>, ImmutableSet<IDataValue>, TileEntity>, BlockData> cache;
 
     static {
-        final LoadingCache<DataKey<Class<? extends BlockData>, ImmutableSet<IDataValueEnum>, TileEntity>, BlockData> c =
+        final LoadingCache<DataKey<Class<? extends BlockData>, ImmutableSet<IDataValue>, TileEntity>, BlockData> c =
                 CacheBuilder.newBuilder().weakValues().build(new Loader());
         if (c != null) {
             cache = c;
@@ -85,9 +85,9 @@ class BlockDataFactory {
 
 
     @SuppressWarnings("unchecked")
-    private static <T extends BlockData> T equalOrThis(final Class<T> clazz, final T instance, final Collection<IDataValueEnum> dataValues) {
+    private static <T extends BlockData> T equalOrThis(final Class<T> clazz, final T instance, final Collection<IDataValue> dataValues) {
         // Defensive copy
-        final SingleInstanceSet<IDataValueEnum> dv = SingleInstanceSet.copyOf(dataValues);
+        final SingleInstanceSet<IDataValue> dv = SingleInstanceSet.copyOf(dataValues);
         final @Nullable BlockData current = cache.getIfPresent(DataKey.of(clazz, dv.asSet()));
         if (instance.equals(current)) {
             return (T) current;
@@ -105,10 +105,10 @@ class BlockDataFactory {
      * @param dataValues Collection of data values
      */
     static <T extends BlockData> void register(final Class<T> clazz, final T instance, @Nullable final TileEntity entity,
-            final Collection<IDataValueEnum> dataValues) {
+            final Collection<IDataValue> dataValues) {
         // Defensive copy
-        final SingleInstanceSet<IDataValueEnum> dv = SingleInstanceSet.copyOf(dataValues);
-        final DataKey<Class<? extends BlockData>, ImmutableSet<IDataValueEnum>, TileEntity> key = DataKey.of(clazz, dv.asSet(), entity);
+        final SingleInstanceSet<IDataValue> dv = SingleInstanceSet.copyOf(dataValues);
+        final DataKey<Class<? extends BlockData>, ImmutableSet<IDataValue>, TileEntity> key = DataKey.of(clazz, dv.asSet(), entity);
         cache.put(key, instance);
     }
 
@@ -124,8 +124,8 @@ class BlockDataFactory {
      */
     // @NonNull IDataValueEnum[] == IDataValueEnum @NonNull[]
     static <T extends BlockData> void register(final Class<T> clazz, final T instance, @Nullable final TileEntity entity,
-            final @NonNull IDataValueEnum... dataValues) {
-        Collection<IDataValueEnum> dv;
+            final @NonNull IDataValue... dataValues) {
+        Collection<IDataValue> dv;
         if (dataValues.length == 0) {
             dv = instance.getData().asSet();
         } else {
@@ -153,12 +153,12 @@ class BlockDataFactory {
      */
     // Return value of map can be null
     static <T extends BlockData> T getInstance(final Class<T> clazz, @Nullable final TileEntity entity,
-            final Collection<IDataValueEnum> dataValues) {
+            final Collection<IDataValue> dataValues) {
 
         // Defensive copy
-        final ImmutableSet<IDataValueEnum> dv = SingleInstanceSet.copyOf(dataValues).asSet();
+        final ImmutableSet<IDataValue> dv = SingleInstanceSet.copyOf(dataValues).asSet();
 
-        final DataKey<Class<? extends BlockData>, ImmutableSet<IDataValueEnum>, TileEntity> key = DataKey.of(clazz, dv, entity);
+        final DataKey<Class<? extends BlockData>, ImmutableSet<IDataValue>, TileEntity> key = DataKey.of(clazz, dv, entity);
         final BlockData bd = cache.getUnchecked(key);
         if (bd.getClass() == clazz) {
             return clazz.cast(bd);
@@ -166,11 +166,11 @@ class BlockDataFactory {
         throw new AssertionError();
     }
 
-    static <T extends BlockData> T getInstance(final Class<T> clazz, final Collection<IDataValueEnum> dataValues) {
+    static <T extends BlockData> T getInstance(final Class<T> clazz, final Collection<IDataValue> dataValues) {
         return getInstance(clazz, null, dataValues);
     }
 
-    static <T extends BlockData> T getInstance(final Class<T> clazz, final IDataValueEnum dataValue, final IDataValueEnum... dataValues) {
+    static <T extends BlockData> T getInstance(final Class<T> clazz, final IDataValue dataValue, final IDataValue... dataValues) {
         return getInstance(clazz, null, dataValue, dataValues);
     }
 
@@ -191,10 +191,10 @@ class BlockDataFactory {
      * @throws IllegalArgumentException if the given data values are invalid for
      *         the given class
      */
-    static <T extends BlockData> T getInstance(final Class<T> clazz, @Nullable final TileEntity entity, final IDataValueEnum dataValue,
-            final IDataValueEnum... dataValues) {
+    static <T extends BlockData> T getInstance(final Class<T> clazz, @Nullable final TileEntity entity, final IDataValue dataValue,
+            final IDataValue... dataValues) {
 
-        final Set<IDataValueEnum> dvs = new HashSet<>();
+        final Set<IDataValue> dvs = new HashSet<>();
         dvs.addAll(Arrays.asList(dataValues));
         dvs.add(dataValue);
         // @NonNull IDataValueEnum[] == IDataValueEnum @NonNull[]
@@ -216,8 +216,8 @@ class BlockDataFactory {
      * @param dataValues Data values
      */
     static <T extends BlockData> void registerDefault(final Class<T> clazz, final T instance, @Nullable final TileEntity entity,
-            final IDataValueEnum... dataValues) {
-        Collection<IDataValueEnum> dv;
+            final IDataValue... dataValues) {
+        Collection<IDataValue> dv;
         if (dataValues.length == 0) {
             dv = instance.getData().asSet();
         } else {
@@ -226,7 +226,7 @@ class BlockDataFactory {
         BlockDataFactory.registerDefault(clazz, instance, entity, dv);
     }
 
-    static <T extends BlockData> void registerDefault(final Class<T> clazz, final T instance, final IDataValueEnum... dataValues) {
+    static <T extends BlockData> void registerDefault(final Class<T> clazz, final T instance, final IDataValue... dataValues) {
         // registerDefault(clazz, instance,
         // instance.getTileEntity().orElse(null), dataValues);
         // TODO
@@ -245,7 +245,7 @@ class BlockDataFactory {
      * @param dataValues Collection of data values
      */
     static <T extends BlockData> void registerDefault(final Class<T> clazz, final T instance, @Nullable final TileEntity entity,
-            final Collection<IDataValueEnum> dataValues) {
+            final Collection<IDataValue> dataValues) {
         final T instanceReg = BlockDataFactory.equalOrThis(clazz, instance, dataValues);
         register(clazz, instanceReg, entity, dataValues);
         defaults.put(clazz, instanceReg);

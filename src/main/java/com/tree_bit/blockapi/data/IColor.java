@@ -19,34 +19,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.tree_bit.blockapi.internal;
+package com.tree_bit.blockapi.data;
 
-import org.immutables.value.Value;
-import org.immutables.value.Value.Style.ImplementationVisibility;
+import com.tree_bit.blockapi.data.minecraft.Color;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.util.Optional;
 
 /**
- * My immutable style
+ * Minecraft color values.
+ *
+ * @see Color 16 Minecraft colors
  */
-@Target({ElementType.PACKAGE, ElementType.TYPE})
-// Make it class retention for incremental compilation
-@Retention(RetentionPolicy.CLASS)
+public interface IColor extends IDataValue {
 
-@Value.Style(get = {"is*", "get*"},
-        // 'Abstract' prefix will be detected and trimmed
-        typeAbstract = {"_*",},
-        // No prefix or suffix for generated immutable type
-        typeImmutable = "*",
-        // Generated class will be always public
-        visibility = ImplementationVisibility.PUBLIC, init = "*",
-        // Remove trailing s characters
-        depluralize = true,
+    /**
+     * Gets the id of this color.
+     */
+    @Override
+    int getDV();
 
-        defaults = @Value.Immutable(copy = true))
-public @interface BlockApiStyle {
-    // Nothing to do here
+    /**
+     * Gets the color by id.
+     *
+     * @param dv color id
+     * @return color
+     */
+    @Override
+    Optional<? extends IColor> byDV(final int dv);
 }

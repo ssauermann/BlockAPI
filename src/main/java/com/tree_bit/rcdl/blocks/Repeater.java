@@ -1,6 +1,6 @@
 package com.tree_bit.rcdl.blocks;
 
-import com.tree_bit.rcdl.blocks.dv.IDataValueEnum;
+import com.tree_bit.blockapi.data.IDataValue;
 import com.tree_bit.rcdl.blocks.dv.OrientationNESW;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -33,7 +33,7 @@ public final class Repeater extends BlockData {
     /**
      * Representing the delay of a 'Repeater' block.
      */
-    public enum Delay implements IDataValueEnum {
+    public enum Delay implements IDataValue {
         /** 1-Tick Delay */
         D1(0),
         /** 2-Tick Delay */
@@ -63,7 +63,7 @@ public final class Repeater extends BlockData {
         super(OrientationNESW.North, Delay.D1);
     }
 
-    private Repeater(final @NonNull IDataValueEnum[] values) {
+    private Repeater(final @NonNull IDataValue[] values) {
         super(validateDV(values, OrientationNESW.class, Delay.class));
     }
 

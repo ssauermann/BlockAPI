@@ -1,7 +1,7 @@
 package com.tree_bit.rcdl.blocks;
 
+import com.tree_bit.blockapi.data.IDataValue;
 import com.tree_bit.rcdl.blocks.dv.DummyOrientation;
-import com.tree_bit.rcdl.blocks.dv.IDataValueEnum;
 
 import org.eclipse.jdt.annotation.NonNull;
 
@@ -33,7 +33,7 @@ public final class Redstone extends BlockData {
     /**
      * Representing the power level of a 'Redstone Wire' block.
      */
-    public enum PowerLevel implements IDataValueEnum {
+    public enum PowerLevel implements IDataValue {
         /** Signal strength zero (0) */
         L0(0),
         /** Signal strength one (1) */
@@ -87,7 +87,7 @@ public final class Redstone extends BlockData {
         super(level, DummyOrientation.NONE);
     }
 
-    private Redstone(final @NonNull IDataValueEnum[] values) {
+    private Redstone(final @NonNull IDataValue[] values) {
         super(validateDV(values, PowerLevel.class, DummyOrientation.class));
     }
 

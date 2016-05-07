@@ -1,9 +1,9 @@
 package com.tree_bit.rcdl.blocks;
 
+import com.tree_bit.blockapi.data.IDataValue;
 import com.tree_bit.blockapi.entities.FormatText;
 import com.tree_bit.blockapi.entities.SignEntity;
 import com.tree_bit.blockapi.entities.GenericTileEntity;
-import com.tree_bit.rcdl.blocks.dv.IDataValueEnum;
 import com.tree_bit.rcdl.blocks.dv.Orientation16;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -34,11 +34,11 @@ public class StandingSign extends BlockData {
         super(SignEntity.empty(), Orientation16.N);
     }
 
-    private StandingSign(final @NonNull IDataValueEnum[] values) {
+    private StandingSign(final @NonNull IDataValue[] values) {
         super(SignEntity.empty(), validateDV(values, Orientation16.class));
     }
 
-    private StandingSign(final @NonNull IDataValueEnum[] values, final GenericTileEntity entity) {
+    private StandingSign(final @NonNull IDataValue[] values, final GenericTileEntity entity) {
         super(entity, validateDV(values, Orientation16.class));
     }
 

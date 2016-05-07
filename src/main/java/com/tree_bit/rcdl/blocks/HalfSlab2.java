@@ -1,6 +1,6 @@
 package com.tree_bit.rcdl.blocks;
 
-import com.tree_bit.rcdl.blocks.dv.IDataValueEnum;
+import com.tree_bit.blockapi.data.IDataValue;
 import com.tree_bit.rcdl.blocks.dv.SlabPosition;
 import com.tree_bit.rcdl.blocks.dv.SlabType2;
 
@@ -39,7 +39,7 @@ public final class HalfSlab2 extends BlockData {
         super(SlabType2.RED_SANDSTONE, SlabPosition.DOWN);
     }
 
-    private HalfSlab2(final @NonNull IDataValueEnum[] values) {
+    private HalfSlab2(final @NonNull IDataValue[] values) {
         super(validateDV(values, SlabType2.class, SlabPosition.class));
     }
 

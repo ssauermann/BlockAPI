@@ -1,7 +1,7 @@
 package com.tree_bit.rcdl.blocks;
 
 import com.google.common.math.IntMath;
-import com.tree_bit.rcdl.blocks.dv.IDataValueEnum;
+import com.tree_bit.blockapi.data.IDataValue;
 import com.tree_bit.rcdl.blocks.dv.IOrientationEnum;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -117,7 +117,7 @@ public final class Torch extends BlockData {
         super(orientation);
     }
 
-    private Torch(final @NonNull IDataValueEnum[] values) {
+    private Torch(final @NonNull IDataValue[] values) {
         super(validateDV(values, TorchOrientation.class));
     }
 

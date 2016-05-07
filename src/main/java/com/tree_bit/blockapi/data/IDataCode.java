@@ -19,34 +19,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.tree_bit.blockapi.internal;
+package com.tree_bit.blockapi.data;
 
-import org.immutables.value.Value;
-import org.immutables.value.Value.Style.ImplementationVisibility;
-
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.util.Optional;
 
 /**
- * My immutable style
+ * Defining methods a class representing data code strings has to implement.
  */
-@Target({ElementType.PACKAGE, ElementType.TYPE})
-// Make it class retention for incremental compilation
-@Retention(RetentionPolicy.CLASS)
+public interface IDataCode {
 
-@Value.Style(get = {"is*", "get*"},
-        // 'Abstract' prefix will be detected and trimmed
-        typeAbstract = {"_*",},
-        // No prefix or suffix for generated immutable type
-        typeImmutable = "*",
-        // Generated class will be always public
-        visibility = ImplementationVisibility.PUBLIC, init = "*",
-        // Remove trailing s characters
-        depluralize = true,
+    /**
+     * Returns the data code of this setting.
+     *
+     * @return Data code string
+     */
+    String getDC();
 
-        defaults = @Value.Immutable(copy = true))
-public @interface BlockApiStyle {
-    // Nothing to do here
+    /**
+     * Gets the data code object by the code.
+     *
+     * @param dc data code
+     * @return data code object
+     */
+    Optional<? extends IDataCode> byDC(final String dc);
 }

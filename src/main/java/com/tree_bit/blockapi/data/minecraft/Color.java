@@ -1,9 +1,13 @@
-package com.tree_bit.rcdl.blocks.dv;
+package com.tree_bit.blockapi.data.minecraft;
+
+import com.tree_bit.blockapi.data.IColor;
+
+import java.util.Optional;
 
 /**
- * Representing the Minecraft colors.
+ * Representing the 16 Minecraft colors.
  */
-public enum Color implements IDataValueEnum {
+public enum Color implements IColor {
     /** White */
     White(0),
     /** Orange */
@@ -44,22 +48,17 @@ public enum Color implements IDataValueEnum {
     }
 
     @Override
-    public int getDataValue() {
+    public int getDV() {
         return this.value;
     }
 
-    /**
-     * Gets this color by id.
-     *
-     * @param id Color id
-     * @return matching color or this
-     */
-    public Color byID(final int id) {
+    @Override
+    public Optional<Color> byDV(final int id) {
         for (final Color e : values()) {
-            if (e.getDataValue() == id) {
-                return e;
+            if (e.getDV() == id) {
+                return Optional.of(e);
             }
         }
-        return this;
+        return Optional.empty();
     }
 }

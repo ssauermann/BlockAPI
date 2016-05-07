@@ -1,7 +1,7 @@
 package com.tree_bit.rcdl.blocks;
 
-import com.tree_bit.rcdl.blocks.dv.Color;
-import com.tree_bit.rcdl.blocks.dv.IDataValueEnum;
+import com.tree_bit.blockapi.data.IDataValue;
+import com.tree_bit.blockapi.data.minecraft.Color;
 
 import org.eclipse.jdt.annotation.NonNull;
 
@@ -41,7 +41,7 @@ public final class ColorBlock extends BlockData {
         super(Color.White);
     }
 
-    private ColorBlock(final @NonNull IDataValueEnum[] values) {
+    private ColorBlock(final @NonNull IDataValue[] values) {
         super(validateDV(values, Color.class));
     }
 

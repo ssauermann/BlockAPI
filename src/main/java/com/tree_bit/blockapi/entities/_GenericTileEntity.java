@@ -19,34 +19,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.tree_bit.blockapi.internal;
+package com.tree_bit.blockapi.entities;
 
-import org.immutables.value.Value;
-import org.immutables.value.Value.Style.ImplementationVisibility;
+import com.tree_bit.blockapi.nbt.tags.CompoundTag;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import org.immutables.value.Value.Derived;
+import org.immutables.value.Value.Immutable;
+import org.immutables.value.Value.Parameter;
+
 
 /**
- * My immutable style
+ * Representing a generic TileEntity that isn't represented by any other class.
  */
-@Target({ElementType.PACKAGE, ElementType.TYPE})
-// Make it class retention for incremental compilation
-@Retention(RetentionPolicy.CLASS)
+@Immutable
+public abstract class _GenericTileEntity implements TileEntity {
 
-@Value.Style(get = {"is*", "get*"},
-        // 'Abstract' prefix will be detected and trimmed
-        typeAbstract = {"_*",},
-        // No prefix or suffix for generated immutable type
-        typeImmutable = "*",
-        // Generated class will be always public
-        visibility = ImplementationVisibility.PUBLIC, init = "*",
-        // Remove trailing s characters
-        depluralize = true,
+    @Override
+    @Parameter(order = 1)
+    public abstract CompoundTag compound();
 
-        defaults = @Value.Immutable(copy = true))
-public @interface BlockApiStyle {
-    // Nothing to do here
+    @Override
+    @Derived
+    public String id() {
+        return this.compound().getName();
+    }
+
 }

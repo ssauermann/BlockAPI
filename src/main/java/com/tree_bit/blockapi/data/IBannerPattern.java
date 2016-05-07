@@ -19,34 +19,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.tree_bit.blockapi.internal;
+package com.tree_bit.blockapi.data;
 
-import org.immutables.value.Value;
-import org.immutables.value.Value.Style.ImplementationVisibility;
+import com.tree_bit.blockapi.data.minecraft.BannerPattern;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.util.Optional;
 
 /**
- * My immutable style
+ * Interface for banner pattern.
+ *
+ * @see BannerPattern Minecraft banner pattern
  */
-@Target({ElementType.PACKAGE, ElementType.TYPE})
-// Make it class retention for incremental compilation
-@Retention(RetentionPolicy.CLASS)
+public interface IBannerPattern extends IDataCode {
 
-@Value.Style(get = {"is*", "get*"},
-        // 'Abstract' prefix will be detected and trimmed
-        typeAbstract = {"_*",},
-        // No prefix or suffix for generated immutable type
-        typeImmutable = "*",
-        // Generated class will be always public
-        visibility = ImplementationVisibility.PUBLIC, init = "*",
-        // Remove trailing s characters
-        depluralize = true,
+    /**
+     * Gets the code of this banner pattern.
+     */
+    @Override
+    String getDC();
 
-        defaults = @Value.Immutable(copy = true))
-public @interface BlockApiStyle {
-    // Nothing to do here
+    /**
+     * Gets the banner pattern by code.
+     *
+     * @param dc data code
+     * @return banner pattern
+     */
+    @Override
+    Optional<? extends IBannerPattern> byDC(String dc);
 }

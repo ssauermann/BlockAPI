@@ -1,10 +1,11 @@
 package com.tree_bit.rcdl.blocks.dv;
 
+import com.tree_bit.blockapi.data.IDataValue;
 
 /**
  * Texture types of slabs. (Type 2)
  */
-public enum SlabType2 implements IDataValueEnum {
+public enum SlabType2 implements IDataValue {
     /** Red Sandstone */
     RED_SANDSTONE(0);
 

@@ -19,34 +19,45 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.tree_bit.blockapi.internal;
+package com.tree_bit.blockapi.data.minecraft;
 
-import org.immutables.value.Value;
-import org.immutables.value.Value.Style.ImplementationVisibility;
+import com.tree_bit.blockapi.data.ISlot;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.util.Optional;
 
 /**
- * My immutable style
+ * Slots of a brewing stand.
  */
-@Target({ElementType.PACKAGE, ElementType.TYPE})
-// Make it class retention for incremental compilation
-@Retention(RetentionPolicy.CLASS)
+public enum CauldronSlot implements ISlot {
+    /** Left potion slot */
+    Left(0),
+    /** Middle potion slot */
+    Middle(1),
+    /** Right potion slot */
+    Right(2),
+    /** Ingredient slot */
+    Ingredient(3),
+    /** Fuel slot */
+    Fuel(4);
 
-@Value.Style(get = {"is*", "get*"},
-        // 'Abstract' prefix will be detected and trimmed
-        typeAbstract = {"_*",},
-        // No prefix or suffix for generated immutable type
-        typeImmutable = "*",
-        // Generated class will be always public
-        visibility = ImplementationVisibility.PUBLIC, init = "*",
-        // Remove trailing s characters
-        depluralize = true,
+    private int slot;
 
-        defaults = @Value.Immutable(copy = true))
-public @interface BlockApiStyle {
-    // Nothing to do here
+    CauldronSlot(final int slot) {
+        this.slot = slot;
+    }
+
+    @Override
+    public int getDV() {
+        return this.slot;
+    }
+
+    @Override
+    public Optional<CauldronSlot> byDV(final int dv) {
+        for (final CauldronSlot e : values()) {
+            if (e.getDV() == this.slot) {
+                return Optional.of(e);
+            }
+        }
+        return Optional.empty();
+    }
 }

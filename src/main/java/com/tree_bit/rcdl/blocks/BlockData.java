@@ -5,8 +5,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import com.google.common.base.Joiner;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableSet;
+import com.tree_bit.blockapi.data.IDataValue;
 import com.tree_bit.blockapi.entities.TileEntity;
-import com.tree_bit.rcdl.blocks.dv.IDataValueEnum;
 import com.tree_bit.rcdl.blocks.dv.IOrientationEnum;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -57,7 +57,7 @@ public abstract class BlockData {
         }
     }
 
-    private final SingleInstanceSet<IDataValueEnum> data;
+    private final SingleInstanceSet<IDataValue> data;
 
     @Nullable
     private final TileEntity entity;
@@ -73,16 +73,16 @@ public abstract class BlockData {
      * <p>
      * Child classes have to have a constructor without parameters which returns
      * a default Data object. Additional a constructor which accepts an
-     * {@link IDataValueEnum} array has to exist. The validity of the array
+     * {@link IDataValue} array has to exist. The validity of the array
      * should be checked by
-     * {@link #validateDV(IDataValueEnum[], Class, Class...)}. A default
+     * {@link #validateDV(IDataValue[], Class, Class...)}. A default
      * instance of each class should be registered at the
      * {@link BlockDataFactory}
      *
      * @param entity Tile entity
      * @param data Data values
      */
-    protected BlockData(@Nullable final TileEntity entity, final Set<IDataValueEnum> data) {
+    protected BlockData(@Nullable final TileEntity entity, final Set<IDataValue> data) {
         this.data = SingleInstanceSet.copyOf(data, IOrientationEnum.class);
         this.entity = entity;
     }
@@ -97,15 +97,15 @@ public abstract class BlockData {
      * <p>
      * Child classes have to have a constructor without parameters which returns
      * a default Data object. Additional a constructor which accepts an
-     * {@link IDataValueEnum} array has to exist. The validity of the array
+     * {@link IDataValue} array has to exist. The validity of the array
      * should be checked by
-     * {@link #validateDV(IDataValueEnum[], Class, Class...)}. A default
+     * {@link #validateDV(IDataValue[], Class, Class...)}. A default
      * instance of each class should be registered at the
      * {@link BlockDataFactory}
      *
      * @param data Data values
      */
-    protected BlockData(final Set<IDataValueEnum> data) {
+    protected BlockData(final Set<IDataValue> data) {
         this(null, data);
     }
 
@@ -119,15 +119,15 @@ public abstract class BlockData {
      * <p>
      * Child classes have to have a constructor without parameters which returns
      * a default Data object. Additional a constructor which accepts an
-     * {@link IDataValueEnum} array has to exist. The validity of the array
+     * {@link IDataValue} array has to exist. The validity of the array
      * should be checked by
-     * {@link #validateDV(IDataValueEnum[], Class, Class...)}. A default
+     * {@link #validateDV(IDataValue[], Class, Class...)}. A default
      * instance of each class should be registered at the
      * {@link BlockDataFactory}
      *
      * @param data Data values
      */
-    protected BlockData(final @NonNull IDataValueEnum... data) {
+    protected BlockData(final @NonNull IDataValue... data) {
         this(null, data);
     }
 
@@ -142,16 +142,16 @@ public abstract class BlockData {
      * <p>
      * Child classes have to have a constructor without parameters which returns
      * a default Data object. Additional a constructor which accepts an
-     * {@link IDataValueEnum} array has to exist. The validity of the array
+     * {@link IDataValue} array has to exist. The validity of the array
      * should be checked by
-     * {@link #validateDV(IDataValueEnum[], Class, Class...)}. A default
+     * {@link #validateDV(IDataValue[], Class, Class...)}. A default
      * instance of each class should be registered at the
      * {@link BlockDataFactory}
      *
      * @param entity Tile entity
      * @param data Data values
      */
-    protected BlockData(@Nullable final TileEntity entity, final @NonNull IDataValueEnum... data) {
+    protected BlockData(@Nullable final TileEntity entity, final @NonNull IDataValue... data) {
         this.data = SingleInstanceSet.copyOf(Arrays.asList(data), IOrientationEnum.class);
         this.entity = entity;
     }
@@ -205,7 +205,7 @@ public abstract class BlockData {
      *
      * @return Map containing all data of the block
      */
-    public final SingleInstanceSet<IDataValueEnum> getData() {
+    public final SingleInstanceSet<IDataValue> getData() {
         return SingleInstanceSet.copyOf(this.data.asSet());
     }
 
@@ -233,8 +233,8 @@ public abstract class BlockData {
      * @param data New data value
      * @return BlockData instance with the changed data values.
      */
-    final BlockData setData(final IDataValueEnum data) {
-        final SingleInstanceSet<IDataValueEnum> newData = this.getData();
+    final BlockData setData(final IDataValue data) {
+        final SingleInstanceSet<IDataValue> newData = this.getData();
         // Exclude Orientation.NONE
         if (data instanceof Orientation) {
             return this;
@@ -253,7 +253,7 @@ public abstract class BlockData {
      */
     final int getDataValue() {
         int sum = 0;
-        for (final IDataValueEnum data : this.getData()) {
+        for (final IDataValue data : this.getData()) {
             sum += data.getDataValue();
         }
         return sum;
@@ -284,18 +284,18 @@ public abstract class BlockData {
      */
     @SafeVarargs
     @NonNull
-    protected static IDataValueEnum[] validateDV(final @NonNull IDataValueEnum[] data, final Class<? extends @NonNull IDataValueEnum> clas,
-            final @NonNull Class<? extends IDataValueEnum>... classes) {
+    protected static IDataValue[] validateDV(final @NonNull IDataValue[] data, final Class<? extends com.tree_bit.blockapi.data.IDataValue> clas,
+            final @NonNull Class<? extends IDataValue>... classes) {
 
-        final Set<Class<? extends IDataValueEnum>> clazzes = new HashSet<>();
+        final Set<Class<? extends IDataValue>> clazzes = new HashSet<>();
         clazzes.add(clas);
         clazzes.addAll(Arrays.asList(classes));
         if (data.length != clazzes.size()) {
             throw new IllegalArgumentException("The amount of given data values has to match the number of classes. Given: " + Arrays.toString(data)
                     + " Expected: " + clazzes.toString());
         }
-        outer: for (final IDataValueEnum dv : data) {
-            for (final Class<? extends IDataValueEnum> clazz : clazzes) {
+        outer: for (final IDataValue dv : data) {
+            for (final Class<? extends IDataValue> clazz : clazzes) {
                 if (dv.getClass() == clazz) {
                     continue outer;
                 }
