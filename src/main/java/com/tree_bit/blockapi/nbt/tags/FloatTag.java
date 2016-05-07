@@ -26,7 +26,6 @@ import org.immutables.value.Value.Immutable;
 /**
  * NBT FloatTag
  */
-@TagStyle
 @Immutable
 public abstract class FloatTag implements Tag<Float> {
 

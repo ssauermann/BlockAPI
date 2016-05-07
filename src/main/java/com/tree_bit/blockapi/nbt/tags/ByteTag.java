@@ -26,7 +26,6 @@ import org.immutables.value.Value.Immutable;
 /**
  * NBT ByteTag
  */
-@TagStyle
 @Immutable
 public abstract class ByteTag implements Tag<Byte> {
 

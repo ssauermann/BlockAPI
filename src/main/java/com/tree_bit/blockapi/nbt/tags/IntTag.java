@@ -26,7 +26,6 @@ import org.immutables.value.Value.Immutable;
 /**
  * NBT IntTag
  */
-@TagStyle
 @Immutable
 public abstract class IntTag implements Tag<Integer> {
 
@@ -37,7 +36,7 @@ public abstract class IntTag implements Tag<Integer> {
 
     /**
      * Construct a new immutable {@code IntTag} instance.
-     * 
+     *
      * @param name The value for the {@code name} attribute
      * @param value The value for the {@code value} attribute
      * @return An immutable IntTag instance

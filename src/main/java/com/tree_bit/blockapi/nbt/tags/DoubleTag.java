@@ -26,7 +26,6 @@ import org.immutables.value.Value.Immutable;
 /**
  * NBT DoubleTag
  */
-@TagStyle
 @Immutable
 public abstract class DoubleTag implements Tag<Double> {
 

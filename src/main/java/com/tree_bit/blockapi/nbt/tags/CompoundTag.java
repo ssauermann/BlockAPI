@@ -30,7 +30,6 @@ import java.util.Map;
 /**
  * NBT CompoundTag
  */
-@TagStyle
 @Immutable
 public abstract class CompoundTag implements Tag<Map<String, ? extends Tag<?>>> {
 

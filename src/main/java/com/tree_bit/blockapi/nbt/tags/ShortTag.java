@@ -26,7 +26,6 @@ import org.immutables.value.Value.Immutable;
 /**
  * NBT ShortTag
  */
-@TagStyle
 @Immutable
 public abstract class ShortTag implements Tag<Short> {
 
@@ -37,7 +36,7 @@ public abstract class ShortTag implements Tag<Short> {
 
     /**
      * Construct a new immutable {@code ShortTag} instance.
-     * 
+     *
      * @param name The value for the {@code name} attribute
      * @param value The value for the {@code value} attribute
      * @return An immutable ShortTag instance

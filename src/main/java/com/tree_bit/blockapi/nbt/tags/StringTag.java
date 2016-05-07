@@ -26,7 +26,6 @@ import org.immutables.value.Value.Immutable;
 /**
  * NBT StringTag
  */
-@TagStyle
 @Immutable
 public abstract class StringTag implements Tag<String> {
 

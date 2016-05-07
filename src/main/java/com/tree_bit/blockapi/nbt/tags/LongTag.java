@@ -26,7 +26,6 @@ import org.immutables.value.Value.Immutable;
 /**
  * NBT LongTag
  */
-@TagStyle
 @Immutable
 public abstract class LongTag implements Tag<Long> {
 
@@ -37,7 +36,7 @@ public abstract class LongTag implements Tag<Long> {
 
     /**
      * Construct a new immutable {@code LongTag} instance.
-     * 
+     *
      * @param name The value for the {@code name} attribute
      * @param value The value for the {@code value} attribute
      * @return An immutable LongTag instance

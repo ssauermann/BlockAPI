@@ -29,7 +29,6 @@ import org.immutables.value.Value.Immutable;
 /**
  * NBT EndTag
  */
-@TagStyle
 @Immutable(singleton = true)
 public abstract class EndTag implements Tag<Null> {
 
@@ -49,8 +48,10 @@ public abstract class EndTag implements Tag<Null> {
     public org.jnbt.Tag unwrap() {
         return new org.jnbt.EndTag();
     }
+
     /**
      * Returns the default immutable singleton value of {@code EndTag}
+     * 
      * @return An immutable instance of EndTag
      */
     public static EndTag of() {

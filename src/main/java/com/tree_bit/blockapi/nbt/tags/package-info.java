@@ -23,6 +23,7 @@
  * Wrapper classes for used NBT framework.
  */
 @NonNullByDefault
+@TagStyle
 package com.tree_bit.blockapi.nbt.tags;
 
 import org.eclipse.jdt.annotation.NonNullByDefault;
