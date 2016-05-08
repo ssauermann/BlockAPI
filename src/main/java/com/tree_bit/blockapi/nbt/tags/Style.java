@@ -41,6 +41,6 @@ import java.lang.annotation.Target;
         depluralize = true,
         // No builder, no copy
         defaults = @Value.Immutable(copy = false, builder = false))
-@interface TagStyle {
+@interface Style {
     // Nothing to do here
 }

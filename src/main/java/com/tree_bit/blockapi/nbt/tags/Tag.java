@@ -28,7 +28,7 @@ import com.google.common.collect.Maps;
 import com.tree_bit.blockapi.nbt.NBT;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.immutables.value.Value;
+import org.immutables.value.Value.Parameter;
 
 import java.util.List;
 
@@ -45,7 +45,7 @@ public interface Tag<@NonNull T> {
      *
      * @return The name of this tag
      */
-    @Value.Parameter(order = 1)
+    @Parameter(order = 1)
     String getName();
 
     /**
@@ -53,7 +53,7 @@ public interface Tag<@NonNull T> {
      *
      * @return The value of this tag
      */
-    @Value.Parameter(order = 2)
+    @Parameter(order = 2)
     @NonNull
     T getValue();
 
