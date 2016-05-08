@@ -29,7 +29,6 @@ import com.tree_bit.blockapi.nbt.tags.CompoundTag;
 import com.tree_bit.blockapi.nbt.tags.Tag;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -148,7 +147,17 @@ public class CompoundBuilder extends NBTBuilder<Tag<?>> {
     }
 
     @Override
+    public CompoundBuilder ByteArray(final String name, final Optional<byte[]> value) {
+        return (CompoundBuilder) super.ByteArray(name, value);
+    }
+
+    @Override
     public CompoundBuilder Byte(final String name, final byte value) {
+        return (CompoundBuilder) super.Byte(name, value);
+    }
+
+    @Override
+    public CompoundBuilder Byte(final String name, final Optional<Byte> value) {
         return (CompoundBuilder) super.Byte(name, value);
     }
 
@@ -158,7 +167,17 @@ public class CompoundBuilder extends NBTBuilder<Tag<?>> {
     }
 
     @Override
+    public CompoundBuilder Compound(final String name, final Optional<Map<String, Tag<?>>> value) {
+        return (CompoundBuilder) super.Compound(name, value);
+    }
+
+    @Override
     public CompoundBuilder Double(final String name, final double value) {
+        return (CompoundBuilder) super.Double(name, value);
+    }
+
+    @Override
+    public CompoundBuilder Double(final String name, final Optional<Double> value) {
         return (CompoundBuilder) super.Double(name, value);
     }
 
@@ -167,9 +186,13 @@ public class CompoundBuilder extends NBTBuilder<Tag<?>> {
         return (CompoundBuilder) super.End();
     }
 
-
     @Override
     public CompoundBuilder Float(final String name, final float value) {
+        return (CompoundBuilder) super.Float(name, value);
+    }
+
+    @Override
+    public CompoundBuilder Float(final String name, final Optional<Float> value) {
         return (CompoundBuilder) super.Float(name, value);
     }
 
@@ -179,7 +202,17 @@ public class CompoundBuilder extends NBTBuilder<Tag<?>> {
     }
 
     @Override
+    public CompoundBuilder IntArray(final String name, final Optional<int[]> value) {
+        return (CompoundBuilder) super.IntArray(name, value);
+    }
+
+    @Override
     public CompoundBuilder Int(final String name, final int value) {
+        return (CompoundBuilder) super.Int(name, value);
+    }
+
+    @Override
+    public CompoundBuilder Int(final String name, final Optional<Integer> value) {
         return (CompoundBuilder) super.Int(name, value);
     }
 
@@ -188,12 +221,20 @@ public class CompoundBuilder extends NBTBuilder<Tag<?>> {
         return (CompoundBuilder) super.List(name, type, value);
     }
 
+    @Override
+    public <X extends Tag<?>> CompoundBuilder List(final String name, final Class<X> type, final Optional<java.util.List<? extends X>> value) {
+        return (CompoundBuilder) super.List(name, type, value);
+    }
 
     @Override
     public CompoundBuilder Long(final String name, final long value) {
         return (CompoundBuilder) super.Long(name, value);
     }
 
+    @Override
+    public CompoundBuilder Long(final String name, final Optional<Long> value) {
+        return (CompoundBuilder) super.Long(name, value);
+    }
 
     @Override
     public CompoundBuilder Short(final String name, final short value) {
@@ -201,7 +242,17 @@ public class CompoundBuilder extends NBTBuilder<Tag<?>> {
     }
 
     @Override
-    public CompoundBuilder String(final String name, final @Nullable String value) {
+    public CompoundBuilder Short(final String name, final Optional<Short> value) {
+        return (CompoundBuilder) super.Short(name, value);
+    }
+
+    @Override
+    public CompoundBuilder String(final String name, final String value) {
+        return (CompoundBuilder) super.String(name, value);
+    }
+
+    @Override
+    public CompoundBuilder String(final String name, final Optional<String> value) {
         return (CompoundBuilder) super.String(name, value);
     }
 }

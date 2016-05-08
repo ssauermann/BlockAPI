@@ -156,6 +156,21 @@ public abstract class NBTBuilder<T extends Tag<?>> {
     }
 
     /**
+     * Creates a byte array tag. If no value is present, no tag will be added.
+     *
+     * @param name The name
+     * @param value The value array
+     *
+     * @return Builder
+     */
+    public NBTBuilder<T> ByteArray(final String name, final Optional<byte[]> value) {
+        if (value.isPresent()) {
+            return this.ByteArray(name, value.get());
+        }
+        return this;
+    }
+
+    /**
      * Creates a byte tag.
      *
      * @param name The name
@@ -165,6 +180,21 @@ public abstract class NBTBuilder<T extends Tag<?>> {
      */
     public NBTBuilder<T> Byte(final String name, final byte value) {
         return this.addTag(NBT.Byte(name, value));
+    }
+
+    /**
+     * Creates a byte tag. If no value is present, no tag will be added.
+     *
+     * @param name The name
+     * @param value The value
+     *
+     * @return Builder
+     */
+    public NBTBuilder<T> Byte(final String name, final Optional<Byte> value) {
+        if (value.isPresent()) {
+            return this.Byte(name, value.get());
+        }
+        return this;
     }
 
     /**
@@ -180,6 +210,21 @@ public abstract class NBTBuilder<T extends Tag<?>> {
     }
 
     /**
+     * Creates a compound tag. If no value is present, no tag will be added.
+     *
+     * @param name The name
+     * @param value The map with subtags
+     *
+     * @return Builder
+     */
+    public NBTBuilder<T> Compound(final String name, final Optional<Map<String, Tag<?>>> value) {
+        if (value.isPresent()) {
+            return this.Compound(name, value.get());
+        }
+        return this;
+    }
+
+    /**
      * Creates a double tag.
      *
      * @param name The name
@@ -189,6 +234,21 @@ public abstract class NBTBuilder<T extends Tag<?>> {
      */
     public NBTBuilder<T> Double(final String name, final double value) {
         return this.addTag(NBT.Double(name, value));
+    }
+
+    /**
+     * Creates a double tag. If no value is present, no tag will be added.
+     *
+     * @param name The name
+     * @param value The value
+     *
+     * @return Builder
+     */
+    public NBTBuilder<T> Double(final String name, final Optional<Double> value) {
+        if (value.isPresent()) {
+            return this.Double(name, value.get());
+        }
+        return this;
     }
 
     /**
@@ -213,6 +273,21 @@ public abstract class NBTBuilder<T extends Tag<?>> {
     }
 
     /**
+     * Creates a float tag. If no value is present, no tag will be added.
+     *
+     * @param name The name
+     * @param value The value
+     *
+     * @return Builder
+     */
+    public NBTBuilder<T> Float(final String name, final Optional<Float> value) {
+        if (value.isPresent()) {
+            return this.Float(name, value.get());
+        }
+        return this;
+    }
+
+    /**
      * Creates an int array tag.
      *
      * @param name The name
@@ -225,6 +300,21 @@ public abstract class NBTBuilder<T extends Tag<?>> {
     }
 
     /**
+     * Creates an int array tag. If no value is present, no tag will be added.
+     *
+     * @param name The name
+     * @param value The value array
+     *
+     * @return Builder
+     */
+    public NBTBuilder<T> IntArray(final String name, final Optional<int[]> value) {
+        if (value.isPresent()) {
+            return this.IntArray(name, value.get());
+        }
+        return this;
+    }
+
+    /**
      * Creates an int tag.
      *
      * @param name The name
@@ -234,6 +324,21 @@ public abstract class NBTBuilder<T extends Tag<?>> {
      */
     public NBTBuilder<T> Int(final String name, final int value) {
         return this.addTag(NBT.Int(name, value));
+    }
+
+    /**
+     * Creates an int tag. If no value is present, no tag will be added.
+     *
+     * @param name The name
+     * @param value The value
+     *
+     * @return Builder
+     */
+    public NBTBuilder<T> Int(final String name, final Optional<Integer> value) {
+        if (value.isPresent()) {
+            return this.Int(name, value.get());
+        }
+        return this;
     }
 
     /**
@@ -250,6 +355,22 @@ public abstract class NBTBuilder<T extends Tag<?>> {
     }
 
     /**
+     * Creates a list tag. If no value is present, no tag will be added.
+     *
+     * @param name The name
+     * @param type The type of item in the list
+     * @param value The list
+     *
+     * @return Builder
+     */
+    public <X extends Tag<?>> NBTBuilder<T> List(final String name, final Class<X> type, final Optional<java.util.List<? extends X>> value) {
+        if (value.isPresent()) {
+            return this.List(name, type, value.get());
+        }
+        return this;
+    }
+
+    /**
      * Creates a long tag.
      *
      * @param name The name
@@ -259,6 +380,21 @@ public abstract class NBTBuilder<T extends Tag<?>> {
      */
     public NBTBuilder<T> Long(final String name, final long value) {
         return this.addTag(NBT.Long(name, value));
+    }
+
+    /**
+     * Creates a long tag. If no value is present, no tag will be added.
+     *
+     * @param name The name
+     * @param value The value
+     *
+     * @return Builder
+     */
+    public NBTBuilder<T> Long(final String name, final Optional<Long> value) {
+        if (value.isPresent()) {
+            return this.Long(name, value.get());
+        }
+        return this;
     }
 
     /**
@@ -274,16 +410,43 @@ public abstract class NBTBuilder<T extends Tag<?>> {
     }
 
     /**
-     * Creates a string tag. If the string is null, no tag will be added.
+     * Creates a short tag. If no value is present, no tag will be added.
      *
      * @param name The name
      * @param value The value
      *
      * @return Builder
      */
-    public NBTBuilder<T> String(final String name, @Nullable final String value) {
-        if (value != null) {
-            return this.addTag(NBT.String(name, value));
+    public NBTBuilder<T> Short(final String name, final Optional<Short> value) {
+        if (value.isPresent()) {
+            return this.Short(name, value.get());
+        }
+        return this;
+    }
+
+    /**
+     * Creates a string tag.
+     *
+     * @param name The name
+     * @param value The value
+     *
+     * @return Builder
+     */
+    public NBTBuilder<T> String(final String name, final String value) {
+        return this.addTag(NBT.String(name, value));
+    }
+
+    /**
+     * Creates a string tag. If no value is present, no tag will be added.
+     *
+     * @param name The name
+     * @param value The value
+     *
+     * @return Builder
+     */
+    public NBTBuilder<T> String(final String name, final Optional<String> value) {
+        if (value.isPresent()) {
+            return this.String(name, value.get());
         }
         return this;
     }

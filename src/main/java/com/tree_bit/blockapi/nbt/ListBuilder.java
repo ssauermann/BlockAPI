@@ -27,8 +27,6 @@ import com.google.common.collect.ImmutableList;
 import com.tree_bit.blockapi.nbt.tags.ListTag;
 import com.tree_bit.blockapi.nbt.tags.Tag;
 
-import org.eclipse.jdt.annotation.Nullable;
-
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Map;
@@ -153,7 +151,17 @@ public class ListBuilder<T extends Tag<?>> extends NBTBuilder<T> {
     }
 
     @Override
+    public ListBuilder<T> ByteArray(final String name, final Optional<byte[]> value) {
+        return (ListBuilder<T>) super.ByteArray(name, value);
+    }
+
+    @Override
     public ListBuilder<T> Byte(final String name, final byte value) {
+        return (ListBuilder<T>) super.Byte(name, value);
+    }
+
+    @Override
+    public ListBuilder<T> Byte(final String name, final Optional<Byte> value) {
         return (ListBuilder<T>) super.Byte(name, value);
     }
 
@@ -163,7 +171,17 @@ public class ListBuilder<T extends Tag<?>> extends NBTBuilder<T> {
     }
 
     @Override
+    public ListBuilder<T> Compound(final String name, final Optional<Map<String, Tag<?>>> value) {
+        return (ListBuilder<T>) super.Compound(name, value);
+    }
+
+    @Override
     public ListBuilder<T> Double(final String name, final double value) {
+        return (ListBuilder<T>) super.Double(name, value);
+    }
+
+    @Override
+    public ListBuilder<T> Double(final String name, final Optional<Double> value) {
         return (ListBuilder<T>) super.Double(name, value);
     }
 
@@ -172,9 +190,13 @@ public class ListBuilder<T extends Tag<?>> extends NBTBuilder<T> {
         return (ListBuilder<T>) super.End();
     }
 
-
     @Override
     public ListBuilder<T> Float(final String name, final float value) {
+        return (ListBuilder<T>) super.Float(name, value);
+    }
+
+    @Override
+    public ListBuilder<T> Float(final String name, final Optional<Float> value) {
         return (ListBuilder<T>) super.Float(name, value);
     }
 
@@ -184,7 +206,17 @@ public class ListBuilder<T extends Tag<?>> extends NBTBuilder<T> {
     }
 
     @Override
+    public ListBuilder<T> IntArray(final String name, final Optional<int[]> value) {
+        return (ListBuilder<T>) super.IntArray(name, value);
+    }
+
+    @Override
     public ListBuilder<T> Int(final String name, final int value) {
+        return (ListBuilder<T>) super.Int(name, value);
+    }
+
+    @Override
+    public ListBuilder<T> Int(final String name, final Optional<Integer> value) {
         return (ListBuilder<T>) super.Int(name, value);
     }
 
@@ -193,12 +225,20 @@ public class ListBuilder<T extends Tag<?>> extends NBTBuilder<T> {
         return (ListBuilder<T>) super.List(name, type, value);
     }
 
+    @Override
+    public <X extends Tag<?>> ListBuilder<T> List(final String name, final Class<X> type, final Optional<java.util.List<? extends X>> value) {
+        return (ListBuilder<T>) super.List(name, type, value);
+    }
 
     @Override
     public ListBuilder<T> Long(final String name, final long value) {
         return (ListBuilder<T>) super.Long(name, value);
     }
 
+    @Override
+    public ListBuilder<T> Long(final String name, final Optional<Long> value) {
+        return (ListBuilder<T>) super.Long(name, value);
+    }
 
     @Override
     public ListBuilder<T> Short(final String name, final short value) {
@@ -206,7 +246,17 @@ public class ListBuilder<T extends Tag<?>> extends NBTBuilder<T> {
     }
 
     @Override
-    public ListBuilder<T> String(final String name, final @Nullable String value) {
+    public ListBuilder<T> Short(final String name, final Optional<Short> value) {
+        return (ListBuilder<T>) super.Short(name, value);
+    }
+
+    @Override
+    public ListBuilder<T> String(final String name, final String value) {
+        return (ListBuilder<T>) super.String(name, value);
+    }
+
+    @Override
+    public ListBuilder<T> String(final String name, final Optional<String> value) {
         return (ListBuilder<T>) super.String(name, value);
     }
 
