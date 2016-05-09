@@ -19,12 +19,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-/**
- * Classes giving access to Minecraft entities.
- */
-@NonNullByDefault
-@Style
 package com.tree_bit.blockapi.entities;
 
-import org.eclipse.jdt.annotation.NonNullByDefault;
 
+/**
+ * Helper class for conversions of booleans.
+ */
+final class BooleanHelper {
+
+    private BooleanHelper() {}
+
+    /**
+     * Convert a boolean to a byte (0 or 1).
+     *
+     * @param b boolean value
+     * @return 0 for false, 1 for true
+     */
+    public static byte toByte(final boolean b) {
+        if (b) {
+            return 1;
+        }
+        return 0;
+    }
+
+    /**
+     * Convert a byte to a boolean.
+     *
+     * @param b byte value
+     * @return false for 0, else true
+     */
+    public static boolean fromByte(final byte b) {
+        if (b == 0) {
+            return false;
+        }
+        return true;
+    }
+
+}

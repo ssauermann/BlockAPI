@@ -24,6 +24,7 @@ package com.tree_bit.blockapi.nbt;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableCollection;
+import com.google.common.collect.Lists;
 import com.tree_bit.blockapi.nbt.tags.Tag;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -32,6 +33,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
 
 /**
  * Superclass of NBT tag builders.
@@ -62,7 +64,9 @@ public abstract class NBTBuilder<T extends Tag<?>> {
      * @throws NullPointerException if the given tag has a null value as its
      *         name
      */
-    public abstract NBTBuilder<T> add(final T tag);
+    public NBTBuilder<T> add(final T tag) {
+        return this.addTag(tag);
+    }
 
     /**
      * Adds a new tag to this collection tag if it is present . An existing tag
@@ -82,6 +86,27 @@ public abstract class NBTBuilder<T extends Tag<?>> {
     }
 
     /**
+     * Adds a new tag to the collection tag if the value is present. An existing
+     * tag with the same name is replaced. The added tag will be computed by
+     * applying the given function to the inner value of the given optional.
+     *
+     * @param value optional witch may contain the value
+     * @param function function to apply if value is present to transform this
+     *        value into a Tag
+     * @return Builder for chaining
+     *
+     * @throws NullPointerException if one of the given tags has a null value as
+     *         its name
+     */
+    public <Y> NBTBuilder<T> add(final Optional<Y> value, final Function<? super Y, T> function) {
+        if (value.isPresent()) {
+            return this.add(function.apply(value.get()));
+        }
+        return this;
+    }
+
+
+    /**
      * Adds new tags to this collection tag. An existing tag with the same name
      * as one in the collection is replaced.
      *
@@ -91,7 +116,12 @@ public abstract class NBTBuilder<T extends Tag<?>> {
      * @throws NullPointerException if one of the given tags has a null value as
      *         its name
      */
-    public abstract NBTBuilder<T> addAll(final Collection<? extends T> tags);
+    public NBTBuilder<T> addAll(final Collection<? extends T> tags) {
+        for (final T tag : tags) {
+            this.add(tag);
+        }
+        return this;
+    }
 
     /**
      * Gets the name of this NBT tag.
@@ -352,6 +382,22 @@ public abstract class NBTBuilder<T extends Tag<?>> {
      */
     public <X extends Tag<?>> NBTBuilder<T> List(final String name, final Class<X> type, final java.util.List<? extends X> value) {
         return this.addTag(NBT.List(name, type, value));
+    }
+
+    /**
+     * Creates a list tag by transforming a list of another type.
+     *
+     * @param name The name
+     * @param type The type of item in the list
+     * @param value The list
+     * @param function function transforming the list values to tags
+     *
+     * @return Builder
+     */
+    public <Y, X extends Tag<?>> NBTBuilder<T> List(final String name, final Class<X> type, final java.util.List<Y> value,
+            final Function<? super Y, ? extends X> function) {
+        final java.util.List<? extends X> transformed = Lists.transform(value, function::apply);
+        return this.List(name, type, transformed);
     }
 
     /**

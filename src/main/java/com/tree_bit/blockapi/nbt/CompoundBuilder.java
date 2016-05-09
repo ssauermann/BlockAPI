@@ -34,6 +34,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
 
 /**
  * Builder for NBT Compound Tags
@@ -61,11 +62,11 @@ public class CompoundBuilder extends NBTBuilder<Tag<?>> {
      *
      * @throws NullPointerException if the given tag has a null value as its
      *         name
+     * @throws IllegalArgumentException if Tag type doens't match
      */
     @Override
     public CompoundBuilder add(final Tag<?> tag) {
-        this.tags.put(checkNotNull(tag.getName()), tag);
-        return this;
+        return (CompoundBuilder) super.add(tag);
     }
 
     /**
@@ -77,13 +78,29 @@ public class CompoundBuilder extends NBTBuilder<Tag<?>> {
      *
      * @throws NullPointerException if the given tag has a null value as its
      *         name
+     * @throws IllegalArgumentException if Tag type doens't match
      */
     @Override
     public CompoundBuilder add(final Optional<? extends Tag<?>> tag) {
-        if (tag.isPresent()) {
-            return this.add(tag.get());
-        }
-        return this;
+        return (CompoundBuilder) super.add(tag);
+    }
+
+    /**
+     * Adds a new tag to this compound tag if the value is present. An existing
+     * tag with the same name is replaced. The added tag will be computed by
+     * applying the given function to the inner value of the given optional.
+     *
+     * @param value optional witch may contain the value
+     * @param function function to apply if value is present to transform this
+     *        value into a Tag
+     * @return Builder for chaining
+     *
+     * @throws NullPointerException if one of the given tags has a null value as
+     *         its name
+     */
+    @Override
+    public <Y> CompoundBuilder add(final Optional<Y> value, final Function<? super Y, Tag<?>> function) {
+        return (CompoundBuilder) super.add(value, function);
     }
 
     /**
@@ -98,10 +115,7 @@ public class CompoundBuilder extends NBTBuilder<Tag<?>> {
      */
     @Override
     public CompoundBuilder addAll(final Collection<? extends @NonNull Tag<?>> tags) {
-        for (final Tag<?> tag : tags) {
-            this.add(tag);
-        }
-        return this;
+        return (CompoundBuilder) super.addAll(tags);
     }
 
     /**
@@ -224,6 +238,12 @@ public class CompoundBuilder extends NBTBuilder<Tag<?>> {
     @Override
     public <X extends Tag<?>> CompoundBuilder List(final String name, final Class<X> type, final Optional<java.util.List<? extends X>> value) {
         return (CompoundBuilder) super.List(name, type, value);
+    }
+
+    @Override
+    public <Y, X extends Tag<?>> CompoundBuilder List(final String name, final Class<X> type, final java.util.List<Y> value,
+            final Function<? super Y, ? extends X> function) {
+        return (CompoundBuilder) super.List(name, type, value, function);
     }
 
     @Override

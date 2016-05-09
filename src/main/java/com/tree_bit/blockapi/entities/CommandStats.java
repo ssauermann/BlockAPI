@@ -19,12 +19,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-/**
- * Classes giving access to Minecraft entities.
- */
-@NonNullByDefault
-@Style
 package com.tree_bit.blockapi.entities;
 
-import org.eclipse.jdt.annotation.NonNullByDefault;
+import com.tree_bit.blockapi.nbt.NBTData;
+import com.tree_bit.blockapi.nbt.tags.CompoundTag;
 
+
+/**
+ *
+ */
+public abstract class CommandStats implements NBTData {
+
+
+    @Override
+    public CompoundTag compound() {
+        // TODO
+    }
+
+}

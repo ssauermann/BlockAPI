@@ -19,12 +19,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.tree_bit.blockapi.id;
+
+
 /**
- * Classes giving access to Minecraft entities.
+ * Interface for classes which represent a minecraft dimension id.
  */
-@NonNullByDefault
-@Style
-package com.tree_bit.blockapi.entities;
+public interface IDimensionID extends ID {
 
-import org.eclipse.jdt.annotation.NonNullByDefault;
-
+    /**
+     * Returns the id of this dimension.
+     *
+     * @return id
+     */
+    @Override
+    int getID();
+}

@@ -19,12 +19,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-/**
- * Classes giving access to Minecraft entities.
- */
-@NonNullByDefault
-@Style
 package com.tree_bit.blockapi.entities;
 
-import org.eclipse.jdt.annotation.NonNullByDefault;
+import org.immutables.value.Value;
+import org.immutables.value.Value.Style.ImplementationVisibility;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+/**
+ * Style of generated immutable entities.
+ */
+@Target({ElementType.PACKAGE, ElementType.TYPE})
+@Retention(RetentionPolicy.CLASS)
+@Value.Style(typeImmutable = "Immutable*",
+        // Must be wrapped
+        visibility = ImplementationVisibility.PACKAGE,
+        // Depluralize
+        depluralize = true,
+        // With builder, with copy
+        defaults = @Value.Immutable(copy = true, builder = true))
+@interface Style {
+    // Nothing to do here
+}

@@ -19,12 +19,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.tree_bit.blockapi.id.minecraft;
+
+import com.google.common.base.MoreObjects;
+import com.tree_bit.blockapi.id.IDimensionID;
+
+import org.eclipse.jdt.annotation.NonNull;
+
 /**
- * Classes giving access to Minecraft entities.
+ * Mapping of dimension names to id's.
  */
-@NonNullByDefault
-@Style
-package com.tree_bit.blockapi.entities;
+public enum DimensionID implements IDimensionID {
+    /** The Nether */
+    Nether(-1),
+    /** The Overworld */
+    Overworld(0),
+    /** The End */
+    End(1);
 
-import org.eclipse.jdt.annotation.NonNullByDefault;
 
+    private int id;
+
+    DimensionID(final int id) {
+        this.id = id;
+    }
+
+    @Override
+    public int getID() {
+        return this.id;
+    }
+
+    @Override
+    public @NonNull String toString() {
+        return MoreObjects.toStringHelper(this).addValue(super.toString()).add("id", this.id).toString();
+    }
+}

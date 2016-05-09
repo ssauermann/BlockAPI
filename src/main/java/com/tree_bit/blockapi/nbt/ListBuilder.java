@@ -31,6 +31,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
 
 /**
  * Builder for NBT <code>ListTag</code>
@@ -63,11 +64,11 @@ public class ListBuilder<T extends Tag<?>> extends NBTBuilder<T> {
      *
      * @throws NullPointerException if the given tag has a null value as its
      *         name
+     * @throws IllegalArgumentException if Tag type doens't match
      */
     @Override
     public ListBuilder<T> add(final T tag) {
-        this.tags.add(tag);
-        return this;
+        return (ListBuilder<T>) super.add(tag);
     }
 
     /**
@@ -79,13 +80,29 @@ public class ListBuilder<T extends Tag<?>> extends NBTBuilder<T> {
      *
      * @throws NullPointerException if the given tag has a null value as its
      *         name
+     * @throws IllegalArgumentException if Tag type doens't match
      */
     @Override
     public ListBuilder<T> add(final Optional<? extends T> tag) {
-        if (tag.isPresent()) {
-            return this.add(tag.get());
-        }
-        return this;
+        return (ListBuilder<T>) super.add(tag);
+    }
+
+    /**
+     * Adds a new tag to this list tag if the value is present. An existing tag
+     * with the same name is replaced. The added tag will be computed by
+     * applying the given function to the inner value of the given optional.
+     *
+     * @param value optional witch may contain the value
+     * @param function function to apply if value is present to transform this
+     *        value into a Tag
+     * @return Builder for chaining
+     *
+     * @throws NullPointerException if one of the given tags has a null value as
+     *         its name
+     */
+    @Override
+    public <Y> ListBuilder<T> add(final Optional<Y> value, final Function<? super Y, T> function) {
+        return (ListBuilder<T>) super.add(value, function);
     }
 
     /**
@@ -100,10 +117,7 @@ public class ListBuilder<T extends Tag<?>> extends NBTBuilder<T> {
      */
     @Override
     public ListBuilder<T> addAll(final Collection<? extends T> tags) {
-        for (final T tag : tags) {
-            this.add(tag);
-        }
-        return this;
+        return (ListBuilder<T>) super.addAll(tags);
     }
 
     /**
@@ -228,6 +242,12 @@ public class ListBuilder<T extends Tag<?>> extends NBTBuilder<T> {
     @Override
     public <X extends Tag<?>> ListBuilder<T> List(final String name, final Class<X> type, final Optional<java.util.List<? extends X>> value) {
         return (ListBuilder<T>) super.List(name, type, value);
+    }
+
+    @Override
+    public <Y, X extends Tag<?>> ListBuilder<T> List(final String name, final Class<X> type, final java.util.List<Y> value,
+            final Function<? super Y, ? extends X> function) {
+        return (ListBuilder<T>) super.List(name, type, value, function);
     }
 
     @Override
