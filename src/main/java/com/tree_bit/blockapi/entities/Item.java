@@ -125,27 +125,6 @@ public abstract class Item implements Entity {
 
 
     /**
-     * Construct a new immutable {@code Item} instance.
-     *
-     * @param position The value for the {@code pos} attribute
-     * @param item The value for the {@code item} attribute
-     * @return An immutable Item instance
-     */
-    public static Item of(final Coordinates position, final InventoryItem item) {
-        return ImmutableItem.of(position, item);
-    }
-
-    /**
-     * Creates a builder for {@link Item Item}.
-     *
-     * @return A new ImmutableItem builder
-     */
-    public static Builder builder() {
-        return ImmutableItem.builder();
-    }
-
-
-    /**
      * Set to the name of the player who dropped the item, if dropped by a
      * player. Used by the "Diamonds to you!" achievement.
      *
@@ -164,6 +143,26 @@ public abstract class Item implements Entity {
     @Parameter(order = 1)
     public abstract InventoryItem item();
 
+
+    /**
+     * Construct a new immutable {@code Item} instance.
+     *
+     * @param position The value for the {@code pos} attribute
+     * @param item The value for the {@code item} attribute
+     * @return An immutable Item instance
+     */
+    public static Item of(final Coordinates position, final InventoryItem item) {
+        return ImmutableItem.of(position, item);
+    }
+
+    /**
+     * Creates a builder for {@link Item Item}.
+     *
+     * @return A new ImmutableItem builder
+     */
+    public static Builder builder() {
+        return ImmutableItem.builder();
+    }
 
     /**
      * Copy the current immutable object by setting a value for the
