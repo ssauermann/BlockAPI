@@ -167,11 +167,6 @@ public enum BiomeID implements IBiomeID {
         this.id = id;
     }
 
-    /**
-     * Returns the biome id.
-     *
-     * @return Biome id
-     */
     @Override
     public int getID() {
         return this.id;
