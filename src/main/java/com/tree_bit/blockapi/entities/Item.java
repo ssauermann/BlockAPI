@@ -244,7 +244,7 @@ public abstract class Item implements Entity {
      * instances.</em>
      */
     @NotThreadSafe
-    interface Builder extends Entity.Builder {
+    interface Builder extends Entity.Builder<Builder> {
 
         /**
          * Fill a builder with attribute values from the provided {@code Item}
@@ -335,6 +335,7 @@ public abstract class Item implements Entity {
          * @throws java.lang.IllegalStateException if any required attributes
          *         are missing
          */
+        @Override
         Item build();
 
     }

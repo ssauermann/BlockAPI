@@ -23,6 +23,8 @@ package com.tree_bit.blockapi.nbt;
 
 import com.tree_bit.blockapi.nbt.tags.CompoundTag;
 
+import org.immutables.value.Value.Derived;
+
 /**
  * A class which represents an NBT compound tag and can be represented as one.
  */
@@ -33,5 +35,6 @@ public interface NBTData {
      *
      * @return Compound tag
      */
+    @Derived
     public CompoundTag compound();
 }

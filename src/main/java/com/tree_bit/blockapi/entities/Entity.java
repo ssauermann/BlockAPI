@@ -38,6 +38,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import javax.annotation.concurrent.NotThreadSafe;
+
 
 /**
  * Tags common to all entities.
@@ -306,13 +308,557 @@ public interface Entity extends NBTData {
                 .build().getValue().values();
     }
 
-    public interface Builder {
-        // TODO
+    /**
+     * Entity builder
+     *
+     * @param <T> Recursive type for builder extension
+     */
+    @NotThreadSafe
+    public interface Builder<T extends Builder<T>> {
+
+        /**
+         * Fill a builder with attribute values from the provided
+         * {@code com.tree_bit.blockapi.entities.Entity} instance.
+         *
+         * @param instance The instance from which to copy values
+         * @return {@code this} builder for use in a chained invocation
+         */
+        T from(Entity instance);
+
+        /**
+         * Initializes the value for the {@link Entity#pos() pos} attribute.
+         *
+         * @param pos The value for pos
+         * @return {@code this} builder for use in a chained invocation
+         */
+        T pos(Coordinates pos);
+
+        /**
+         * Initializes the value for the {@link Entity#motion() motion}
+         * attribute.
+         * <p>
+         * <em>If not set, this attribute will have a default value as returned
+         * by the initializer of {@link Entity#motion() motion}.</em>
+         *
+         * @param motion The value for motion
+         * @return {@code this} builder for use in a chained invocation
+         */
+        T motion(Motion motion);
+
+        /**
+         * Initializes the value for the {@link Entity#rotation() rotation}
+         * attribute.
+         * <p>
+         * <em>If not set, this attribute will have a default value as returned
+         * by the initializer of {@link Entity#rotation() rotation}.</em>
+         *
+         * @param rotation The value for rotation
+         * @return {@code this} builder for use in a chained invocation
+         */
+        T rotation(Rotation rotation);
+
+        /**
+         * Initializes the value for the {@link Entity#fallDistance()
+         * fallDistance} attribute.
+         * <p>
+         * <em>If not set, this attribute will have a default value as returned
+         * by the initializer of {@link Entity#fallDistance()
+         * fallDistance}.</em>
+         *
+         * @param fallDistance The value for fallDistance
+         * @return {@code this} builder for use in a chained invocation
+         */
+        T fallDistance(float fallDistance);
+
+        /**
+         * Initializes the value for the {@link Entity#fire() fire} attribute.
+         * <p>
+         * <em>If not set, this attribute will have a default value as returned
+         * by the initializer of {@link Entity#fire() fire}.</em>
+         *
+         * @param fire The value for fire
+         * @return {@code this} builder for use in a chained invocation
+         */
+        T fire(short fire);
+
+        /**
+         * Initializes the value for the {@link Entity#air() air} attribute.
+         * <p>
+         * <em>If not set, this attribute will have a default value as returned
+         * by the initializer of {@link Entity#air() air}.</em>
+         *
+         * @param air The value for air
+         * @return {@code this} builder for use in a chained invocation
+         */
+        T air(short air);
+
+        /**
+         * Initializes the value for the {@link Entity#onGround() onGround}
+         * attribute.
+         * <p>
+         * <em>If not set, this attribute will have a default value as returned
+         * by the initializer of {@link Entity#onGround() onGround}.</em>
+         *
+         * @param onGround The value for onGround
+         * @return {@code this} builder for use in a chained invocation
+         */
+        T onGround(boolean onGround);
+
+        /**
+         * Initializes the optional value {@link Entity#dimension() dimension}
+         * to dimension.
+         *
+         * @param dimension The value for dimension
+         * @return {@code this} builder for chained invocation
+         */
+        T dimension(IDimensionID dimension);
+
+        /**
+         * Initializes the optional value {@link Entity#dimension() dimension}
+         * to dimension.
+         *
+         * @param dimension The value for dimension
+         * @return {@code this} builder for use in a chained invocation
+         */
+        T dimension(Optional<IDimensionID> dimension);
+
+        /**
+         * Initializes the optional value {@link Entity#uuidMost() uuidMost} to
+         * uuidMost.
+         *
+         * @param uuidMost The value for uuidMost
+         * @return {@code this} builder for chained invocation
+         */
+        T uuidMost(long uuidMost);
+
+        /**
+         * Initializes the optional value {@link Entity#uuidMost() uuidMost} to
+         * uuidMost.
+         *
+         * @param uuidMost The value for uuidMost
+         * @return {@code this} builder for use in a chained invocation
+         */
+        T uuidMost(Optional<Long> uuidMost);
+
+        /**
+         * Initializes the optional value {@link Entity#uuidLeast() uuidLeast}
+         * to uuidLeast.
+         *
+         * @param uuidLeast The value for uuidLeast
+         * @return {@code this} builder for chained invocation
+         */
+        T uuidLeast(long uuidLeast);
+
+        /**
+         * Initializes the optional value {@link Entity#uuidLeast() uuidLeast}
+         * to uuidLeast.
+         *
+         * @param uuidLeast The value for uuidLeast
+         * @return {@code this} builder for use in a chained invocation
+         */
+        T uuidLeast(Optional<Long> uuidLeast);
+
+        /**
+         * Initializes the optional value {@link Entity#uuid() uuid} to uuid.
+         *
+         * @param uuid The value for uuid
+         * @return {@code this} builder for chained invocation
+         */
+        T uuid(String uuid);
+
+        /**
+         * Initializes the optional value {@link Entity#uuid() uuid} to uuid.
+         *
+         * @param uuid The value for uuid
+         * @return {@code this} builder for use in a chained invocation
+         */
+        T uuid(Optional<String> uuid);
+
+        /**
+         * Initializes the optional value {@link Entity#customName() customName}
+         * to customName.
+         *
+         * @param customName The value for customName
+         * @return {@code this} builder for chained invocation
+         */
+        T customName(String customName);
+
+        /**
+         * Initializes the optional value {@link Entity#customName() customName}
+         * to customName.
+         *
+         * @param customName The value for customName
+         * @return {@code this} builder for use in a chained invocation
+         */
+        T customName(Optional<String> customName);
+
+        /**
+         * Initializes the optional value {@link Entity#riding() riding} to
+         * riding.
+         *
+         * @param riding The value for riding
+         * @return {@code this} builder for chained invocation
+         */
+        T riding(Entity riding);
+
+        /**
+         * Initializes the optional value {@link Entity#riding() riding} to
+         * riding.
+         *
+         * @param riding The value for riding
+         * @return {@code this} builder for use in a chained invocation
+         */
+        T riding(Optional<Entity> riding);
+
+        /**
+         * Adds one element to {@link Entity#passengers() passengers} list.
+         *
+         * @param element A passengers element
+         * @return {@code this} builder for use in a chained invocation
+         */
+        T addPassenger(Entity element);
+
+        /**
+         * Adds elements to {@link Entity#passengers() passengers} list.
+         *
+         * @param elements An array of passengers elements
+         * @return {@code this} builder for use in a chained invocation
+         */
+        T addPassenger(Entity... elements);
+
+        /**
+         * Sets or replaces all elements for {@link Entity#passengers()
+         * passengers} list.
+         *
+         * @param elements An iterable of passengers elements
+         * @return {@code this} builder for use in a chained invocation
+         */
+        T passengers(Iterable<? extends Entity> elements);
+
+        /**
+         * Adds elements to {@link Entity#passengers() passengers} list.
+         *
+         * @param elements An iterable of passengers elements
+         * @return {@code this} builder for use in a chained invocation
+         */
+        T addAllPassengers(Iterable<? extends Entity> elements);
+
+        /**
+         * Adds one element to {@link Entity#tags() tags} list.
+         *
+         * @param element A tags element
+         * @return {@code this} builder for use in a chained invocation
+         */
+        T addTag(String element);
+
+        /**
+         * Adds elements to {@link Entity#tags() tags} list.
+         *
+         * @param elements An array of tags elements
+         * @return {@code this} builder for use in a chained invocation
+         */
+        T addTag(String... elements);
+
+        /**
+         * Sets or replaces all elements for {@link Entity#tags() tags} list.
+         *
+         * @param elements An iterable of tags elements
+         * @return {@code this} builder for use in a chained invocation
+         */
+        T tags(Iterable<String> elements);
+
+        /**
+         * Adds elements to {@link Entity#tags() tags} list.
+         *
+         * @param elements An iterable of tags elements
+         * @return {@code this} builder for use in a chained invocation
+         */
+        T addAllTags(Iterable<String> elements);
+
+        /**
+         * Initializes the optional value {@link Entity#commandStats()
+         * commandStats} to commandStats.
+         *
+         * @param commandStats The value for commandStats
+         * @return {@code this} builder for chained invocation
+         */
+        T commandStats(CommandStats commandStats);
+
+        /**
+         * Initializes the optional value {@link Entity#commandStats()
+         * commandStats} to commandStats.
+         *
+         * @param commandStats The value for commandStats
+         * @return {@code this} builder for use in a chained invocation
+         */
+        T commandStats(Optional<CommandStats> commandStats);
 
 
-
+        /**
+         * Builds a new {@link Entity Entity}.
+         *
+         * @return An immutable instance of Entity
+         * @throws java.lang.IllegalStateException if any required attributes
+         *         are missing
+         */
         Entity build();
+
     }
 
+    /**
+     * Copy the current immutable object by setting a value for the
+     * {@link Entity#pos() pos} attribute. A shallow reference equality check is
+     * used to prevent copying of the same value by returning {@code this}.
+     *
+     * @param pos A new value for pos
+     * @return A modified copy of the {@code this} object
+     */
+    Entity withPos(Coordinates pos);
+
+    /**
+     * Copy the current immutable object by setting a value for the
+     * {@link Entity#air() air} attribute. A value equality check is used to
+     * prevent copying of the same value by returning {@code this}.
+     *
+     * @param air A new value for air
+     * @return A modified copy of the {@code this} object
+     */
+    Entity withAir(final short air);
+
+    /**
+     * Copy the current immutable object by setting a <i>present</i> value for
+     * the optional {@link Entity#commandStats() commandStats} attribute.
+     *
+     * @param value The value for commandStats
+     * @return A modified copy of {@code this} object
+     */
+    Entity withCommandStats(final CommandStats value);
+
+    /**
+     * Copy the current immutable object by setting an optional value for the
+     * {@link Entity#commandStats() commandStats} attribute. A shallow reference
+     * equality check is used on unboxed optional value to prevent copying of
+     * the same value by returning {@code this}.
+     *
+     * @param optional A value for commandStats
+     * @return A modified copy of {@code this} object
+     */
+    Entity withCommandStats(Optional<CommandStats> optional);
+
+    /**
+     * Copy the current immutable object by setting a <i>present</i> value for
+     * the optional {@link Entity#customName() customName} attribute.
+     *
+     * @param value The value for customName
+     * @return A modified copy of {@code this} object
+     */
+    Entity withCustomName(final String value);
+
+    /**
+     * Copy the current immutable object by setting an optional value for the
+     * {@link Entity#customName() customName} attribute. An equality check is
+     * used on inner nullable value to prevent copying of the same value by
+     * returning {@code this}.
+     *
+     * @param optional A value for customName
+     * @return A modified copy of {@code this} object
+     */
+    Entity withCustomName(Optional<String> optional);
+
+    /**
+     * Copy the current immutable object by setting a <i>present</i> value for
+     * the optional {@link Entity#dimension() dimension} attribute.
+     *
+     * @param value The value for dimension
+     * @return A modified copy of {@code this} object
+     */
+    Entity withDimension(final IDimensionID value);
+
+    /**
+     * Copy the current immutable object by setting an optional value for the
+     * {@link Entity#dimension() dimension} attribute. A shallow reference
+     * equality check is used on unboxed optional value to prevent copying of
+     * the same value by returning {@code this}.
+     *
+     * @param optional A value for dimension
+     * @return A modified copy of {@code this} object
+     */
+    Entity withDimension(Optional<IDimensionID> optional);
+
+    /**
+     * Copy the current immutable object by setting a value for the
+     * {@link Entity#fallDistance() fallDistance} attribute. A value strict bits
+     * equality used to prevent copying of the same value by returning
+     * {@code this}.
+     *
+     * @param fallDistance A new value for fallDistance
+     * @return A modified copy of the {@code this} object
+     */
+    Entity withFallDistance(final float fallDistance);
+
+    /**
+     * Copy the current immutable object by setting a value for the
+     * {@link Entity#fire() fire} attribute. A value equality check is used to
+     * prevent copying of the same value by returning {@code this}.
+     *
+     * @param fire A new value for fire
+     * @return A modified copy of the {@code this} object
+     */
+    Entity withFire(final short fire);
+
+    /**
+     * Copy the current immutable object by setting a value for the
+     * {@link Entity#motion() motion} attribute. A shallow reference equality
+     * check is used to prevent copying of the same value by returning
+     * {@code this}.
+     *
+     * @param motion A new value for motion
+     * @return A modified copy of the {@code this} object
+     */
+    Entity withMotion(Motion motion);
+
+    /**
+     * Copy the current immutable object by setting a value for the
+     * {@link Entity#onGround() onGround} attribute. A value equality check is
+     * used to prevent copying of the same value by returning {@code this}.
+     *
+     * @param onGround A new value for onGround
+     * @return A modified copy of the {@code this} object
+     */
+    Entity withOnGround(final boolean onGround);
+
+    /**
+     * Copy the current immutable object with elements that replace the content
+     * of {@link Entity#passengers() passengers}.
+     *
+     * @param elements The elements to set
+     * @return A modified copy of {@code this} object
+     */
+    Entity withPassengers(final Entity... elements);
+
+    /**
+     * Copy the current immutable object with elements that replace the content
+     * of {@link Entity#passengers() passengers}. A shallow reference equality
+     * check is used to prevent copying of the same value by returning
+     * {@code this}.
+     *
+     * @param elements An iterable of passengers elements to set
+     * @return A modified copy of {@code this} object
+     */
+    Entity withPassengers(final Iterable<? extends Entity> elements);
+
+    /**
+     * Copy the current immutable object by setting a <i>present</i> value for
+     * the optional {@link Entity#riding() riding} attribute.
+     *
+     * @param value The value for riding
+     * @return A modified copy of {@code this} object
+     */
+    @Deprecated
+    Entity withRiding(final Entity value);
+
+    /**
+     * Copy the current immutable object by setting an optional value for the
+     * {@link Entity#riding() riding} attribute. A shallow reference equality
+     * check is used on unboxed optional value to prevent copying of the same
+     * value by returning {@code this}.
+     *
+     * @param optional A value for riding
+     * @return A modified copy of {@code this} object
+     */
+    @Deprecated
+    Entity withRiding(Optional<Entity> optional);
+
+    /**
+     * Copy the current immutable object by setting a value for the
+     * {@link Entity#rotation() rotation} attribute. A shallow reference
+     * equality check is used to prevent copying of the same value by returning
+     * {@code this}.
+     *
+     * @param rotation A new value for rotation
+     * @return A modified copy of the {@code this} object
+     */
+    Entity withRotation(Rotation rotation);
+
+    /**
+     * Copy the current immutable object with elements that replace the content
+     * of {@link Entity#tags() tags}.
+     *
+     * @param elements The elements to set
+     * @return A modified copy of {@code this} object
+     */
+    Entity withTags(final String... elements);
+
+    /**
+     * Copy the current immutable object with elements that replace the content
+     * of {@link Entity#tags() tags}. A shallow reference equality check is used
+     * to prevent copying of the same value by returning {@code this}.
+     *
+     * @param elements An iterable of tags elements to set
+     * @return A modified copy of {@code this} object
+     */
+    Entity withTags(final Iterable<String> elements);
+
+    /**
+     * Copy the current immutable object by setting a <i>present</i> value for
+     * the optional {@link Entity#uuid() uuid} attribute.
+     *
+     * @param value The value for uuid
+     * @return A modified copy of {@code this} object
+     */
+    @Deprecated
+    Entity withUuid(final String value);
+
+    /**
+     * Copy the current immutable object by setting an optional value for the
+     * {@link Entity#uuid() uuid} attribute. An equality check is used on inner
+     * nullable value to prevent copying of the same value by returning
+     * {@code this}.
+     *
+     * @param optional A value for uuid
+     * @return A modified copy of {@code this} object
+     */
+    @Deprecated
+    Entity withUuid(Optional<String> optional);
+
+    /**
+     * Copy the current immutable object by setting a <i>present</i> value for
+     * the optional {@link Entity#uuidLeast() uuidLeast} attribute.
+     *
+     * @param value The value for uuidLeast
+     * @return A modified copy of {@code this} object
+     */
+    Entity withUuidLeast(final long value);
+
+    /**
+     * Copy the current immutable object by setting an optional value for the
+     * {@link Entity#uuidLeast() uuidLeast} attribute. An equality check is used
+     * on inner nullable value to prevent copying of the same value by returning
+     * {@code this}.
+     *
+     * @param optional A value for uuidLeast
+     * @return A modified copy of {@code this} object
+     */
+    Entity withUuidLeast(Optional<Long> optional);
+
+    /**
+     * Copy the current immutable object by setting a <i>present</i> value for
+     * the optional {@link Entity#uuidMost() uuidMost} attribute.
+     *
+     * @param value The value for uuidMost
+     * @return A modified copy of {@code this} object
+     */
+    Entity withUuidMost(long value);
+
+    /**
+     * Copy the current immutable object by setting an optional value for the
+     * {@link Entity#uuidMost() uuidMost} attribute. An equality check is used
+     * on inner nullable value to prevent copying of the same value by returning
+     * {@code this}.
+     *
+     * @param optional A value for uuidMost
+     * @return A modified copy of {@code this} object
+     */
+    Entity withUuidMost(Optional<Long> optional);
 
 }
