@@ -31,6 +31,7 @@ import java.util.Map;
  * NBT CompoundTag
  */
 @Immutable
+@ValueType(Map.class)
 public abstract class CompoundTag implements Tag<Map<String, ? extends Tag<?>>> {
 
     @Override

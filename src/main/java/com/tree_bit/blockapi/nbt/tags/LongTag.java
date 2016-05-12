@@ -27,6 +27,7 @@ import org.immutables.value.Value.Immutable;
  * NBT LongTag
  */
 @Immutable
+@ValueType(Long.class)
 public abstract class LongTag implements Tag<Long> {
 
     @Override

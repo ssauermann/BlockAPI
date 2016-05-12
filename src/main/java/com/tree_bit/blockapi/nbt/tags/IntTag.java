@@ -27,6 +27,7 @@ import org.immutables.value.Value.Immutable;
  * NBT IntTag
  */
 @Immutable
+@ValueType(Integer.class)
 public abstract class IntTag implements Tag<Integer> {
 
     @Override

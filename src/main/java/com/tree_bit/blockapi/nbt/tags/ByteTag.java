@@ -27,6 +27,7 @@ import org.immutables.value.Value.Immutable;
  * NBT ByteTag
  */
 @Immutable
+@ValueType(Byte.class)
 public abstract class ByteTag implements Tag<Byte> {
 
     @Override

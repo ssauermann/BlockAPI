@@ -27,6 +27,7 @@ import org.immutables.value.Value.Immutable;
  * NBT StringTag
  */
 @Immutable
+@ValueType(String.class)
 public abstract class StringTag implements Tag<String> {
 
     @Override

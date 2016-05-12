@@ -21,42 +21,26 @@
  */
 package com.tree_bit.blockapi.nbt.tags;
 
-import com.tree_bit.blockapi.internal.Null;
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-import org.immutables.value.Value.Derived;
-import org.immutables.value.Value.Immutable;
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
 
 /**
- * NBT EndTag
+ * Annotation for tags to have access to the inner type at runtime.
  */
-@Immutable(singleton = true)
-@ValueType(Null.class)
-public abstract class EndTag implements Tag<Null> {
-
-    @Override
-    @Derived
-    public String getName() {
-        return "";
-    }
-
-    @Override
-    @Derived
-    public Null getValue() {
-        return Null._null();
-    }
-
-    @Override
-    public org.jnbt.Tag unwrap() {
-        return new org.jnbt.EndTag();
-    }
+@Documented
+@Retention(RUNTIME)
+@Target(TYPE)
+public @interface ValueType {
 
     /**
-     * Returns the default immutable singleton value of {@code EndTag}
+     * Type of the inner value.
      *
-     * @return An immutable instance of EndTag
+     * @return type
      */
-    public static EndTag of() {
-        return ImmutableEndTag.of();
-    }
-
+    Class<?> value();
 }

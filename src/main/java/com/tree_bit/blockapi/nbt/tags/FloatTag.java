@@ -27,6 +27,7 @@ import org.immutables.value.Value.Immutable;
  * NBT FloatTag
  */
 @Immutable
+@ValueType(Float.class)
 public abstract class FloatTag implements Tag<Float> {
 
     @Override

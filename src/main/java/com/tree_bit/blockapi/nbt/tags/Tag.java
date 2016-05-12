@@ -27,7 +27,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.tree_bit.blockapi.nbt.NBT;
 
-import org.eclipse.jdt.annotation.NonNull;
 import org.immutables.value.Value.Parameter;
 
 import java.util.List;
@@ -38,7 +37,8 @@ import java.util.List;
  * @author Sascha Sauermann
  * @param <T> Content of this tag
  */
-public interface Tag<@NonNull T> {
+@ValueType(Object.class)
+public interface Tag<T> {
 
     /**
      * Gets the name of this tag.
@@ -54,7 +54,6 @@ public interface Tag<@NonNull T> {
      * @return The value of this tag
      */
     @Parameter(order = 2)
-    @NonNull
     T getValue();
 
     /**
@@ -158,7 +157,5 @@ public interface Tag<@NonNull T> {
         throw new IllegalArgumentException("Invalid tag instance");
 
     }
-
-
 
 }

@@ -27,6 +27,7 @@ import org.immutables.value.Value.Immutable;
  * NBT ShortTag
  */
 @Immutable
+@ValueType(Short.class)
 public abstract class ShortTag implements Tag<Short> {
 
     @Override

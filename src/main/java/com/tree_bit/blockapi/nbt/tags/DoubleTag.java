@@ -27,6 +27,7 @@ import org.immutables.value.Value.Immutable;
  * NBT DoubleTag
  */
 @Immutable
+@ValueType(Double.class)
 public abstract class DoubleTag implements Tag<Double> {
 
     @Override

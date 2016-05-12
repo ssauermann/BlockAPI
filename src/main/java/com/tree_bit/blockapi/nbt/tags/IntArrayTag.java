@@ -27,6 +27,7 @@ import org.immutables.value.Value.Immutable;
  * NBT IntArrayTag
  */
 @Immutable
+@ValueType(int[].class)
 public abstract class IntArrayTag implements Tag<int[]> {
 
     @Override

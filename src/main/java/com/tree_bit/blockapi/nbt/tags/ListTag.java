@@ -30,6 +30,7 @@ import java.util.List;
  *
  * @param <T> Content type
  */
+@ValueType(List.class)
 public abstract class ListTag<T extends Tag<?>> implements Tag<List<T>> {
 
     private final Class<? extends org.jnbt.Tag> clazz;
