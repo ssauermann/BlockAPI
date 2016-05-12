@@ -109,7 +109,7 @@ public interface Tag<@NonNull T> {
         }
 
         else if (org.jnbt.ByteTag.class.isInstance(tag)) {
-            return ByteTag.of(tag.getName(), (byte) tag.getValue());
+            return ByteTag.of(tag.getName(), (Byte) tag.getValue());
         }
 
         else if (org.jnbt.CompoundTag.class.isInstance(tag)) {
@@ -118,7 +118,7 @@ public interface Tag<@NonNull T> {
         }
 
         else if (org.jnbt.DoubleTag.class.isInstance(tag)) {
-            return DoubleTag.of(tag.getName(), (double) tag.getValue());
+            return DoubleTag.of(tag.getName(), (Double) tag.getValue());
         }
 
         else if (org.jnbt.EndTag.class.isInstance(tag)) {
@@ -126,7 +126,7 @@ public interface Tag<@NonNull T> {
         }
 
         else if (org.jnbt.FloatTag.class.isInstance(tag)) {
-            return FloatTag.of(tag.getName(), (float) tag.getValue());
+            return FloatTag.of(tag.getName(), (Float) tag.getValue());
         }
 
         else if (org.jnbt.IntArrayTag.class.isInstance(tag)) {
@@ -134,7 +134,7 @@ public interface Tag<@NonNull T> {
         }
 
         else if (org.jnbt.IntTag.class.isInstance(tag)) {
-            return (IntTag) (Tag<?>) IntTag.of(tag.getName(), (int) tag.getValue());
+            return IntTag.of(tag.getName(), (Integer) tag.getValue());
         }
 
         else if (org.jnbt.ListTag.class.isInstance(tag)) {
@@ -144,11 +144,11 @@ public interface Tag<@NonNull T> {
         }
 
         else if (org.jnbt.LongTag.class.isInstance(tag)) {
-            return LongTag.of(tag.getName(), (long) tag.getValue());
+            return LongTag.of(tag.getName(), (Long) tag.getValue());
         }
 
         else if (org.jnbt.ShortTag.class.isInstance(tag)) {
-            return ShortTag.of(tag.getName(), (short) tag.getValue());
+            return ShortTag.of(tag.getName(), (Short) tag.getValue());
         }
 
         else if (org.jnbt.StringTag.class.isInstance(tag)) {

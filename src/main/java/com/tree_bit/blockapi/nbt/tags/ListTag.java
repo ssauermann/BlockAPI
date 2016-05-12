@@ -111,6 +111,6 @@ public abstract class ListTag<T extends Tag<?>> implements Tag<List<T>> {
      * @return An immutable ListTag instance
      */
     public static <T extends Tag<?>> ListTag<T> of(final String name, final Class<T> clazz, final List<? extends T> value) {
-        return ListTag.of(name, clazz, value);
+        return ImmutableListTag.of(name, clazz, value);
     }
 }
