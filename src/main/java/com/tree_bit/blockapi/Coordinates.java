@@ -21,9 +21,9 @@
  */
 package com.tree_bit.blockapi;
 
-import com.tree_bit.blockapi.nbt.NBT;
+import com.tree_bit.blockapi.nbt.NBTList;
+import com.tree_bit.blockapi.nbt.NBTListData;
 import com.tree_bit.blockapi.nbt.tags.DoubleTag;
-import com.tree_bit.blockapi.nbt.tags.ListTag;
 
 import org.immutables.value.Value.Immutable;
 import org.immutables.value.Value.Parameter;
@@ -32,7 +32,12 @@ import org.immutables.value.Value.Parameter;
  * Coordinate triplet of doubles
  */
 @Immutable(builder = false, copy = false)
-public abstract class Coordinates {
+public abstract class Coordinates implements NBTListData<DoubleTag> {
+
+    @Override
+    public Class<DoubleTag> tagClass() {
+        return DoubleTag.class;
+    }
 
     /**
      * x-Coordinate
@@ -40,6 +45,7 @@ public abstract class Coordinates {
      * @return x
      */
     @Parameter(order = 1)
+    @NBTList(key = "X", order = 0)
     public abstract double x();
 
     /**
@@ -48,6 +54,7 @@ public abstract class Coordinates {
      * @return y
      */
     @Parameter(order = 2)
+    @NBTList(key = "Y", order = 1)
     public abstract double y();
 
     /**
@@ -56,17 +63,8 @@ public abstract class Coordinates {
      * @return z
      */
     @Parameter(order = 3)
+    @NBTList(key = "Z", order = 2)
     public abstract double z();
-
-    /**
-     * Returns the coordinates as a ListTag of DoubleTags.
-     * 
-     * @param name list name
-     * @return ListTag
-     */
-    public final ListTag<DoubleTag> asListTag(final String name) {
-        return NBT.List(name, DoubleTag.class).Double("X", this.x()).Double("Y", this.y()).Double("Z", this.z()).build();
-    }
 
     /**
      * Construct a new immutable {@code Coordinates} instance.

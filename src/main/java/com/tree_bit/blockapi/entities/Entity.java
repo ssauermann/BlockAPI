@@ -26,7 +26,7 @@ import com.tree_bit.blockapi.Motion;
 import com.tree_bit.blockapi.Rotation;
 import com.tree_bit.blockapi.id.IDimensionID;
 import com.tree_bit.blockapi.nbt.NBT;
-import com.tree_bit.blockapi.nbt.NBTData;
+import com.tree_bit.blockapi.nbt.NBTCompoundData;
 import com.tree_bit.blockapi.nbt.tags.CompoundTag;
 import com.tree_bit.blockapi.nbt.tags.StringTag;
 import com.tree_bit.blockapi.nbt.tags.Tag;
@@ -44,7 +44,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 /**
  * Tags common to all entities.
  */
-public interface Entity extends NBTData {
+public interface Entity extends NBTCompoundData {
 
     /**
      * Entity ID. This tag does not exist for the Player entity.
@@ -286,9 +286,9 @@ public interface Entity extends NBTData {
     default Collection<? extends Tag<?>> _entityTags() {
         return NBT.begin() //
                 .String("id", id()) //
-                .add(pos().asListTag("Pos")) //
-                .add(motion().asListTag("Motion")) //
-                .add(rotation().asListTag("Rotation")) //
+                // TODO .add(pos().asListTag("Pos")) //
+                // .add(motion().asListTag("Motion")) //
+                // .add(rotation().asListTag("Rotation")) //
                 .Float("FallDistance", fallDistance()) //
                 .Short("Fire", fire()) //
                 .Short("Air", air()) //

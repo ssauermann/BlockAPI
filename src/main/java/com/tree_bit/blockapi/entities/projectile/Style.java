@@ -19,23 +19,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.tree_bit.blockapi.entities;
+package com.tree_bit.blockapi.entities.projectile;
 
-import com.tree_bit.blockapi.nbt.NBT;
-import com.tree_bit.blockapi.nbt.NBTCompoundData;
-import com.tree_bit.blockapi.nbt.tags.CompoundTag;
+import org.immutables.value.Value;
+import org.immutables.value.Value.Style.ImplementationVisibility;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- *
+ * Style of generated immutable entities.
  */
-public abstract class CommandStats implements NBTCompoundData {
-
-
-    @Override
-    public CompoundTag compound() {
-        // TODO
-        return NBT.Compound("").build();
-    }
-
+@Target({ElementType.PACKAGE, ElementType.TYPE})
+@Retention(RetentionPolicy.CLASS)
+@Value.Style(typeImmutable = "Immutable*",
+        // Must be wrapped
+        visibility = ImplementationVisibility.PACKAGE,
+        // Depluralize
+        depluralize = true,
+        // With builder, with copy
+        defaults = @Value.Immutable(copy = true, builder = true))
+@interface Style {
+    // Nothing to do here
 }

@@ -21,9 +21,9 @@
  */
 package com.tree_bit.blockapi;
 
-import com.tree_bit.blockapi.nbt.NBT;
+import com.tree_bit.blockapi.nbt.NBTList;
+import com.tree_bit.blockapi.nbt.NBTListData;
 import com.tree_bit.blockapi.nbt.tags.DoubleTag;
-import com.tree_bit.blockapi.nbt.tags.ListTag;
 
 import org.immutables.value.Value.Immutable;
 import org.immutables.value.Value.Parameter;
@@ -32,7 +32,12 @@ import org.immutables.value.Value.Parameter;
  * Motion triplet of doubles
  */
 @Immutable(builder = false, copy = false)
-public abstract class Motion {
+public abstract class Motion implements NBTListData<DoubleTag> {
+
+    @Override
+    public Class<DoubleTag> tagClass() {
+        return DoubleTag.class;
+    }
 
     /**
      * dX velocity in meters per tick
@@ -40,6 +45,7 @@ public abstract class Motion {
      * @return dX
      */
     @Parameter(order = 1)
+    @NBTList(key = "dX", order = 0)
     public abstract double dX();
 
     /**
@@ -48,6 +54,7 @@ public abstract class Motion {
      * @return dY
      */
     @Parameter(order = 2)
+    @NBTList(key = "dY", order = 1)
     public abstract double dY();
 
     /**
@@ -56,17 +63,8 @@ public abstract class Motion {
      * @return dZ
      */
     @Parameter(order = 3)
+    @NBTList(key = "dZ", order = 2)
     public abstract double dZ();
-
-    /**
-     * Returns the motion as a ListTag of DoubleTags.
-     *
-     * @param name list name
-     * @return ListTag
-     */
-    public final ListTag<DoubleTag> asListTag(final String name) {
-        return NBT.List(name, DoubleTag.class).Double("dX", this.dX()).Double("dY", this.dY()).Double("dZ", this.dZ()).build();
-    }
 
     /**
      * Construct a new immutable {@code Motion} instance.

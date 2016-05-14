@@ -21,10 +21,50 @@
  */
 package com.tree_bit.blockapi.nbt;
 
+import com.tree_bit.blockapi.nbt.tags.ListTag;
+import com.tree_bit.blockapi.nbt.tags.Tag;
 
 /**
- * A class which represents any NBT tag and can be represented as one.
+ * A class which represents a NBT list tag and can be represented as one.
+ *
+ * @param <T> Type of list tag
  */
-public interface NBTData {
-    // empty
+public interface NBTListData<T extends Tag<?>> extends NBTData {
+
+    /**
+     * Get's the inner class type.
+     *
+     * @return Tag class
+     */
+    Class<T> tagClass();
+
+    /**
+     * Get's the list tag representing this object.
+     *
+     * <p>
+     * <i>The default implementation uses annotation processing for
+     * {@link NBTList} annotations to create the {@link ListTag}.</i>
+     *
+     * @param name Name of the list tag.
+     *
+     * @return List tag
+     */
+    default ListTag<T> list(final String name) {
+        return AnnotationProcessor.getList(name, this);
+    }
+
+    /**
+     * Get's the list tag representing this object with an empty String as name.
+     *
+     * <p>
+     * <i>The default implementation uses annotation processing for
+     * {@link NBTList} annotations to create the {@link ListTag}.</i>
+     *
+     * @return List tag
+     */
+    default ListTag<T> list() {
+        return list("");
+    }
+
+
 }

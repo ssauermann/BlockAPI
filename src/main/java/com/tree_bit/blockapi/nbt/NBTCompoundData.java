@@ -19,23 +19,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.tree_bit.blockapi.entities;
+package com.tree_bit.blockapi.nbt;
 
-import com.tree_bit.blockapi.nbt.NBT;
-import com.tree_bit.blockapi.nbt.NBTCompoundData;
 import com.tree_bit.blockapi.nbt.tags.CompoundTag;
 
-
 /**
- *
+ * A class which represents a NBT compound tag and can be represented as one.
  */
-public abstract class CommandStats implements NBTCompoundData {
+public interface NBTCompoundData extends NBTData {
 
-
-    @Override
-    public CompoundTag compound() {
-        // TODO
-        return NBT.Compound("").build();
+    /**
+     * Get's the compound tag representing this object with an empty string as
+     *
+     * <p>
+     * <i>The default implementation uses annotation processing for
+     * {@link NBTCompound} annotations to create the {@link CompoundTag}.</i>
+     * name.
+     *
+     * @return Compound tag
+     */
+    default CompoundTag compound() {
+        return compound("");
     }
 
+    /**
+     * Get's the compound tag representing this object.
+     *
+     * <p>
+     * <i>The default implementation uses annotation processing for
+     * {@link NBTCompound} annotations to create the {@link CompoundTag}.</i>
+     *
+     * @param name Tag name
+     *
+     * @return Compound tag
+     */
+    default CompoundTag compound(final String name) {
+        return AnnotationProcessor.getCompound(name, this);
+    }
 }

@@ -23,7 +23,7 @@ package com.tree_bit.blockapi.entities;
 
 import com.tree_bit.blockapi.id.minecraft.BlockID;
 import com.tree_bit.blockapi.nbt.NBT;
-import com.tree_bit.blockapi.nbt.NBTData;
+import com.tree_bit.blockapi.nbt.NBTCompoundData;
 import com.tree_bit.blockapi.nbt.tags.CompoundTag;
 
 import org.immutables.value.Value.Default;
@@ -41,7 +41,7 @@ import javax.annotation.concurrent.NotThreadSafe;
  */
 @Style
 @Immutable
-public abstract class InventoryItem implements NBTData {
+public abstract class InventoryItem implements NBTCompoundData {
 
     @Override
     @Lazy

@@ -23,9 +23,9 @@ package com.tree_bit.blockapi;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-import com.tree_bit.blockapi.nbt.NBT;
+import com.tree_bit.blockapi.nbt.NBTList;
+import com.tree_bit.blockapi.nbt.NBTListData;
 import com.tree_bit.blockapi.nbt.tags.DoubleTag;
-import com.tree_bit.blockapi.nbt.tags.ListTag;
 
 import org.immutables.value.Value.Immutable;
 import org.immutables.value.Value.Parameter;
@@ -34,7 +34,7 @@ import org.immutables.value.Value.Parameter;
  * Rotation pair of floats
  */
 @Immutable(builder = false, copy = false)
-public abstract class Rotation {
+public abstract class Rotation implements NBTListData<DoubleTag> {
 
     /**
      * Rotation clockwise around y axis. West is 0.
@@ -45,6 +45,7 @@ public abstract class Rotation {
      * @return yaw
      */
     @Parameter(order = 1)
+    @NBTList(key = "yaw", order = 0)
     public abstract float yaw();
 
     /**
@@ -56,17 +57,8 @@ public abstract class Rotation {
      * @return yaw
      */
     @Parameter(order = 2)
+    @NBTList(key = "pitch", order = 1)
     public abstract float pitch();
-
-    /**
-     * Returns the rotation as a ListTag of DoubleTags.
-     *
-     * @param name list name
-     * @return ListTag
-     */
-    public final ListTag<DoubleTag> asListTag(final String name) {
-        return NBT.List(name, DoubleTag.class).Double("yaw", this.yaw()).Double("pitch", this.pitch()).build();
-    }
 
     /**
      * Construct a new immutable {@code Rotation} instance.
