@@ -24,17 +24,26 @@ package com.tree_bit.blockapi.entities;
 import com.tree_bit.blockapi.Coordinates;
 import com.tree_bit.blockapi.Motion;
 import com.tree_bit.blockapi.Rotation;
+import com.tree_bit.blockapi.Version;
+import com.tree_bit.blockapi.id.ID;
 import com.tree_bit.blockapi.id.IDimensionID;
-import com.tree_bit.blockapi.nbt.NBT;
+import com.tree_bit.blockapi.nbt.NBTCompound;
+import com.tree_bit.blockapi.nbt.NBTCompound.Transformation;
 import com.tree_bit.blockapi.nbt.NBTCompoundData;
+import com.tree_bit.blockapi.nbt.NBTConverter;
+import com.tree_bit.blockapi.nbt.NBTVersion;
+import com.tree_bit.blockapi.nbt.tags.ByteTag;
 import com.tree_bit.blockapi.nbt.tags.CompoundTag;
+import com.tree_bit.blockapi.nbt.tags.FloatTag;
+import com.tree_bit.blockapi.nbt.tags.IntTag;
+import com.tree_bit.blockapi.nbt.tags.LongTag;
+import com.tree_bit.blockapi.nbt.tags.ShortTag;
 import com.tree_bit.blockapi.nbt.tags.StringTag;
-import com.tree_bit.blockapi.nbt.tags.Tag;
 
 import org.immutables.value.Value.Default;
+import org.immutables.value.Value.Lazy;
 import org.immutables.value.Value.Parameter;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,6 +55,12 @@ import javax.annotation.concurrent.NotThreadSafe;
  */
 public interface Entity extends NBTCompoundData {
 
+    @Override
+    @Lazy
+    public default CompoundTag compound() {
+        return compound(id());
+    }
+
     /**
      * Entity ID. This tag does not exist for the Player entity.
      * <p>
@@ -53,6 +68,7 @@ public interface Entity extends NBTCompoundData {
      *
      * @return entity id
      */
+    @NBTCompound(key = "id", tag = StringTag.class)
     String id();
 
     /**
@@ -61,6 +77,7 @@ public interface Entity extends NBTCompoundData {
      * @return position
      */
     @Parameter(order = 0)
+    @NBTCompound(key = "Pos", isNBTList = true)
     Coordinates pos();
 
     /**
@@ -70,6 +87,7 @@ public interface Entity extends NBTCompoundData {
      * @return motion
      */
     @Default
+    @NBTCompound(key = "Motion", isNBTList = true)
     default Motion motion() {
         return Motion.of(0, 0, 0);
     }
@@ -80,6 +98,7 @@ public interface Entity extends NBTCompoundData {
      * @return rotation
      */
     @Default
+    @NBTCompound(key = "Rotation", isNBTList = true)
     default Rotation rotation() {
         return Rotation.of(0, 0);
     }
@@ -91,6 +110,7 @@ public interface Entity extends NBTCompoundData {
      * @return fall distance
      */
     @Default
+    @NBTCompound(key = "FallDistance", tag = FloatTag.class)
     default float fallDistance() {
         return 0f;
     }
@@ -103,6 +123,7 @@ public interface Entity extends NBTCompoundData {
      * @return remaining fire time
      */
     @Default
+    @NBTCompound(key = "Fire", tag = ShortTag.class)
     default short fire() {
         return -20;
     }
@@ -117,6 +138,7 @@ public interface Entity extends NBTCompoundData {
      * @return remaining air time
      */
     @Default
+    @NBTCompound(key = "Air", tag = ShortTag.class)
     default short air() {
         return 0;
     }
@@ -127,6 +149,7 @@ public interface Entity extends NBTCompoundData {
      * @return on ground boolean
      */
     @Default
+    @NBTCompound(key = "OnGround", tag = ByteTag.class, converter = BooleanHelper.ToByte.class)
     default boolean onGround() {
         return false;
     }
@@ -138,6 +161,8 @@ public interface Entity extends NBTCompoundData {
      *
      * @return dimension object
      */
+    // TODO: Support for optional
+    @NBTCompound(key = "Dimension", tag = IntTag.class, converter = ID.ToInt.class, transformation = Transformation.OPTIONAL)
     Optional<IDimensionID> dimension();
 
     /**
@@ -151,6 +176,7 @@ public interface Entity extends NBTCompoundData {
      *
      * @return invulnerable boolean
      */
+    @NBTCompound(key = "Invulnerable", tag = ByteTag.class, converter = BooleanHelper.ToByte.class)
     default boolean invulnerable() {
         return false;
     }
@@ -162,6 +188,7 @@ public interface Entity extends NBTCompoundData {
      *
      * @return portal cooldown time
      */
+    @NBTCompound(key = "PortalCooldown", tag = IntTag.class)
     default int portalCooldown() {
         return 0;
     }
@@ -172,6 +199,7 @@ public interface Entity extends NBTCompoundData {
      *
      * @return UUID most
      */
+    @NBTCompound(key = "UUIDMost", tag = LongTag.class, transformation = Transformation.OPTIONAL)
     Optional<Long> uuidMost();
 
     /**
@@ -180,6 +208,7 @@ public interface Entity extends NBTCompoundData {
      *
      * @return UUID least
      */
+    @NBTCompound(key = "UUIDLeast", tag = LongTag.class, transformation = Transformation.OPTIONAL)
     Optional<Long> uuidLeast();
 
     /**
@@ -193,6 +222,7 @@ public interface Entity extends NBTCompoundData {
      * @return UUID
      */
     @Deprecated
+    @NBTCompound(key = "UUID", tag = StringTag.class, transformation = Transformation.OPTIONAL, version = @NBTVersion(max = Version.V1_8))
     Optional<String> uuid();
 
     /**
@@ -202,6 +232,7 @@ public interface Entity extends NBTCompoundData {
      *
      * @return custom name
      */
+    @NBTCompound(key = "CustomName", tag = StringTag.class, transformation = Transformation.OPTIONAL)
     Optional<String> customName();
 
     /**
@@ -212,6 +243,7 @@ public interface Entity extends NBTCompoundData {
      *
      * @return custom name visible boolean
      */
+    @NBTCompound(key = "CustomNameVisible", tag = ByteTag.class, converter = BooleanHelper.ToByte.class)
     default boolean customNameVisible() {
         return false;
     }
@@ -222,6 +254,7 @@ public interface Entity extends NBTCompoundData {
      *
      * @return silent boolean
      */
+    @NBTCompound(key = "Silent", tag = ByteTag.class, converter = BooleanHelper.ToByte.class)
     default boolean silent() {
         return false;
     }
@@ -237,6 +270,7 @@ public interface Entity extends NBTCompoundData {
      * @return riding entity
      */
     @Deprecated
+    @NBTCompound(key = "Riding", isNBTCompound = true, transformation = Transformation.OPTIONAL, version = @NBTVersion(max = Version.V1_8))
     Optional<Entity> riding();
 
     /**
@@ -244,8 +278,10 @@ public interface Entity extends NBTCompoundData {
      * and the topmost entity controls spawning conditions when created by a mob
      * spawner.
      *
+     * @since 1.9
      * @return passenger list
      */
+    @NBTCompound(key = "Passengers", isNBTCompound = true, transformation = Transformation.LIST, version = @NBTVersion(min = Version.V1_9))
     List<Entity> passengers();
 
     /**
@@ -253,6 +289,7 @@ public interface Entity extends NBTCompoundData {
      *
      * @return glowing boolean
      */
+    @NBTCompound(key = "Glowing", tag = ByteTag.class, converter = BooleanHelper.ToByte.class)
     default boolean glowing() {
         return false;
     }
@@ -262,6 +299,7 @@ public interface Entity extends NBTCompoundData {
      *
      * @return tag list
      */
+    @NBTCompound(key = "Tags", tag = StringTag.class, transformation = Transformation.LIST, converter = NBTConverter.OfString.class)
     List<String> tags();
 
     /**
@@ -270,43 +308,8 @@ public interface Entity extends NBTCompoundData {
      *
      * @return command stats
      */
+    @NBTCompound(key = "CommandStats", isNBTCompound = true, transformation = Transformation.OPTIONAL)
     Optional<CommandStats> commandStats();
-
-
-    /**
-     * Returns a collection of tags for this entity. This can be used to create
-     * a CompoundTag for a subclass of entity.
-     * <p>
-     * <b>Do not use outside of classes that implement this interface.</b>
-     *
-     * @return tag collection
-     */
-    // TODO What to do with the deprecated values? Optional version switch? Only
-    // support newest version?
-    default Collection<? extends Tag<?>> _entityTags() {
-        return NBT.begin() //
-                .String("id", id()) //
-                // TODO .add(pos().asListTag("Pos")) //
-                // .add(motion().asListTag("Motion")) //
-                // .add(rotation().asListTag("Rotation")) //
-                .Float("FallDistance", fallDistance()) //
-                .Short("Fire", fire()) //
-                .Short("Air", air()) //
-                .Byte("OnGround", BooleanHelper.toByte(onGround())) //
-                .add(dimension(), x -> NBT.Int("Dimension", x.getID())) //
-                .Byte("Invulnerable", BooleanHelper.toByte(invulnerable())) //
-                .Int("PortalCooldown", portalCooldown()) //
-                .Long("UUIDMost", uuidMost()) //
-                .Long("UUIDLeast", uuidLeast()) //
-                .String("UUID", uuid()) //
-                .String("CustomName", customName()) //
-                .Byte("CustomNameVisible", BooleanHelper.toByte(customNameVisible())) //
-                .Byte("Silent", BooleanHelper.toByte(silent())).add(riding(), Entity::compound) //
-                .List("Passengers", CompoundTag.class, passengers(), Entity::compound) //
-                .Byte("Glowing", BooleanHelper.toByte(glowing())) //
-                .List("Tags", StringTag.class, tags(), x -> StringTag.of("", x)) //
-                .build().getValue().values();
-    }
 
     /**
      * Entity builder
