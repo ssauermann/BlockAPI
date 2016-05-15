@@ -31,15 +31,34 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 
+/**
+ * Minecraft version in which this NBTTag is valid and will be added.
+ * <p>
+ * Both bounds are inclusive.
+ */
 @Documented
 @Retention(RUNTIME)
 @Target(TYPE)
-/**
- *
- */
 public @interface NBTVersion {
 
+    /**
+     * Only if minecraft version is greater (or equal) than this value the tag
+     * will be added.
+     *
+     * <p>
+     * <i>Default: {@link Version#EVERY}</i>
+     *
+     * @return Minimum version
+     */
     Version min() default Version.EVERY;
 
+    /**
+     * Only if minecraft version is less (or equal) than this value the tag will
+     * be added.
+     * <p>
+     * <i>Default: {@link Version#LATEST}</i>
+     *
+     * @return Maximum version
+     */
     Version max() default Version.LATEST;
 }

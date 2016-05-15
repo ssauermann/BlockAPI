@@ -74,7 +74,11 @@ public @interface NBTList {
      */
     Recursive recursive() default Recursive.NONE;
 
-    // TODO
+    /**
+     * Transform this value before applying the converter functions.
+     * 
+     * @return transformation
+     */
     Transformation transformation() default Transformation.NONE;
 
     /**

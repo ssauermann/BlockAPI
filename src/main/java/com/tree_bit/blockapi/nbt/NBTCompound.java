@@ -80,7 +80,11 @@ public @interface NBTCompound {
      */
     Tags tag();
 
-    // TODO
+    /**
+     * Transform this value before applying the converter functions.
+     *
+     * @return transformation
+     */
     Transformation transformation() default Transformation.NONE;
 
     /**
