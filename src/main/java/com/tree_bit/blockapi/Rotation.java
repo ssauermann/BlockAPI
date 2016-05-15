@@ -25,7 +25,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 import com.tree_bit.blockapi.nbt.NBTList;
 import com.tree_bit.blockapi.nbt.NBTListData;
-import com.tree_bit.blockapi.nbt.tags.DoubleTag;
+import com.tree_bit.blockapi.nbt.tags.FloatTag;
 
 import org.immutables.value.Value.Immutable;
 import org.immutables.value.Value.Parameter;
@@ -34,7 +34,13 @@ import org.immutables.value.Value.Parameter;
  * Rotation pair of floats
  */
 @Immutable(builder = false, copy = false)
-public abstract class Rotation implements NBTListData<DoubleTag> {
+public abstract class Rotation implements NBTListData<FloatTag> {
+
+    @Override
+    public Class<FloatTag> tagClass() {
+        return FloatTag.class;
+    }
+
 
     /**
      * Rotation clockwise around y axis. West is 0.
