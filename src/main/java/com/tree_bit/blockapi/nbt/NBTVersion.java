@@ -21,30 +21,25 @@
  */
 package com.tree_bit.blockapi.nbt;
 
-import com.tree_bit.blockapi.nbt.tags.CompoundTag;
-import com.tree_bit.blockapi.nbt.tags.StringTag;
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-import java.util.function.Function;
+import com.tree_bit.blockapi.Version;
 
-public final class NBTConverter {
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 
-    private NBTConverter() {}
 
-    public static class OfString implements Function<String, StringTag> {
+@Documented
+@Retention(RUNTIME)
+@Target(TYPE)
+/**
+ *
+ */
+public @interface NBTVersion {
 
-        @Override
-        public StringTag apply(final String t) {
-            return NBT.String("", t);
-        }
+    Version min() default Version.EVERY;
 
-    }
-
-    public static class OfCompound implements Function<NBTCompoundData, CompoundTag> {
-
-        @Override
-        public CompoundTag apply(final NBTCompoundData t) {
-            return t.compound();
-        }
-
-    }
+    Version max() default Version.LATEST;
 }

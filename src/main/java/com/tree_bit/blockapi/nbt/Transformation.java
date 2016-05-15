@@ -21,30 +21,24 @@
  */
 package com.tree_bit.blockapi.nbt;
 
-import com.tree_bit.blockapi.nbt.tags.CompoundTag;
-import com.tree_bit.blockapi.nbt.tags.StringTag;
 
-import java.util.function.Function;
-
-public final class NBTConverter {
-
-    private NBTConverter() {}
-
-    public static class OfString implements Function<String, StringTag> {
-
-        @Override
-        public StringTag apply(final String t) {
-            return NBT.String("", t);
-        }
-
-    }
-
-    public static class OfCompound implements Function<NBTCompoundData, CompoundTag> {
-
-        @Override
-        public CompoundTag apply(final NBTCompoundData t) {
-            return t.compound();
-        }
-
-    }
+/**
+ * Transformations before applying the converter (or NBT annotation
+ * processing).
+ */
+public enum Transformation {
+    /**
+     * Plain value is used for converter (or NBT annotation processing).
+     */
+    NONE,
+    /**
+     * Unpacking optional before applying converter (or NBT annotation
+     * processing). No tag is added if optional is empty.
+     */
+    OPTIONAL,
+    /**
+     * Convert to ListTag, converter (or NBT annotation processing) applies
+     * to every entry.
+     */
+    LIST
 }

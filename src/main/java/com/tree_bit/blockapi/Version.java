@@ -19,32 +19,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.tree_bit.blockapi.nbt;
+package com.tree_bit.blockapi;
 
-import com.tree_bit.blockapi.nbt.tags.CompoundTag;
-import com.tree_bit.blockapi.nbt.tags.StringTag;
 
-import java.util.function.Function;
-
-public final class NBTConverter {
-
-    private NBTConverter() {}
-
-    public static class OfString implements Function<String, StringTag> {
-
-        @Override
-        public StringTag apply(final String t) {
-            return NBT.String("", t);
-        }
-
-    }
-
-    public static class OfCompound implements Function<NBTCompoundData, CompoundTag> {
-
-        @Override
-        public CompoundTag apply(final NBTCompoundData t) {
-            return t.compound();
-        }
-
-    }
+/**
+ * Minecraft version, sorted from old to new.
+ */
+public enum Version {
+    /** Every version */
+    EVERY,
+    /** Release 1.7 */
+    V1_7,
+    /** Release 1.8 */
+    V1_8,
+    /** Release 1.9 */
+    V1_9,
+    /** Latest version */
+    LATEST
 }

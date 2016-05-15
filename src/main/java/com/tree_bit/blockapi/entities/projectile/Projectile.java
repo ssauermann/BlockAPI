@@ -24,9 +24,7 @@ package com.tree_bit.blockapi.entities.projectile;
 import com.tree_bit.blockapi.Coordinates;
 import com.tree_bit.blockapi.entities.Entity;
 import com.tree_bit.blockapi.nbt.NBTCompound;
-import com.tree_bit.blockapi.nbt.tags.CompoundTag;
-import com.tree_bit.blockapi.nbt.tags.ShortTag;
-import com.tree_bit.blockapi.nbt.tags.StringTag;
+import com.tree_bit.blockapi.nbt.NBTCompound.Tags;
 
 import org.immutables.value.Value.Immutable;
 import org.immutables.value.Value.Parameter;
@@ -34,12 +32,13 @@ import org.immutables.value.Value.Parameter;
 /**
  * Representing a projectile entity.
  */
+// TODO Remove
 @Immutable
 public interface Projectile extends Entity {
 
     @Override
     @Parameter(order = 0)
-    @NBTCompound(key = "pos", isNBTList = true)
+    @NBTCompound(key = "pos", tag = Tags.isNBTList)
     Coordinates pos();
 
     /**
@@ -48,7 +47,7 @@ public interface Projectile extends Entity {
      * @return x coordinate
      */
     @Parameter
-    @NBTCompound(key = "xTile", tag = ShortTag.class)
+    @NBTCompound(key = "xTile", tag = Tags.Short)
     short xTile();
 
     /**
@@ -57,7 +56,7 @@ public interface Projectile extends Entity {
      * @return y coordinate
      */
     @Parameter
-    @NBTCompound(key = "yTile", tag = ShortTag.class)
+    @NBTCompound(key = "yTile", tag = Tags.Short)
     short yTile();
 
     /**
@@ -66,7 +65,7 @@ public interface Projectile extends Entity {
      * @return z coordinate
      */
     @Parameter
-    @NBTCompound(key = "zTile", tag = ShortTag.class)
+    @NBTCompound(key = "zTile", tag = Tags.Short)
     short zTile();
 
     /**
@@ -75,20 +74,17 @@ public interface Projectile extends Entity {
      * @return alphabetical id
      */
     @Parameter
-    @NBTCompound(key = "inTile", tag = StringTag.class)
+    @NBTCompound(key = "inTile", tag = Tags.String)
     String inTile();
 
-    // TODO move in entity
-    @Override
-    public default CompoundTag compound() {
-        return compound(this.id());
-    }
-
+    // TODO Remove
     @Override
     default String id() {
         return "Name";
     }
 
+
+    // TODO Remove
     /**
      * Construct a new immutable {@code Projectile} instance.
      *

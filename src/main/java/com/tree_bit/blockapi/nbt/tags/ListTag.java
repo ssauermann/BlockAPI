@@ -114,4 +114,22 @@ public abstract class ListTag<T extends Tag<?>> implements Tag<List<T>> {
     public static <T extends Tag<?>> ListTag<T> of(final String name, final Class<T> clazz, final List<? extends T> value) {
         return ImmutableListTag.of(name, clazz, value);
     }
+
+    /**
+     * Construct a new immutable {@code ListTag} instance.
+     *
+     * <p>
+     * <i>Do use the of method with the class attribute if known. If value is
+     * empty this will be an ListTag of Tag<?>!</i>
+     *
+     * @param name The value for the {@code name} attribute
+     * @param value The value for the {@code value} attribute
+     * @return An immutable ListTag instance
+     */
+    @SuppressWarnings("unchecked")
+    public static <T extends Tag<?>> ListTag<T> of(final String name, final List<? extends T> value) {
+        @SuppressWarnings("rawtypes")
+        final Class<? extends Tag> clazz = value.isEmpty() ? Tag.class : value.get(0).getClass();
+        return ImmutableListTag.of(name, (Class<T>) clazz, value);
+    }
 }

@@ -28,17 +28,12 @@ import com.tree_bit.blockapi.Version;
 import com.tree_bit.blockapi.id.ID;
 import com.tree_bit.blockapi.id.IDimensionID;
 import com.tree_bit.blockapi.nbt.NBTCompound;
-import com.tree_bit.blockapi.nbt.NBTCompound.Transformation;
+import com.tree_bit.blockapi.nbt.NBTCompound.Tags;
 import com.tree_bit.blockapi.nbt.NBTCompoundData;
 import com.tree_bit.blockapi.nbt.NBTConverter;
 import com.tree_bit.blockapi.nbt.NBTVersion;
-import com.tree_bit.blockapi.nbt.tags.ByteTag;
+import com.tree_bit.blockapi.nbt.Transformation;
 import com.tree_bit.blockapi.nbt.tags.CompoundTag;
-import com.tree_bit.blockapi.nbt.tags.FloatTag;
-import com.tree_bit.blockapi.nbt.tags.IntTag;
-import com.tree_bit.blockapi.nbt.tags.LongTag;
-import com.tree_bit.blockapi.nbt.tags.ShortTag;
-import com.tree_bit.blockapi.nbt.tags.StringTag;
 
 import org.immutables.value.Value.Default;
 import org.immutables.value.Value.Lazy;
@@ -68,7 +63,7 @@ public interface Entity extends NBTCompoundData {
      *
      * @return entity id
      */
-    @NBTCompound(key = "id", tag = StringTag.class)
+    @NBTCompound(key = "id", tag = Tags.String)
     String id();
 
     /**
@@ -77,7 +72,7 @@ public interface Entity extends NBTCompoundData {
      * @return position
      */
     @Parameter(order = 0)
-    @NBTCompound(key = "Pos", isNBTList = true)
+    @NBTCompound(key = "Pos", tag = Tags.isNBTList)
     Coordinates pos();
 
     /**
@@ -87,7 +82,7 @@ public interface Entity extends NBTCompoundData {
      * @return motion
      */
     @Default
-    @NBTCompound(key = "Motion", isNBTList = true)
+    @NBTCompound(key = "Motion", tag = Tags.isNBTList)
     default Motion motion() {
         return Motion.of(0, 0, 0);
     }
@@ -98,7 +93,7 @@ public interface Entity extends NBTCompoundData {
      * @return rotation
      */
     @Default
-    @NBTCompound(key = "Rotation", isNBTList = true)
+    @NBTCompound(key = "Rotation", tag = Tags.isNBTList)
     default Rotation rotation() {
         return Rotation.of(0, 0);
     }
@@ -110,7 +105,7 @@ public interface Entity extends NBTCompoundData {
      * @return fall distance
      */
     @Default
-    @NBTCompound(key = "FallDistance", tag = FloatTag.class)
+    @NBTCompound(key = "FallDistance", tag = Tags.Float)
     default float fallDistance() {
         return 0f;
     }
@@ -123,7 +118,7 @@ public interface Entity extends NBTCompoundData {
      * @return remaining fire time
      */
     @Default
-    @NBTCompound(key = "Fire", tag = ShortTag.class)
+    @NBTCompound(key = "Fire", tag = Tags.Short)
     default short fire() {
         return -20;
     }
@@ -138,7 +133,7 @@ public interface Entity extends NBTCompoundData {
      * @return remaining air time
      */
     @Default
-    @NBTCompound(key = "Air", tag = ShortTag.class)
+    @NBTCompound(key = "Air", tag = Tags.Short)
     default short air() {
         return 0;
     }
@@ -149,7 +144,7 @@ public interface Entity extends NBTCompoundData {
      * @return on ground boolean
      */
     @Default
-    @NBTCompound(key = "OnGround", tag = ByteTag.class, converter = BooleanHelper.ToByte.class)
+    @NBTCompound(key = "OnGround", tag = Tags.Byte, converter = BooleanHelper.ToByte.class)
     default boolean onGround() {
         return false;
     }
@@ -161,8 +156,7 @@ public interface Entity extends NBTCompoundData {
      *
      * @return dimension object
      */
-    // TODO: Support for optional
-    @NBTCompound(key = "Dimension", tag = IntTag.class, converter = ID.ToInt.class, transformation = Transformation.OPTIONAL)
+    @NBTCompound(key = "Dimension", tag = Tags.Int, converter = ID.ToInt.class, transformation = Transformation.OPTIONAL)
     Optional<IDimensionID> dimension();
 
     /**
@@ -176,7 +170,7 @@ public interface Entity extends NBTCompoundData {
      *
      * @return invulnerable boolean
      */
-    @NBTCompound(key = "Invulnerable", tag = ByteTag.class, converter = BooleanHelper.ToByte.class)
+    @NBTCompound(key = "Invulnerable", tag = Tags.Byte, converter = BooleanHelper.ToByte.class)
     default boolean invulnerable() {
         return false;
     }
@@ -188,7 +182,7 @@ public interface Entity extends NBTCompoundData {
      *
      * @return portal cooldown time
      */
-    @NBTCompound(key = "PortalCooldown", tag = IntTag.class)
+    @NBTCompound(key = "PortalCooldown", tag = Tags.Int)
     default int portalCooldown() {
         return 0;
     }
@@ -199,7 +193,7 @@ public interface Entity extends NBTCompoundData {
      *
      * @return UUID most
      */
-    @NBTCompound(key = "UUIDMost", tag = LongTag.class, transformation = Transformation.OPTIONAL)
+    @NBTCompound(key = "UUIDMost", tag = Tags.Long, transformation = Transformation.OPTIONAL)
     Optional<Long> uuidMost();
 
     /**
@@ -208,7 +202,7 @@ public interface Entity extends NBTCompoundData {
      *
      * @return UUID least
      */
-    @NBTCompound(key = "UUIDLeast", tag = LongTag.class, transformation = Transformation.OPTIONAL)
+    @NBTCompound(key = "UUIDLeast", tag = Tags.Long, transformation = Transformation.OPTIONAL)
     Optional<Long> uuidLeast();
 
     /**
@@ -222,7 +216,7 @@ public interface Entity extends NBTCompoundData {
      * @return UUID
      */
     @Deprecated
-    @NBTCompound(key = "UUID", tag = StringTag.class, transformation = Transformation.OPTIONAL, version = @NBTVersion(max = Version.V1_8))
+    @NBTCompound(key = "UUID", tag = Tags.String, transformation = Transformation.OPTIONAL, version = @NBTVersion(max = Version.V1_8))
     Optional<String> uuid();
 
     /**
@@ -232,7 +226,7 @@ public interface Entity extends NBTCompoundData {
      *
      * @return custom name
      */
-    @NBTCompound(key = "CustomName", tag = StringTag.class, transformation = Transformation.OPTIONAL)
+    @NBTCompound(key = "CustomName", tag = Tags.String, transformation = Transformation.OPTIONAL)
     Optional<String> customName();
 
     /**
@@ -243,7 +237,7 @@ public interface Entity extends NBTCompoundData {
      *
      * @return custom name visible boolean
      */
-    @NBTCompound(key = "CustomNameVisible", tag = ByteTag.class, converter = BooleanHelper.ToByte.class)
+    @NBTCompound(key = "CustomNameVisible", tag = Tags.Byte, converter = BooleanHelper.ToByte.class)
     default boolean customNameVisible() {
         return false;
     }
@@ -254,7 +248,7 @@ public interface Entity extends NBTCompoundData {
      *
      * @return silent boolean
      */
-    @NBTCompound(key = "Silent", tag = ByteTag.class, converter = BooleanHelper.ToByte.class)
+    @NBTCompound(key = "Silent", tag = Tags.Byte, converter = BooleanHelper.ToByte.class)
     default boolean silent() {
         return false;
     }
@@ -270,7 +264,7 @@ public interface Entity extends NBTCompoundData {
      * @return riding entity
      */
     @Deprecated
-    @NBTCompound(key = "Riding", isNBTCompound = true, transformation = Transformation.OPTIONAL, version = @NBTVersion(max = Version.V1_8))
+    @NBTCompound(key = "Riding", tag = Tags.isNBTCompound, transformation = Transformation.OPTIONAL, version = @NBTVersion(max = Version.V1_8))
     Optional<Entity> riding();
 
     /**
@@ -281,7 +275,8 @@ public interface Entity extends NBTCompoundData {
      * @since 1.9
      * @return passenger list
      */
-    @NBTCompound(key = "Passengers", isNBTCompound = true, transformation = Transformation.LIST, version = @NBTVersion(min = Version.V1_9))
+    @NBTCompound(key = "Passengers", tag = Tags.List, transformation = Transformation.LIST, converter = NBTConverter.OfCompound.class,
+            version = @NBTVersion(min = Version.V1_9))
     List<Entity> passengers();
 
     /**
@@ -289,7 +284,7 @@ public interface Entity extends NBTCompoundData {
      *
      * @return glowing boolean
      */
-    @NBTCompound(key = "Glowing", tag = ByteTag.class, converter = BooleanHelper.ToByte.class)
+    @NBTCompound(key = "Glowing", tag = Tags.Byte, converter = BooleanHelper.ToByte.class)
     default boolean glowing() {
         return false;
     }
@@ -299,7 +294,7 @@ public interface Entity extends NBTCompoundData {
      *
      * @return tag list
      */
-    @NBTCompound(key = "Tags", tag = StringTag.class, transformation = Transformation.LIST, converter = NBTConverter.OfString.class)
+    @NBTCompound(key = "Tags", tag = Tags.List, transformation = Transformation.LIST, converter = NBTConverter.OfString.class)
     List<String> tags();
 
     /**
@@ -308,7 +303,7 @@ public interface Entity extends NBTCompoundData {
      *
      * @return command stats
      */
-    @NBTCompound(key = "CommandStats", isNBTCompound = true, transformation = Transformation.OPTIONAL)
+    @NBTCompound(key = "CommandStats", tag = Tags.isNBTCompound, transformation = Transformation.OPTIONAL)
     Optional<CommandStats> commandStats();
 
     /**

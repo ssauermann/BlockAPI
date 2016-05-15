@@ -24,11 +24,21 @@ package com.tree_bit.blockapi.nbt;
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
+import com.tree_bit.blockapi.nbt.tags.ByteArrayTag;
+import com.tree_bit.blockapi.nbt.tags.ByteTag;
 import com.tree_bit.blockapi.nbt.tags.CompoundTag;
+import com.tree_bit.blockapi.nbt.tags.DoubleTag;
+import com.tree_bit.blockapi.nbt.tags.EndTag;
+import com.tree_bit.blockapi.nbt.tags.FloatTag;
+import com.tree_bit.blockapi.nbt.tags.IntArrayTag;
+import com.tree_bit.blockapi.nbt.tags.IntTag;
+import com.tree_bit.blockapi.nbt.tags.ListTag;
+import com.tree_bit.blockapi.nbt.tags.LongTag;
+import com.tree_bit.blockapi.nbt.tags.ShortTag;
+import com.tree_bit.blockapi.nbt.tags.StringTag;
 import com.tree_bit.blockapi.nbt.tags.Tag;
 
 import java.lang.annotation.Documented;
-import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 import java.util.function.Function;
@@ -45,7 +55,6 @@ import java.util.function.Function;
 @Documented
 @Retention(RUNTIME)
 @Target(METHOD)
-@Inherited
 public @interface NBTCompound {
 
     /**
@@ -56,20 +65,6 @@ public @interface NBTCompound {
     String key();
 
     /**
-     * Type of the wrapping tag for this value.
-     * <p>
-     * <b>This or "isNBT___" has to be set.</b>
-     *
-     * <p>
-     * <i>The interface "Tag" is no valid substitution for this parameter and
-     * will result in an exception when processed.</i>
-     *
-     * @return Tag class
-     */
-    @SuppressWarnings("rawtypes")
-    Class<? extends Tag> tag() default Tag.class;
-
-    /**
      * Converter functions which get applied successively to the value of this
      * method. (May be empty)
      *
@@ -78,26 +73,83 @@ public @interface NBTCompound {
     Class<? extends Function<?, ?>>[] converter() default {};
 
     /**
-     * If set to true, this value can be transformed to a ListTag via
-     * annotations processing of it's class. So no tag type has to be set. (It
-     * will be ignored)
-     * <p>
-     * <b>If "isNBTCompound" is also set to true, the result of the annotation
-     * processing is undefined.</b>
+     * Type of the wrapping tag for this value. Instead of a wrapping type a
+     * recursive calculation method can be set.
      *
-     * @return Can this value be transformed to a ListTag
+     * @return Tag type or recursive method
      */
-    boolean isNBTList() default false;
+    Tags tag();
+
+    // TODO
+    Transformation transformation() default Transformation.NONE;
 
     /**
-     * If set to true, this value can be transformed to a CompoundTag via
-     * annotations processing of it's class. So no tag type has to be set. (It
-     * will be ignored)
-     * <p>
-     * <b>If "isNBTList" is also set to true , the result of the annotation
-     * processing is undefined.</b>
+     * If one version range matches the version set in the settings, a tag will
+     * be added. Else this value will be ignored for the NBTCompound creation.
      *
-     * @return Can this value be transformed to a CompoundTag
+     * @return Versions
      */
-    boolean isNBTCompound() default false;
+    NBTVersion[] version() default {};
+
+    /**
+     * Tag type for annotation processing.
+     */
+    public enum Tags {
+
+        /** ByteArrayTag */
+        ByteArray(ByteArrayTag.class),
+        /** ByteTag */
+        Byte(ByteTag.class),
+        /** CompoundTag */
+        Compound(CompoundTag.class),
+        /** DoubleTag */
+        Double(DoubleTag.class),
+        /** EndTag */
+        End(EndTag.class),
+        /** FloatTag */
+        Float(FloatTag.class),
+        /** IntArrayTag */
+        IntArray(IntArrayTag.class),
+        /** IntTag. */
+        Int(IntTag.class),
+        /** ListTag */
+        List(ListTag.class),
+        /** LongTag */
+        Long(LongTag.class),
+        /** ShortTag */
+        Short(ShortTag.class),
+        /** StringTag */
+        String(StringTag.class),
+        /**
+         * If set, this value can be transformed to a ListTag via annotations
+         * processing of it's class. So no tag type has to be set.
+         */
+        isNBTList,
+        /**
+         * If set, this value can be transformed to a CompoundTag via
+         * annotations processing of it's class. So no tag type has to be set.
+         */
+        isNBTCompound;
+
+        private Class<? extends Tag<?>> clazz;
+
+        @SuppressWarnings("unchecked")
+        private Tags(@SuppressWarnings("rawtypes") final Class<? extends Tag> clazz) {
+            this.clazz = (Class<? extends Tag<?>>) clazz;
+        }
+
+        private Tags() {
+            this(Tag.class);
+        }
+
+        /**
+         * Get's the tag class.
+         *
+         * @return Tag class
+         */
+        public Class<? extends Tag<?>> getTagClass() {
+            return this.clazz;
+        }
+    }
+
 }

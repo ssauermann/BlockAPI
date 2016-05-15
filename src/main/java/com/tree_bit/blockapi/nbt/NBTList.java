@@ -27,7 +27,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import com.tree_bit.blockapi.nbt.tags.ListTag;
 
 import java.lang.annotation.Documented;
-import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 import java.util.function.Function;
@@ -44,7 +43,6 @@ import java.util.function.Function;
 @Documented
 @Retention(RUNTIME)
 @Target(METHOD)
-@Inherited
 public @interface NBTList {
 
     /**
@@ -70,25 +68,42 @@ public @interface NBTList {
     Class<? extends Function<?, ?>>[] converter() default {};
 
     /**
-     * If set to true, this value can be transformed to a ListTag via
-     * annotations processing of it's class.
-     * <p>
-     * <b>If "isNBTCompound" is also set to true, the result of the annotation
-     * processing is undefined.</b>
+     * Should this value get calculated recursively by annotation processing?
      *
-     * @return Can this value be transformed to a ListTag
+     * @return Recursive value
      */
-    boolean isNBTList() default false;
+    Recursive recursive() default Recursive.NONE;
+
+    // TODO
+    Transformation transformation() default Transformation.NONE;
 
     /**
-     * If set to true, this value can be transformed to a CompoundTag via
-     * annotations processing of it's class.
-     * <p>
-     * <b>If "isNBTList" is also set to true , the result of the annotation
-     * processing is undefined.</b>
+     * If one version range matches the version set in the settings, a tag will
+     * be added. Else this value will be ignored for the NBTList creation.
      *
-     * @return Can this value be transformed to a CompoundTag
+     * @return Versions
      */
-    boolean isNBTCompound() default false;
+    NBTVersion[] version() default {};
+
+    /**
+     * Recursive types for annotation processing.
+     */
+    public enum Recursive {
+
+        /**
+         * If set the value will be calculated normally.
+         */
+        NONE,
+        /**
+         * If set, this value can be transformed to a ListTag via annotations
+         * processing of it's class. So no tag type has to be set.
+         */
+        isNBTList,
+        /**
+         * If set, this value can be transformed to a CompoundTag via
+         * annotations processing of it's class. So no tag type has to be set.
+         */
+        isNBTCompound;
+    }
 }
 
