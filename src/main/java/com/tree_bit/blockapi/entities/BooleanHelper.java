@@ -21,6 +21,7 @@
  */
 package com.tree_bit.blockapi.entities;
 
+import java.util.function.Function;
 
 /**
  * Helper class for conversions of booleans.
@@ -55,4 +56,15 @@ final class BooleanHelper {
         return true;
     }
 
+    /**
+     * Converter from boolean to byte.
+     */
+    public static class ToByte implements Function<Boolean, Byte> {
+
+        @Override
+        public Byte apply(final Boolean t) {
+            return toByte(t);
+        }
+
+    }
 }

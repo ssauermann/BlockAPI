@@ -22,6 +22,8 @@
 
 package com.tree_bit.blockapi.id;
 
+import java.util.function.Function;
+
 /**
  * Supertype of all id interfaces.
  *
@@ -35,4 +37,16 @@ public interface ID {
      * @return id
      */
     int getID();
+
+    /**
+     * Converter from ID to int.
+     */
+    public static class ToInt implements Function<ID, Integer> {
+
+        @Override
+        public Integer apply(final ID t) {
+            return t.getID();
+        }
+
+    }
 }
