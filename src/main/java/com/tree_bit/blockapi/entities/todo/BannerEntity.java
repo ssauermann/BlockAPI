@@ -19,11 +19,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.tree_bit.blockapi.entities;
+package com.tree_bit.blockapi.entities.todo;
 
 import com.google.common.collect.Lists;
 import com.tree_bit.blockapi.data.IColor;
 import com.tree_bit.blockapi.data.minecraft.Color;
+import com.tree_bit.blockapi.entities.blockentity.BlockEntity;
+import com.tree_bit.blockapi.internal.BlockApiStyle;
 import com.tree_bit.blockapi.nbt.NBT;
 import com.tree_bit.blockapi.nbt.tags.CompoundTag;
 
@@ -45,8 +47,10 @@ import java.util.List;
  *
  * @author Sascha Sauermann
  */
+@SuppressWarnings("all")
 @Immutable
-public abstract class _BannerEntity implements TileEntity {
+@BlockApiStyle
+public abstract class BannerEntity implements BlockEntity {
 
     /**
      * Base color of the banner

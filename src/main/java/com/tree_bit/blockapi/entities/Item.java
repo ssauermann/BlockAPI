@@ -22,12 +22,9 @@
 package com.tree_bit.blockapi.entities;
 
 import com.tree_bit.blockapi.Coordinates;
-import com.tree_bit.blockapi.nbt.NBT;
-import com.tree_bit.blockapi.nbt.tags.CompoundTag;
 
-import org.immutables.value.Value;
+import org.immutables.value.Value.Default;
 import org.immutables.value.Value.Immutable;
-import org.immutables.value.Value.Lazy;
 import org.immutables.value.Value.Parameter;
 
 import java.util.Optional;
@@ -50,14 +47,6 @@ public abstract class Item implements Entity {
     public abstract Coordinates pos();
 
 
-    @Override
-    @Lazy
-    public CompoundTag compound() {
-        return NBT.begin().Short("Age", this.age()).Short("Health", this.health()).Short("PickupDelay", this.pickupDelay())
-                .String("Owner", this.owner()).String("Thrower", this.thrower()).add(this.item().compoundWithoutSlot()).addAll(this._entityTags())
-                .build();
-    }
-
     /**
      * The number of ticks the item has been "untouched". After 6000 ticks (5
      * minutes) the item is destroyed. If set to -32768, the Age will not
@@ -68,7 +57,7 @@ public abstract class Item implements Entity {
      *
      * @return current age
      */
-    @Value.Default
+    @Default
     @SuppressWarnings("static-method")
     public short age() {
         return 0;
@@ -84,7 +73,7 @@ public abstract class Item implements Entity {
      *
      * @return current health
      */
-    @Value.Default
+    @Default
     @SuppressWarnings("static-method")
     public short health() {
         return 5;
@@ -100,7 +89,7 @@ public abstract class Item implements Entity {
      *
      * @return current delay
      */
-    @Value.Default
+    @Default
     @SuppressWarnings("static-method")
     public short pickupDelay() {
         return 0;
@@ -117,7 +106,7 @@ public abstract class Item implements Entity {
      *
      * @return current owner
      */
-    @Value.Default
+    @Default
     @SuppressWarnings("static-method")
     public String owner() {
         return "";
@@ -158,81 +147,11 @@ public abstract class Item implements Entity {
     /**
      * Creates a builder for {@link Item Item}.
      *
-     * @return A new ImmutableItem builder
+     * @return A new Item builder
      */
     public static Builder builder() {
         return ImmutableItem.builder();
     }
-
-    /**
-     * Copy the current immutable object by setting a value for the
-     * {@link Item#age() age} attribute. A value equality check is used to
-     * prevent copying of the same value by returning {@code this}.
-     *
-     * @param age A new value for age
-     * @return A modified copy of the {@code this} object
-     */
-    public abstract Item withAge(short age);
-
-    /**
-     * Copy the current immutable object by setting a value for the
-     * {@link Item#health() health} attribute. A value equality check is used to
-     * prevent copying of the same value by returning {@code this}.
-     *
-     * @param health A new value for health
-     * @return A modified copy of the {@code this} object
-     */
-    public abstract Item withHealth(short health);
-
-    /**
-     * Copy the current immutable object by setting a value for the
-     * {@link Item#pickupDelay() pickupDelay} attribute. A value equality check
-     * is used to prevent copying of the same value by returning {@code this}.
-     *
-     * @param pickupDelay A new value for pickupDelay
-     * @return A modified copy of the {@code this} object
-     */
-    public abstract Item withPickupDelay(short pickupDelay);
-
-    /**
-     * Copy the current immutable object by setting a value for the
-     * {@link Item#owner() owner} attribute. An equals check used to prevent
-     * copying of the same value by returning {@code this}.
-     *
-     * @param owner A new value for owner
-     * @return A modified copy of the {@code this} object
-     */
-    public abstract Item withOwner(String owner);
-
-    /**
-     * Copy the current immutable object by setting a <i>present</i> value for
-     * the optional {@link Item#thrower() thrower} attribute.
-     *
-     * @param value The value for thrower
-     * @return A modified copy of {@code this} object
-     */
-    public abstract Item withThrower(String value);
-
-    /**
-     * Copy the current immutable object by setting an optional value for the
-     * {@link Item#thrower() thrower} attribute. An equality check is used on
-     * inner nullable value to prevent copying of the same value by returning
-     * {@code this}.
-     *
-     * @param optional A value for thrower
-     * @return A modified copy of {@code this} object
-     */
-    public abstract Item withThrower(Optional<String> optional);
-
-    /**
-     * Copy the current immutable object by setting a value for the
-     * {@link Item#item() item} attribute. A shallow reference equality check is
-     * used to prevent copying of the same value by returning {@code this}.
-     *
-     * @param item A new value for item
-     * @return A modified copy of the {@code this} object
-     */
-    public abstract Item withItem(InventoryItem item);
 
     /**
      * Builds instances of type {@link Item Item}. Initialize attributes and
@@ -246,15 +165,23 @@ public abstract class Item implements Entity {
     interface Builder extends Entity.Builder<Builder> {
 
         /**
-         * Fill a builder with attribute values from the provided {@code Item}
-         * instance. Regular attribute values will be replaced with those from
-         * the given instance. Absent optional values will not replace present
-         * values.
+         * Fill a builder with attribute values from the provided
+         * {@code com.tree_bit.blockapi.entities.Item} instance.
          *
          * @param instance The instance from which to copy values
          * @return {@code this} builder for use in a chained invocation
          */
         Builder from(Item instance);
+
+        /**
+         * Fill a builder with attribute values from the provided
+         * {@code com.tree_bit.blockapi.entities.Entity} instance.
+         *
+         * @param instance The instance from which to copy values
+         * @return {@code this} builder for use in a chained invocation
+         */
+        @Override
+        Builder from(Entity instance);
 
         /**
          * Initializes the value for the {@link Item#age() age} attribute.
@@ -338,6 +265,76 @@ public abstract class Item implements Entity {
         Item build();
 
     }
+
+    /**
+     * Copy the current immutable object by setting a value for the
+     * {@link Item#age() age} attribute. A value equality check is used to
+     * prevent copying of the same value by returning {@code this}.
+     *
+     * @param age A new value for age
+     * @return A modified copy of the {@code this} object
+     */
+    public abstract Item withAge(short age);
+
+    /**
+     * Copy the current immutable object by setting a value for the
+     * {@link Item#health() health} attribute. A value equality check is used to
+     * prevent copying of the same value by returning {@code this}.
+     *
+     * @param health A new value for health
+     * @return A modified copy of the {@code this} object
+     */
+    public abstract Item withHealth(short health);
+
+    /**
+     * Copy the current immutable object by setting a value for the
+     * {@link Item#pickupDelay() pickupDelay} attribute. A value equality check
+     * is used to prevent copying of the same value by returning {@code this}.
+     *
+     * @param pickupDelay A new value for pickupDelay
+     * @return A modified copy of the {@code this} object
+     */
+    public abstract Item withPickupDelay(short pickupDelay);
+
+    /**
+     * Copy the current immutable object by setting a value for the
+     * {@link Item#owner() owner} attribute. An equals check used to prevent
+     * copying of the same value by returning {@code this}.
+     *
+     * @param owner A new value for owner
+     * @return A modified copy of the {@code this} object
+     */
+    public abstract Item withOwner(String owner);
+
+    /**
+     * Copy the current immutable object by setting a <i>present</i> value for
+     * the optional {@link Item#thrower() thrower} attribute.
+     *
+     * @param value The value for thrower
+     * @return A modified copy of {@code this} object
+     */
+    public abstract Item withThrower(String value);
+
+    /**
+     * Copy the current immutable object by setting an optional value for the
+     * {@link Item#thrower() thrower} attribute. An equality check is used on
+     * inner nullable value to prevent copying of the same value by returning
+     * {@code this}.
+     *
+     * @param optional A value for thrower
+     * @return A modified copy of {@code this} object
+     */
+    public abstract Item withThrower(Optional<String> optional);
+
+    /**
+     * Copy the current immutable object by setting a value for the
+     * {@link Item#item() item} attribute. A shallow reference equality check is
+     * used to prevent copying of the same value by returning {@code this}.
+     *
+     * @param item A new value for item
+     * @return A modified copy of the {@code this} object
+     */
+    public abstract Item withItem(InventoryItem item);
 
 }
 

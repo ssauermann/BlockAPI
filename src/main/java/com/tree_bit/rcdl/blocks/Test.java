@@ -1,11 +1,7 @@
 package com.tree_bit.rcdl.blocks;
 
-import com.tree_bit.blockapi.entities.FormatText;
-import com.tree_bit.blockapi.entities.SignEntity;
-import com.tree_bit.blockapi.entities.FormatText.FormatString;
 import com.tree_bit.blockapi.id.minecraft.BlockID;
 import com.tree_bit.rcdl.blocks.dv.OrientationNESW;
-import com.tree_bit.rcdl.blocks.dv.SignOrientation;
 
 
 @SuppressWarnings("javadoc")
@@ -33,19 +29,21 @@ public class Test {
         // torch.setData(GenericBlockData.getInstance());
 
 
-        final HangingSign h = HangingSign.getInstance(SignOrientation.North,
-                new SignEntity(new FormatText[] {FormatText.builder().append(new FormatString("Hello World")).build()}));
+        // final HangingSign h = HangingSign.getInstance(SignOrientation.North,
+        // new SignEntity(new FormatText[] {FormatText.builder().append(new
+        // FormatString("Hello World")).build()}));
 
-        final HangingSign h2 = HangingSign.getInstance(SignOrientation.North, new SignEntity(new String[] {"Hello World"}));
+        // final HangingSign h2 = HangingSign.getInstance(SignOrientation.North,
+        // new SignEntity(new String[] {"Hello World"}));
 
         // final Set<HangingSign> hs = HangingSign.getInstances();
 
         // System.out.println(Arrays.toString(HangingSign.getInstances().toArray()));
 
-        final Block sign = Block.getInstance(BlockID.WALL_SIGN, h);
+        // final Block sign = Block.getInstance(BlockID.WALL_SIGN, h);
 
-        final Block sign2 = Block.getInstance(BlockID.WALL_SIGN, h2);
+        // final Block sign2 = Block.getInstance(BlockID.WALL_SIGN, h2);
 
-        System.out.println(sign == sign2);
+        // System.out.println(sign == sign2);
     }
 }

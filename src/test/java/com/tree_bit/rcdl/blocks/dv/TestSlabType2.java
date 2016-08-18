@@ -9,7 +9,7 @@ public class TestSlabType2 {
 
     @SuppressWarnings("static-method")
     @Test
-    public void testGetDataValue() {
-        assertEquals(0, SlabType2.RED_SANDSTONE.getDataValue());
+    public void testgetDV() {
+        assertEquals(0, SlabType2.RED_SANDSTONE.getDV());
     }
 }

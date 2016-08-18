@@ -24,6 +24,7 @@ package com.tree_bit.blockapi.entities.projectile;
 import static org.junit.Assert.assertEquals;
 
 import com.tree_bit.blockapi.Coordinates;
+import com.tree_bit.blockapi.entities.XPOrb;
 import com.tree_bit.blockapi.id.minecraft.BlockID;
 import com.tree_bit.blockapi.nbt.tags.CompoundTag;
 import com.tree_bit.blockapi.nbt.tags.ListTag;
@@ -46,7 +47,7 @@ public class TestProjectile {
 
     @Test
     public void testCompound() {
-        final Projectile p = Projectile.of(Coordinates.of(5, 9, 3), (short) 1, (short) 2, (short) 3, BlockID.STONE.getAlphabeticalID());
+        final Projectile p = Arrow.of(Coordinates.of(5, 9, 3), (short) 1, (short) 2, (short) 3);
         final CompoundTag c = p.compound();
 
         System.out.println(c);
@@ -60,6 +61,9 @@ public class TestProjectile {
         assertEquals(9., coordinates.getValue().get(1).getValue());
         assertEquals(3., coordinates.getValue().get(2).getValue());
 
+        final XPOrb orb = XPOrb.of(Coordinates.of(0, 0, 2), (short) 15);
+        System.out.println(orb.compound());
+        System.out.println(orb.compound() == orb.compound());
     }
 
 }

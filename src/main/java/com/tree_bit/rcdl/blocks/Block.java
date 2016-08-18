@@ -12,9 +12,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.security.InvalidParameterException;
+import java.util.Objects;
 import java.util.Set;
-
-import jdk.nashorn.internal.ir.annotations.Immutable;
 
 /**
  * Minecraft Block
@@ -23,7 +22,7 @@ import jdk.nashorn.internal.ir.annotations.Immutable;
  * Use this class to create blocks. Each block is immutable and therefore
  * thread-safe.
  */
-@Immutable
+// @Immutable
 public final class Block implements Comparable<Block> {
 
     private static class Loader extends CacheLoader<DataKey<BlockID, BlockData, ?>, Block> {
@@ -162,6 +161,23 @@ public final class Block implements Comparable<Block> {
         // TODO: Hashcode, equals ? Compare to via Guava return
         // ComparisonChain.start().compare(a,b).compare(c,d).result()
         // Compare Data?
+    }
+
+    @Override
+    public boolean equals(@Nullable final Object another) {
+        if (this == another) {
+            return true;
+        }
+        return (another instanceof Block) && this.equalTo((Block) another);
+    }
+
+    private boolean equalTo(final Block another) {
+        return Objects.equals(this.block, another.block) && Objects.equals(this.data, another.data);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.block, this.data);
     }
 
     @Override

@@ -1,11 +1,13 @@
 package com.tree_bit.rcdl.blocks.dv;
 
 import com.google.common.math.IntMath;
+import com.tree_bit.blockapi.data.IDataValue;
 import com.tree_bit.rcdl.blocks.Axis;
 import com.tree_bit.rcdl.blocks.Comparator;
 import com.tree_bit.rcdl.blocks.Repeater;
 
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -50,7 +52,7 @@ public enum OrientationNESW implements IOrientationEnum {
     }
 
     @Override
-    public int getDataValue() {
+    public int getDV() {
         return this.value;
     }
 
@@ -92,5 +94,12 @@ public enum OrientationNESW implements IOrientationEnum {
     @Override
     public int getStep() {
         return 90;
+    }
+
+
+    @Override
+    public Optional<? extends IDataValue> byDV(final int dv) {
+        // TODO Auto-generated method stub
+        return Optional.empty();
     }
 }

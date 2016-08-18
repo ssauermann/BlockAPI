@@ -21,7 +21,7 @@
  */
 package com.tree_bit.blockapi.internal;
 
-import org.immutables.value.Value;
+import org.immutables.value.Value.Style;
 import org.immutables.value.Value.Style.ImplementationVisibility;
 
 import java.lang.annotation.ElementType;
@@ -36,17 +36,15 @@ import java.lang.annotation.Target;
 // Make it class retention for incremental compilation
 @Retention(RetentionPolicy.CLASS)
 
-@Value.Style(get = {"is*", "get*"},
+@Style(get = {"is*", "get*"},
         // 'Abstract' prefix will be detected and trimmed
-        typeAbstract = {"_*",},
         // No prefix or suffix for generated immutable type
-        typeImmutable = "*",
         // Generated class will be always public
-        visibility = ImplementationVisibility.PUBLIC, init = "*",
+        visibility = ImplementationVisibility.PACKAGE,
         // Remove trailing s characters
-        depluralize = true,
+        depluralize = true) // ,
 
-        defaults = @Value.Immutable(copy = true))
+// defaults = @Immutable(copy = true))
 public @interface BlockApiStyle {
     // Nothing to do here
 }

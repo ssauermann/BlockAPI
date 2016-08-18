@@ -4,10 +4,12 @@ import static org.junit.Assert.assertEquals;
 
 import com.tree_bit.blockapi.id.minecraft.BlockID;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 
 @SuppressWarnings({"javadoc", "static-method"})
+@Ignore
 public class TestBlockID {
 
     @Test

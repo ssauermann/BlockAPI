@@ -19,42 +19,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.tree_bit.blockapi.nbt;
+/**
+ * Classes giving access to Minecraft block entities.
+ */
+@NonNullByDefault
+@Style
+package com.tree_bit.blockapi.entities.blockentity;
 
-import com.tree_bit.blockapi.nbt.tags.CompoundTag;
-import com.tree_bit.blockapi.nbt.tags.FloatTag;
-import com.tree_bit.blockapi.nbt.tags.StringTag;
-
-import java.util.function.Function;
-
-public final class NBTConverter {
-
-    private NBTConverter() {}
-
-    public static class OfString implements Function<String, StringTag> {
-
-        @Override
-        public StringTag apply(final String t) {
-            return NBT.String("", t);
-        }
-
-    }
-
-    public static class OfFloat implements Function<Float, FloatTag> {
-
-        @Override
-        public FloatTag apply(final Float t) {
-            return NBT.Float("", t);
-        }
-
-    }
-
-    public static class OfCompound implements Function<NBTCompoundData, CompoundTag> {
-
-        @Override
-        public CompoundTag apply(final NBTCompoundData t) {
-            return t.compound();
-        }
-
-    }
-}
+import org.eclipse.jdt.annotation.NonNullByDefault;

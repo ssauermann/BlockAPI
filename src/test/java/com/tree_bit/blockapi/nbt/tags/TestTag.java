@@ -42,6 +42,7 @@ import java.util.function.Consumer;
 /**
  *
  */
+@Ignore
 @SuppressWarnings({"javadoc", "null", "static-method"})
 public class TestTag {
 

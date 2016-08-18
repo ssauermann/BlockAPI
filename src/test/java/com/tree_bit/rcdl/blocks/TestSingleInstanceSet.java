@@ -8,6 +8,7 @@ import com.google.common.collect.ImmutableSet;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.HashSet;
@@ -15,6 +16,7 @@ import java.util.Set;
 
 
 @SuppressWarnings("javadoc")
+@Ignore
 public class TestSingleInstanceSet {
 
     private static class A {

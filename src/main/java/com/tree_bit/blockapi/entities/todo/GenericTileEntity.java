@@ -19,8 +19,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.tree_bit.blockapi.entities;
+package com.tree_bit.blockapi.entities.todo;
 
+import com.tree_bit.blockapi.entities.blockentity.BlockEntity;
 import com.tree_bit.blockapi.nbt.tags.CompoundTag;
 
 import org.immutables.value.Value.Derived;
@@ -32,7 +33,8 @@ import org.immutables.value.Value.Parameter;
  * Representing a generic TileEntity that isn't represented by any other class.
  */
 @Immutable
-public abstract class _GenericTileEntity implements TileEntity {
+@SuppressWarnings("all")
+public abstract class GenericTileEntity implements BlockEntity {
 
     @Override
     @Parameter(order = 1)

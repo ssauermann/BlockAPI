@@ -19,42 +19,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.tree_bit.blockapi.nbt;
+package com.tree_bit.blockapi.entities.mobs;
 
-import com.tree_bit.blockapi.nbt.tags.CompoundTag;
-import com.tree_bit.blockapi.nbt.tags.FloatTag;
-import com.tree_bit.blockapi.nbt.tags.StringTag;
+import org.immutables.value.Value;
+import org.immutables.value.Value.Style.ImplementationVisibility;
 
-import java.util.function.Function;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-public final class NBTConverter {
-
-    private NBTConverter() {}
-
-    public static class OfString implements Function<String, StringTag> {
-
-        @Override
-        public StringTag apply(final String t) {
-            return NBT.String("", t);
-        }
-
-    }
-
-    public static class OfFloat implements Function<Float, FloatTag> {
-
-        @Override
-        public FloatTag apply(final Float t) {
-            return NBT.Float("", t);
-        }
-
-    }
-
-    public static class OfCompound implements Function<NBTCompoundData, CompoundTag> {
-
-        @Override
-        public CompoundTag apply(final NBTCompoundData t) {
-            return t.compound();
-        }
-
-    }
+/**
+ * Style of generated immutable entities.
+ */
+@Target({ElementType.PACKAGE, ElementType.TYPE})
+@Retention(RetentionPolicy.CLASS)
+@Value.Style(typeImmutable = "Immutable*",
+        // Must be wrapped
+        visibility = ImplementationVisibility.PACKAGE,
+        // Depluralize
+        depluralize = true,
+        // With builder, with copy
+        defaults = @Value.Immutable(copy = true, builder = true))
+@interface Style {
+    // Nothing to do here
 }

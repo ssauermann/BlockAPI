@@ -1,9 +1,9 @@
 package com.tree_bit.rcdl.blocks;
 
 import com.tree_bit.blockapi.data.IDataValue;
-import com.tree_bit.blockapi.entities.FormatText;
-import com.tree_bit.blockapi.entities.SignEntity;
-import com.tree_bit.blockapi.entities.GenericTileEntity;
+import com.tree_bit.blockapi.entities.todo.FormatText;
+import com.tree_bit.blockapi.entities.todo.GenericTileEntity;
+import com.tree_bit.blockapi.entities.todo.SignEntity;
 import com.tree_bit.rcdl.blocks.dv.Orientation16;
 
 import org.eclipse.jdt.annotation.NonNull;

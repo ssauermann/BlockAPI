@@ -21,25 +21,20 @@
  */
 package com.tree_bit.blockapi.entities.projectile;
 
-import com.tree_bit.blockapi.Coordinates;
 import com.tree_bit.blockapi.entities.Entity;
+import com.tree_bit.blockapi.id.minecraft.BlockID;
 import com.tree_bit.blockapi.nbt.NBTCompound;
 import com.tree_bit.blockapi.nbt.NBTCompound.Tags;
 
-import org.immutables.value.Value.Immutable;
+import org.immutables.value.Value.Default;
 import org.immutables.value.Value.Parameter;
+
+import javax.annotation.concurrent.NotThreadSafe;
 
 /**
  * Representing a projectile entity.
  */
-// TODO Remove
-@Immutable
 public interface Projectile extends Entity {
-
-    @Override
-    @Parameter(order = 0)
-    @NBTCompound(key = "pos", tag = Tags.isNBTList)
-    Coordinates pos();
 
     /**
      * X coordinate of the projectile's position in the chunk.
@@ -73,34 +68,124 @@ public interface Projectile extends Entity {
      *
      * @return alphabetical id
      */
-    @Parameter
+    @Default
     @NBTCompound(key = "inTile", tag = Tags.String)
-    String inTile();
-
-    // TODO Remove
-    @Override
-    default String id() {
-        return "Name";
+    default String inTile() {
+        return BlockID.AIR.getAlphabeticalID();
     }
 
-
-    // TODO Remove
     /**
-     * Construct a new immutable {@code Projectile} instance.
+     * Builds instances of type {@link Projectile Projectile}. Initialize
+     * attributes and then invoke the {@link #build()} method to create an
+     * immutable instance.
+     * <p>
+     * <em>{@code Builder} is not thread-safe and generally should not be stored
+     * in a field or collection, but instead used immediately to create
+     * instances.</em>
      *
-     * @param pos The value for the {@code pos} attribute
-     * @param xTile The value for the {@code xTile} attribute
-     * @param yTile The value for the {@code yTile} attribute
-     * @param zTile The value for the {@code zTile} attribute
-     * @param inTile The value for the {@code inTile} attribute
-     * @return An immutable Projectile instance
+     * @param <T> Recursive type for builder extension
      */
-    public static ImmutableProjectile of(final Coordinates pos, final short xTile, final short yTile, final short zTile, final String inTile) {
-        return ImmutableProjectile.of(pos, xTile, yTile, zTile, inTile);
+    @NotThreadSafe
+    public interface Builder<T extends Builder<T>> extends Entity.Builder<Builder<T>> {
+
+        /**
+         * Fill a builder with attribute values from the provided
+         * {@code Projectile} instance. Regular attribute values will be
+         * replaced with those from the given instance. Absent optional values
+         * will not replace present values.
+         *
+         * @param instance The instance from which to copy values
+         * @return {@code this} builder for use in a chained invocation
+         */
+        Builder<T> from(Projectile instance);
+
+        /**
+         * Initializes the value for the {@link Projectile#xTile() xTile}
+         * attribute.
+         *
+         * @param xTile The value for xTile
+         * @return {@code this} builder for use in a chained invocation
+         */
+        Builder<T> xTile(short xTile);
+
+        /**
+         * Initializes the value for the {@link Projectile#yTile() yTile}
+         * attribute.
+         *
+         * @param yTile The value for yTile
+         * @return {@code this} builder for use in a chained invocation
+         */
+        Builder<T> yTile(short yTile);
+
+        /**
+         * Initializes the value for the {@link Projectile#zTile() zTile}
+         * attribute.
+         *
+         * @param zTile The value for zTile
+         * @return {@code this} builder for use in a chained invocation
+         */
+        Builder<T> zTile(short zTile);
+
+        /**
+         * Initializes the value for the {@link Projectile#inTile() inTile}
+         * attribute.
+         *
+         * @param inTile The value for inTile
+         * @return {@code this} builder for use in a chained invocation
+         */
+        Builder<T> inTile(String inTile);
+
+        /**
+         * Builds a new {@link Projectile Projectile}.
+         *
+         * @return An immutable instance of Projectile
+         * @throws java.lang.IllegalStateException if any required attributes
+         *         are missing
+         */
+        @Override
+        Projectile build();
+
     }
 
+    /**
+     * Copy the current immutable object by setting a value for the
+     * {@link Projectile#xTile() xTile} attribute. A value equality check is
+     * used to prevent copying of the same value by returning {@code this}.
+     *
+     * @param xTile A new value for xTile
+     * @return A modified copy of the {@code this} object
+     */
+    Projectile withXTile(short xTile);
 
-    public interface Builder<T extends Builder<T>> {
+    /**
+     * Copy the current immutable object by setting a value for the
+     * {@link Projectile#yTile() yTile} attribute. A value equality check is
+     * used to prevent copying of the same value by returning {@code this}.
+     *
+     * @param yTile A new value for yTile
+     * @return A modified copy of the {@code this} object
+     */
+    Projectile withYTile(short yTile);
 
-    }
+    /**
+     * Copy the current immutable object by setting a value for the
+     * {@link Projectile#zTile() zTile} attribute. A value equality check is
+     * used to prevent copying of the same value by returning {@code this}.
+     *
+     * @param zTile A new value for zTile
+     * @return A modified copy of the {@code this} object
+     */
+    Projectile withZTile(short zTile);
+
+    /**
+     * Copy the current immutable object by setting a value for the
+     * {@link Projectile#inTile() inTile} attribute. An equals check used to
+     * prevent copying of the same value by returning {@code this}.
+     *
+     * @param inTile A new value for inTile
+     * @return A modified copy of the {@code this} object
+     */
+    Projectile withInTile(String inTile);
+
 }
+

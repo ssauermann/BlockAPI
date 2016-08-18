@@ -5,12 +5,14 @@ import static org.junit.Assert.assertTrue;
 
 import com.tree_bit.rcdl.blocks.Torch.TorchOrientation;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.EnumSet;
 
 
 @SuppressWarnings("javadoc")
+@Ignore
 public class TestTorch {
 
     Torch someInstance = Torch.getInstance();

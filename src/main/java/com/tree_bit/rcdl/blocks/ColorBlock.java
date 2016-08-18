@@ -5,8 +5,6 @@ import com.tree_bit.blockapi.data.minecraft.Color;
 
 import org.eclipse.jdt.annotation.NonNull;
 
-import jdk.nashorn.internal.ir.annotations.Immutable;
-
 
 /**
  * Data values of a colored block.
@@ -30,7 +28,7 @@ import jdk.nashorn.internal.ir.annotations.Immutable;
  * <li>x-z</li>
  * </ul>
  */
-@Immutable
+// @Immutable
 public final class ColorBlock extends BlockData {
 
     private ColorBlock(final Color color) {

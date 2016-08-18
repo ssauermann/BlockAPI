@@ -6,7 +6,7 @@ import com.google.common.base.Joiner;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableSet;
 import com.tree_bit.blockapi.data.IDataValue;
-import com.tree_bit.blockapi.entities.TileEntity;
+import com.tree_bit.blockapi.entities.blockentity.BlockEntity;
 import com.tree_bit.rcdl.blocks.dv.IOrientationEnum;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -47,7 +47,7 @@ public abstract class BlockData {
         }
 
         @Override
-        public int getDataValue() {
+        public int getDV() {
             return 0;
         }
 
@@ -55,12 +55,18 @@ public abstract class BlockData {
         public int getStep() {
             return 90;
         }
+
+        @Override
+        public Optional<? extends IDataValue> byDV(final int dv) {
+            // TODO Auto-generated method stub
+            return Optional.empty();
+        }
     }
 
     private final SingleInstanceSet<IDataValue> data;
 
     @Nullable
-    private final TileEntity entity;
+    private final BlockEntity entity;
 
     /**
      * Creates a BlockData instance and sets the data value and the tile entity
@@ -73,16 +79,15 @@ public abstract class BlockData {
      * <p>
      * Child classes have to have a constructor without parameters which returns
      * a default Data object. Additional a constructor which accepts an
-     * {@link IDataValue} array has to exist. The validity of the array
-     * should be checked by
-     * {@link #validateDV(IDataValue[], Class, Class...)}. A default
-     * instance of each class should be registered at the
+     * {@link IDataValue} array has to exist. The validity of the array should
+     * be checked by {@link #validateDV(IDataValue[], Class, Class...)}. A
+     * default instance of each class should be registered at the
      * {@link BlockDataFactory}
      *
      * @param entity Tile entity
      * @param data Data values
      */
-    protected BlockData(@Nullable final TileEntity entity, final Set<IDataValue> data) {
+    protected BlockData(@Nullable final BlockEntity entity, final Set<IDataValue> data) {
         this.data = SingleInstanceSet.copyOf(data, IOrientationEnum.class);
         this.entity = entity;
     }
@@ -97,10 +102,9 @@ public abstract class BlockData {
      * <p>
      * Child classes have to have a constructor without parameters which returns
      * a default Data object. Additional a constructor which accepts an
-     * {@link IDataValue} array has to exist. The validity of the array
-     * should be checked by
-     * {@link #validateDV(IDataValue[], Class, Class...)}. A default
-     * instance of each class should be registered at the
+     * {@link IDataValue} array has to exist. The validity of the array should
+     * be checked by {@link #validateDV(IDataValue[], Class, Class...)}. A
+     * default instance of each class should be registered at the
      * {@link BlockDataFactory}
      *
      * @param data Data values
@@ -119,10 +123,9 @@ public abstract class BlockData {
      * <p>
      * Child classes have to have a constructor without parameters which returns
      * a default Data object. Additional a constructor which accepts an
-     * {@link IDataValue} array has to exist. The validity of the array
-     * should be checked by
-     * {@link #validateDV(IDataValue[], Class, Class...)}. A default
-     * instance of each class should be registered at the
+     * {@link IDataValue} array has to exist. The validity of the array should
+     * be checked by {@link #validateDV(IDataValue[], Class, Class...)}. A
+     * default instance of each class should be registered at the
      * {@link BlockDataFactory}
      *
      * @param data Data values
@@ -142,16 +145,15 @@ public abstract class BlockData {
      * <p>
      * Child classes have to have a constructor without parameters which returns
      * a default Data object. Additional a constructor which accepts an
-     * {@link IDataValue} array has to exist. The validity of the array
-     * should be checked by
-     * {@link #validateDV(IDataValue[], Class, Class...)}. A default
-     * instance of each class should be registered at the
+     * {@link IDataValue} array has to exist. The validity of the array should
+     * be checked by {@link #validateDV(IDataValue[], Class, Class...)}. A
+     * default instance of each class should be registered at the
      * {@link BlockDataFactory}
      *
      * @param entity Tile entity
      * @param data Data values
      */
-    protected BlockData(@Nullable final TileEntity entity, final @NonNull IDataValue... data) {
+    protected BlockData(@Nullable final BlockEntity entity, final @NonNull IDataValue... data) {
         this.data = SingleInstanceSet.copyOf(Arrays.asList(data), IOrientationEnum.class);
         this.entity = entity;
     }
@@ -214,7 +216,7 @@ public abstract class BlockData {
      *
      * @return TileEntity
      */
-    public Optional<TileEntity> getTileEntity() {
+    public Optional<BlockEntity> getTileEntity() {
         return Optional.ofNullable(this.entity);
     }
 
@@ -251,10 +253,10 @@ public abstract class BlockData {
      *
      * @return Combined data value
      */
-    final int getDataValue() {
+    final int getDV() {
         int sum = 0;
         for (final IDataValue data : this.getData()) {
-            sum += data.getDataValue();
+            sum += data.getDV();
         }
         return sum;
     }
@@ -266,7 +268,7 @@ public abstract class BlockData {
         if (this.getTileEntity().isPresent()) {
             tileInfo = this.getTileEntity().get().toString();
         }
-        return MoreObjects.toStringHelper(this).add("Combined", this.getDataValue())
+        return MoreObjects.toStringHelper(this).add("Combined", this.getDV())
                 .add("Data", Joiner.on(',').skipNulls().join(this.getData().asSet().toArray())).addValue(tileInfo).omitNullValues().toString();
     }
 

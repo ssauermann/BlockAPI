@@ -5,7 +5,7 @@ import com.tree_bit.rcdl.blocks.dv.OrientationNESW;
 
 import org.eclipse.jdt.annotation.NonNull;
 
-import jdk.nashorn.internal.ir.annotations.Immutable;
+import java.util.Optional;
 
 
 /**
@@ -27,7 +27,7 @@ import jdk.nashorn.internal.ir.annotations.Immutable;
  * <li>z-y</li>
  * </ul>
  */
-@Immutable
+// @Immutable
 public final class Repeater extends BlockData {
 
     /**
@@ -50,8 +50,14 @@ public final class Repeater extends BlockData {
         }
 
         @Override
-        public int getDataValue() {
+        public int getDV() {
             return this.value;
+        }
+
+        @Override
+        public Optional<? extends IDataValue> byDV(final int dv) {
+            // TODO Auto-generated method stub
+            return Optional.empty();
         }
     }
 

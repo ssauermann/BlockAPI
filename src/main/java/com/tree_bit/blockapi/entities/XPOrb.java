@@ -22,12 +22,11 @@
 package com.tree_bit.blockapi.entities;
 
 import com.tree_bit.blockapi.Coordinates;
-import com.tree_bit.blockapi.nbt.NBT;
-import com.tree_bit.blockapi.nbt.tags.CompoundTag;
+import com.tree_bit.blockapi.nbt.NBTCompound;
+import com.tree_bit.blockapi.nbt.NBTCompound.Tags;
 
 import org.immutables.value.Value.Default;
 import org.immutables.value.Value.Immutable;
-import org.immutables.value.Value.Lazy;
 import org.immutables.value.Value.Parameter;
 
 import javax.annotation.concurrent.NotThreadSafe;
@@ -48,12 +47,6 @@ public abstract class XPOrb implements Entity {
     @Parameter(order = 0)
     public abstract Coordinates pos();
 
-    @Override
-    @Lazy
-    public CompoundTag compound() {
-        return NBT.begin().Short("Age", this.age()).Byte("Health", this.health()).Short("Value", this.value()).addAll(this._entityTags()).build();
-    }
-
     /**
      * The number of ticks the XP orb has been "untouched". After 6000 ticks (5
      * minutes) the orb is destroyed. If set to -32768, the Age will not
@@ -65,6 +58,7 @@ public abstract class XPOrb implements Entity {
      * @return current age
      */
     @Default
+    @NBTCompound(key = "Age", tag = Tags.Short)
     @SuppressWarnings("static-method")
     public short age() {
         return 0;
@@ -83,6 +77,7 @@ public abstract class XPOrb implements Entity {
      * @return current health
      */
     @Default
+    @NBTCompound(key = "Health", tag = Tags.Byte)
     @SuppressWarnings("static-method")
     public byte health() {
         // TODO validate default
@@ -99,6 +94,7 @@ public abstract class XPOrb implements Entity {
      */
     @Parameter(order = 1)
     @Default
+    @NBTCompound(key = "Value", tag = Tags.Short)
     @SuppressWarnings("static-method")
     public short value() {
         return 1;

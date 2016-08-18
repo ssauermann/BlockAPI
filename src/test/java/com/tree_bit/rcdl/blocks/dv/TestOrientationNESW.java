@@ -57,7 +57,7 @@ public class TestOrientationNESW {
 
     @SuppressWarnings({"static-method"})
     @Test
-    public void testGetDataValue() {
-        assertEquals(1, OrientationNESW.East.getDataValue());
+    public void testgetDV() {
+        assertEquals(1, OrientationNESW.East.getDV());
     }
 }

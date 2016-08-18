@@ -7,9 +7,8 @@ import com.tree_bit.rcdl.blocks.dv.IOrientationEnum;
 import org.eclipse.jdt.annotation.NonNull;
 
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.Set;
-
-import jdk.nashorn.internal.ir.annotations.Immutable;
 
 /**
  * Data values of a 'Torch' block.
@@ -30,7 +29,7 @@ import jdk.nashorn.internal.ir.annotations.Immutable;
  * <li>z-y</li>
  * </ul>
  */
-@Immutable
+// @Immutable
 public final class Torch extends BlockData {
 
     /**
@@ -56,8 +55,14 @@ public final class Torch extends BlockData {
         }
 
         @Override
-        public int getDataValue() {
+        public int getDV() {
             return this.value;
+        }
+
+        @Override
+        public Optional<? extends IDataValue> byDV(final int dv) {
+            // TODO Auto-generated method stub
+            return Optional.empty();
         }
 
         @Override

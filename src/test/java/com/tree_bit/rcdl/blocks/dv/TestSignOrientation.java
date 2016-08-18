@@ -64,7 +64,7 @@ public class TestSignOrientation {
 
     @SuppressWarnings("static-method")
     @Test
-    public void testGetDataValue() {
-        assertEquals(2, SignOrientation.North.getDataValue());
+    public void testgetDV() {
+        assertEquals(2, SignOrientation.North.getDV());
     }
 }

@@ -3,10 +3,11 @@ package com.tree_bit.blockapi.entities;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-import com.tree_bit.blockapi.entities.FormatText;
-import com.tree_bit.blockapi.entities.FormatText.Format;
-import com.tree_bit.blockapi.entities.FormatText.FormatString;
+import com.tree_bit.blockapi.entities.todo.FormatText;
+import com.tree_bit.blockapi.entities.todo.FormatText.Format;
+import com.tree_bit.blockapi.entities.todo.FormatText.FormatString;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -14,7 +15,9 @@ import java.util.HashMap;
 import java.util.List;
 
 
-@SuppressWarnings("javadoc")
+// @SuppressWarnings("javadoc")
+@SuppressWarnings("all")
+@Ignore
 public class TestFormatText {
 
     @SuppressWarnings("static-method")
@@ -35,8 +38,8 @@ public class TestFormatText {
     @SuppressWarnings("static-method")
     @Test
     public void testBuilder() {
-        assertEquals(FormatText.builder().append(new FormatString("Test", FormatText.Format.BOLD)).append("Test2").build(), FormatText.builder()
-                .append(new FormatString("Test", FormatText.Format.BOLD)).append(new FormatString("Test2")).build());
+        assertEquals(FormatText.builder().append(new FormatString("Test", FormatText.Format.BOLD)).append("Test2").build(),
+                FormatText.builder().append(new FormatString("Test", FormatText.Format.BOLD)).append(new FormatString("Test2")).build());
     }
 
     @SuppressWarnings("static-method")

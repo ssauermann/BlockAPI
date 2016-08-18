@@ -26,7 +26,7 @@ import java.util.function.Function;
 /**
  * Helper class for conversions of booleans.
  */
-final class BooleanHelper {
+public final class BooleanHelper {
 
     private BooleanHelper() {}
 
@@ -63,7 +63,10 @@ final class BooleanHelper {
 
         @Override
         public Byte apply(final Boolean t) {
-            return toByte(t);
+            if (t) {
+                return 1;
+            }
+            return 0;
         }
 
     }

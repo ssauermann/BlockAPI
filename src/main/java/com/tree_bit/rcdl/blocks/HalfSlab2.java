@@ -6,8 +6,6 @@ import com.tree_bit.rcdl.blocks.dv.SlabType2;
 
 import org.eclipse.jdt.annotation.NonNull;
 
-import jdk.nashorn.internal.ir.annotations.Immutable;
-
 
 /**
  * Data class for Stone Half Slabs. (Type 2)
@@ -28,7 +26,7 @@ import jdk.nashorn.internal.ir.annotations.Immutable;
  * <li>x-z</li>
  * </ul>
  */
-@Immutable
+// @Immutable
 public final class HalfSlab2 extends BlockData {
 
     private HalfSlab2(final SlabType2 type, final SlabPosition position) {

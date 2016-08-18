@@ -52,6 +52,7 @@ public @interface NBTList {
      */
     String key();
 
+    // TODO: What was this one for?
     /**
      * Order of the generated tag in the wrapping ListTag.
      *
@@ -76,7 +77,7 @@ public @interface NBTList {
 
     /**
      * Transform this value before applying the converter functions.
-     * 
+     *
      * @return transformation
      */
     Transformation transformation() default Transformation.NONE;

@@ -4,6 +4,8 @@ import com.tree_bit.blockapi.data.IDataValue;
 
 import org.eclipse.jdt.annotation.NonNull;
 
+import java.util.Optional;
+
 
 
 /**
@@ -41,8 +43,14 @@ public final class GenericBlockData extends BlockData {
         }
 
         @Override
-        public int getDataValue() {
+        public int getDV() {
             return this.datavalue;
+        }
+
+        @Override
+        public Optional<? extends IDataValue> byDV(final int dv) {
+            // TODO Auto-generated method stub
+            return Optional.empty();
         }
     }
 

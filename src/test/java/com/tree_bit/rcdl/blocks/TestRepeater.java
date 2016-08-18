@@ -7,12 +7,14 @@ import static org.junit.Assert.assertTrue;
 import com.tree_bit.rcdl.blocks.Repeater.Delay;
 import com.tree_bit.rcdl.blocks.dv.OrientationNESW;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.EnumSet;
 
 
 @SuppressWarnings({"javadoc"})
+@Ignore
 public class TestRepeater {
 
     Repeater someInstance = Repeater.getInstance();

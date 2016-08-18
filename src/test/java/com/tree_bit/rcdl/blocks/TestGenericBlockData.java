@@ -3,12 +3,14 @@ package com.tree_bit.rcdl.blocks;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.EnumSet;
 
 
 @SuppressWarnings("javadoc")
+@Ignore
 public class TestGenericBlockData {
 
     private final GenericBlockData instance = GenericBlockData.getInstance();

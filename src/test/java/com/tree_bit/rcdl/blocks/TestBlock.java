@@ -8,10 +8,12 @@ import com.tree_bit.blockapi.id.minecraft.BlockID;
 import com.tree_bit.rcdl.blocks.Repeater.Delay;
 import com.tree_bit.rcdl.blocks.dv.OrientationNESW;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 
 @SuppressWarnings("javadoc")
+@Ignore
 public class TestBlock {
 
     private final Block diamondBlock = Block.getInstance(BlockID.DIAMOND_BLOCK);

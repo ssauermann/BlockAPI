@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.tree_bit.blockapi.entities;
+package com.tree_bit.blockapi.entities.todo;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
@@ -31,15 +31,14 @@ import org.eclipse.jdt.annotation.Nullable;
 import java.util.LinkedList;
 import java.util.List;
 
-import jdk.nashorn.internal.ir.annotations.Immutable;
-
 
 /**
  * Text containing multiple Strings with formatting.
  *
  * @author Sascha Sauermann
  */
-@Immutable
+// @Immutable
+@SuppressWarnings("all")
 public final class FormatText {
 
     private final ImmutableList<@NonNull FormatString> strings;
@@ -197,7 +196,7 @@ public final class FormatText {
      *
      * @author Sascha Sauermann
      */
-    @Immutable
+    // @Immutable
     public static class FormatString {
 
         private final String string;

@@ -19,19 +19,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.tree_bit.blockapi.entities;
+package com.tree_bit.blockapi.entities.blockentity;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.tree_bit.blockapi.nbt.NBT;
-import com.tree_bit.blockapi.nbt.NBTData;
+import com.tree_bit.blockapi.nbt.NBTCompoundData;
 import com.tree_bit.blockapi.nbt.tags.CompoundTag;
 
 
 /**
  * Representing a tile entity containing some tags. The positioning tags (x, y,
  * z) are excluded from this tag list although they have to be saved in files.
- *
+ * <p>
  * <b>With 1.8 TileEntities were renamed to BlockEntities.</b>
  *
  * @see <a href=
@@ -40,39 +40,39 @@ import com.tree_bit.blockapi.nbt.tags.CompoundTag;
  *
  * @author Sascha Sauermann
  */
-public interface TileEntity extends NBTData {
+public interface BlockEntity extends NBTCompoundData {
 
     /**
      * {@inheritDoc}
      * <p>
-     * This compound tag for tile entities is missing the coordinate data which
+     * This compound tag for block entities is missing the coordinate data which
      * must be added for saving but is not currently stored in it.
      * <p>
-     * Use {@link #addCoordinates(TileEntity, int, int, int)} for adding those
+     * Use {@link #addCoordinates(BlockEntity, int, int, int)} for adding those
      * before saving to file.
      */
     @Override
     public CompoundTag compound();
 
     /**
-     * ID defining the type of the tile entity.
+     * ID defining the type of the <code>BlockEntity</code>.
      *
-     * @return TileEntity ID
+     * @return BlockEntity ID
      */
     public String id();
 
     /**
-     * Adds coordinates to a TileEntity and returns the CompoundTag the tile
-     * entity is based on, including the coordinates. This should only be done
-     * before saving the data to a file.
+     * Adds coordinates to a <code>BlockEntity</code> and returns the
+     * <code>CompoundTag</code> the block entity is based on, including the
+     * coordinates. This should only be done before saving the data to a file.
      *
-     * @param e TileEntity to add the coordinates to
-     * @param x x coordinate
-     * @param y y coordinate
-     * @param z z coordinate
-     * @return CompoundTag with TileEntity data and coordinates.
+     * @param e BlockEntity to add the coordinates to
+     * @param x X coordinate
+     * @param y Y coordinate
+     * @param z Z coordinate
+     * @return CompoundTag with BlockEntity data and coordinates.
      */
-    public static CompoundTag addCoordinates(final TileEntity e, final int x, final int y, final int z) {
+    public static CompoundTag addCoordinates(final BlockEntity e, final int x, final int y, final int z) {
         return NBT.Compound(e.compound().getName()).addAll(checkNotNull(e.compound().getValue().values())).Int("x", x).Int("y", y).Int("z", z)
                 .build();
     }

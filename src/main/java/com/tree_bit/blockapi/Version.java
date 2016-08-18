@@ -23,7 +23,8 @@ package com.tree_bit.blockapi;
 
 
 /**
- * Minecraft version, sorted from old to new.
+ * Minecraft version, sorted from old to new. No older version than 1.7 is
+ * officially supported (Missing data for NBT format, etc.)
  */
 public enum Version {
     /** Every version */

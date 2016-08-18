@@ -19,8 +19,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.tree_bit.blockapi.entities;
+package com.tree_bit.blockapi.entities.todo;
 
+import com.tree_bit.blockapi.entities.blockentity.BlockEntity;
+import com.tree_bit.blockapi.internal.BlockApiStyle;
 import com.tree_bit.blockapi.nbt.NBT;
 import com.tree_bit.blockapi.nbt.tags.CompoundTag;
 import com.tree_bit.rcdl.blocks.HangingSign;
@@ -45,7 +47,9 @@ import org.immutables.value.Value.Parameter;
  * @author Sascha Sauermann
  */
 @Immutable
-public abstract class _SignEntity implements TileEntity {
+@BlockApiStyle
+@SuppressWarnings("all")
+public abstract class SignEntity implements BlockEntity {
 
     /**
      * First row of text.
@@ -118,6 +122,12 @@ public abstract class _SignEntity implements TileEntity {
     @Override
     public String id() {
         return "Sign";
+    }
+
+    // TODO Remove
+    public static SignEntity empty() {
+        // return SignEntity.builder().build();
+        return new SignEntity() {};
     }
 
 

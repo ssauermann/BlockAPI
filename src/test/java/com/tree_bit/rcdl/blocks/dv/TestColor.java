@@ -11,7 +11,7 @@ public class TestColor {
 
     @SuppressWarnings("static-method")
     @Test
-    public void testGetDataValue() {
-        assertEquals(1, Color.Orange.getDataValue());
+    public void testgetDV() {
+        assertEquals(1, Color.Orange.getDV());
     }
 }

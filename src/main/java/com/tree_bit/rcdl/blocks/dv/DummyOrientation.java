@@ -3,6 +3,7 @@ package com.tree_bit.rcdl.blocks.dv;
 import com.tree_bit.rcdl.blocks.Axis;
 
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.Set;
 
 
@@ -28,7 +29,7 @@ public enum DummyOrientation implements IOrientationEnum {
     NONE;
 
     @Override
-    public int getDataValue() {
+    public int getDV() {
         return 0;
     }
 
@@ -57,5 +58,14 @@ public enum DummyOrientation implements IOrientationEnum {
     @Override
     public int getStep() {
         return 90;
+    }
+
+    @Override
+    public Optional<? extends DummyOrientation> byDV(final int dv) {
+        // TODO
+        if (dv == 0) {
+            return Optional.of(NONE);
+        }
+        return Optional.empty();
     }
 }

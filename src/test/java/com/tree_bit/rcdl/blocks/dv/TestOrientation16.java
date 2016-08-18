@@ -64,7 +64,7 @@ public class TestOrientation16 {
 
     @SuppressWarnings({"static-method"})
     @Test
-    public void testGetDataValue() {
-        assertEquals(8, Orientation16.N.getDataValue());
+    public void testgetDV() {
+        assertEquals(8, Orientation16.N.getDV());
     }
 }
